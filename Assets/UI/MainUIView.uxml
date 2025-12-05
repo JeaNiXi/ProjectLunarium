@@ -1,0 +1,16 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement style="flex-basis: 20%;"/>
+        <ui:VisualElement style="flex-basis: 80%; flex-direction: row;">
+            <ui:VisualElement style="flex-basis: 10%;">
+                <ui:VisualElement style="flex-grow: 1;">
+                    <ui:Button text="&#1053;&#1072;&#1089;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077;" name="populationButton"/>
+                    <ui:Button text="&#1056;&#1077;&#1089;&#1091;&#1088;&#1089;&#1099;" name="resourcesButton"/>
+                    <ui:Button text="Button"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="mainView" style="flex-basis: 75%;"/>
+            <ui:VisualElement style="flex-basis: 15%;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

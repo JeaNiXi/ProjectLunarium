@@ -34,7 +34,7 @@ namespace Managers
             timer += Time.deltaTime;
             if(timer > SECONDS_PER_DAY)
             {
-                DebugExtensions.ConsoleGetCurrentDate();
+                //DebugExtensions.ConsoleGetCurrentDate();
                 TimeManager.Instance.OnTickUpdate();
                 timer = 0f;
             }

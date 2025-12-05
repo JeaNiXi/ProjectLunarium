@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5959684dcee5734bb6bc4792be52d8f, type: 3}
+  m_Name: Wood
+  m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
+  ID: r_Wood
+  NameKey: WoodNameKey
+  DescriptionKey: WoodDescriptionKey
+  AnimationSprites:
+  - {fileID: 145885272568563908, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: -7066570445600034450, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: -1668848275168783054, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: 7885043353818990963, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: -482291571312725661, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: -629791756309333937, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: -5788191787734890080, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: 6216446298752603474, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: 8857824660070683482, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: -6017269664540651259, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  - {fileID: -159541765, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
