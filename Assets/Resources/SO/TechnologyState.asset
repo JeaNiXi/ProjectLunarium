@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f22d44ad11e57b94286d929f99e92479, type: 3}
-  m_Name: ResourceState
-  m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceStateSO
-  resourcesAmounts:
-  - 0
-  - 0
-  - 0
+  m_Script: {fileID: 11500000, guid: 2509025445279ef40b4aaea437fa97c6, type: 3}
+  m_Name: TechnologyState
+  m_EditorClassIdentifier: Assembly-CSharp::SO.TechnologyStateSO
+  allTechnologies: []
+  researchedTechnologies: []

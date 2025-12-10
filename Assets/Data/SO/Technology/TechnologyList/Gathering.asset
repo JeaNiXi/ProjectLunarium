@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc9f3f21b211c0849a67977d37ba36e7, type: 3}
-  m_Name: ResourceManager
-  m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceManagerSO
-  AllResourcesList:
-  - {fileID: 11400000, guid: 109fe67aa07885446b81869f8686022b, type: 2}
-  - {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
+  m_Script: {fileID: 11500000, guid: 4a0d15fce6aa4264198f6eb46032999f, type: 3}
+  m_Name: Gathering
+  m_EditorClassIdentifier: Assembly-CSharp::SO.TechnologySO
+  ID: tGathering
+  NameKey: nkGathering
+  DescriptionKey: dkGathering
+  opensResources:
   - {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+  - {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}

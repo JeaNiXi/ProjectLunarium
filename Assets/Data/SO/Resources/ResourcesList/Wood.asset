@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5959684dcee5734bb6bc4792be52d8f, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
-  ID: r_Wood
-  NameKey: WoodNameKey
-  DescriptionKey: WoodDescriptionKey
+  ID: rWood
+  NameKey: nkWood
+  DescriptionKey: dkWood
   AnimationSprites:
   - {fileID: 145885272568563908, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
   - {fileID: -7066570445600034450, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
@@ -27,3 +27,5 @@ MonoBehaviour:
   - {fileID: 8857824660070683482, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
   - {fileID: -6017269664540651259, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
   - {fileID: -159541765, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
+  TechNeeded:
+  - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}

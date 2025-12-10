@@ -17,13 +17,16 @@ namespace UI
         private VisualTreeAsset resourcePanelAsset;
         private ListView listView;
         private List<ResourceSO> AllResourcesList;
+        private List<ResourceSO> VisibleResourcesList;
         private bool listUpdated;
+        private bool isUpdating;
         private List<float> spriteTimers;
         private List<int> spriteFrames;
         private float frameTime = 0f;
         private float globalFrameTime = 0.2f;
         private Dictionary<int, VisualElement> visibleElements;
         private ResourceStateSO resourceStateSO;
+        private TechnologyStateSO technologyStateSO;
         public void InitializePage(VisualElement page, ScriptableObject data)
         {
             this.page = page;
@@ -34,6 +37,8 @@ namespace UI
 
             resourcePanelAsset = Resources.Load<VisualTreeAsset>("UI/Panel/ResourcePanelAsset");
             resourceStateSO = Resources.Load<ResourceStateSO>("SO/ResourceState");
+            technologyStateSO = Resources.Load<TechnologyStateSO>("SO/TechnologyState");
+
             visibleElements = new Dictionary<int, VisualElement>();
             InitializeData(this.data);
             InitializeListView();
@@ -41,8 +46,7 @@ namespace UI
         private void InitializeData(ResourceManagerSO data)
         {
             AllResourcesList = new List<ResourceSO>();
-            foreach (var resource in data.AllResourcesList)
-                AllResourcesList.Add(resource);
+            UpdateVisibleResources(data);
             spriteTimers = new List<float>(AllResourcesList.Count);
             spriteFrames = new List<int>(AllResourcesList.Count);
             for (int i = 0; i < AllResourcesList.Count; i++)
@@ -51,9 +55,19 @@ namespace UI
                 spriteFrames.Add(0);
             }
         }
+        private void UpdateVisibleResources(ResourceManagerSO data)
+        {
+            VisibleResourcesList?.Clear();
+            foreach(var resource in AllResourcesList)
+            {
+                if (data.IsResourceVisible(resource, technologyStateSO))
+                    VisibleResourcesList.Add(resource);
+            }
+
+        }
         private void InitializeListView()
         {
-            listView.itemsSource = AllResourcesList;
+            listView.itemsSource = VisibleResourcesList;
             UpdateListView();
         }
         private void UpdateListView()
@@ -96,32 +110,38 @@ namespace UI
         {
             if (!listUpdated)
                 return;
-            UpdateSpriteAnimations();
+            if (!isUpdating)
+                UpdateUIResourceData();
         }
-        private void UpdateSpriteAnimations()
+        private void UpdateUIResourceData()
         {
             if (visibleElements == null || visibleElements.Count == 0)
                 return;
             frameTime += Time.deltaTime;
             if (frameTime < globalFrameTime)
                 return;
+            isUpdating = true;
             foreach (var kv in visibleElements)
             {
                 int index = kv.Key;
                 VisualElement element = kv.Value;
 
-                spriteFrames[index]++;
-                if (spriteFrames[index] >= AllResourcesList[index].AnimationSprites.Count)
-                    spriteFrames[index] = 0;
-
-                var image = element.Q<Image>("resourceImage");
-                if (image != null)
-                    image.sprite = AllResourcesList[index].AnimationSprites[spriteFrames[index]];
-
+                UpdateSprites(element, index);
                 UpdateAmounts(element, index);
 
                 frameTime = 0;
             }
+            isUpdating = false;
+        }
+        private void UpdateSprites(VisualElement element, int index)
+        {
+            spriteFrames[index]++;
+            if (spriteFrames[index] >= AllResourcesList[index].AnimationSprites.Count)
+                spriteFrames[index] = 0;
+
+            var image = element.Q<Image>("resourceImage");
+            if (image != null)
+                image.sprite = AllResourcesList[index].AnimationSprites[spriteFrames[index]];
         }
         private void UpdateAmounts(VisualElement element, int index)
         {

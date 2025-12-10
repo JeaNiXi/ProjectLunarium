@@ -6,5 +6,6 @@ namespace SO
     public class ResourceStateSO : ScriptableObject
     {
         public List<float> resourcesAmounts = new List<float> ();
+        public void ClearAmountsList() => resourcesAmounts.Clear ();
     }
 }

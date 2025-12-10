@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5959684dcee5734bb6bc4792be52d8f, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
-  ID: r_Water
-  NameKey: WaterNameKey
-  DescriptionKey: WaterDescriptionKey
+  ID: rWater
+  NameKey: nkWater
+  DescriptionKey: dkWater
   AnimationSprites:
   - {fileID: 4926131633840504183, guid: 786bda613287e76439e941764bdb25b3, type: 3}
   - {fileID: 8060041809488466418, guid: 786bda613287e76439e941764bdb25b3, type: 3}
   - {fileID: 2335775811206459273, guid: 786bda613287e76439e941764bdb25b3, type: 3}
   - {fileID: -8422885080058932615, guid: 786bda613287e76439e941764bdb25b3, type: 3}
+  TechNeeded:
+  - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}

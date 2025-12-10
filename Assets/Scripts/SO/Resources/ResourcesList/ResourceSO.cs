@@ -11,6 +11,7 @@ namespace SO
         public string DescriptionKey;
         [Header("Visualisation")]
         public List<Sprite> AnimationSprites = new List<Sprite>();
-
+        [Header("Connections")]
+        public List<TechnologySO> TechNeeded;
     }
 }
