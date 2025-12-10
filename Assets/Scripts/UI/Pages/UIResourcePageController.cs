@@ -46,6 +46,9 @@ namespace UI
         private void InitializeData(ResourceManagerSO data)
         {
             AllResourcesList = new List<ResourceSO>();
+            VisibleResourcesList = new List<ResourceSO>();
+            foreach (var resource in data.AllResourcesList)
+                AllResourcesList.Add(resource);
             UpdateVisibleResources(data);
             spriteTimers = new List<float>(AllResourcesList.Count);
             spriteFrames = new List<int>(AllResourcesList.Count);
@@ -58,10 +61,13 @@ namespace UI
         private void UpdateVisibleResources(ResourceManagerSO data)
         {
             VisibleResourcesList?.Clear();
-            foreach(var resource in AllResourcesList)
+            foreach (var resource in AllResourcesList)
             {
-                if (data.IsResourceVisible(resource, technologyStateSO))
+                if (data.IsResourceVisible(resource, technologyStateSO) == true)
+                {
                     VisibleResourcesList.Add(resource);
+                    Debug.Log($"Adding to Visible: {resource.ID}");
+                }
             }
 
         }
@@ -85,9 +91,9 @@ namespace UI
                 Image resourceImage = element.Q<Image>("resourceImage");
                 Label currentAmount = element.Q<Label>("currentAmount");
 
-                resourceNameLabel.text = AllResourcesList[index].NameKey;
-                resourceImage.sprite = AllResourcesList[index].AnimationSprites[0];
-                currentAmount.text = resourceStateSO.resourcesAmounts[index].ToString();
+                resourceNameLabel.text = VisibleResourcesList[index].NameKey;
+                resourceImage.sprite = VisibleResourcesList[index].AnimationSprites[0];
+                currentAmount.text = resourceStateSO.GetResourceAmount(VisibleResourcesList[index]).ToString();
 
                 listUpdated = true;
             };
@@ -136,12 +142,12 @@ namespace UI
         private void UpdateSprites(VisualElement element, int index)
         {
             spriteFrames[index]++;
-            if (spriteFrames[index] >= AllResourcesList[index].AnimationSprites.Count)
+            if (spriteFrames[index] >= VisibleResourcesList[index].AnimationSprites.Count)
                 spriteFrames[index] = 0;
 
             var image = element.Q<Image>("resourceImage");
             if (image != null)
-                image.sprite = AllResourcesList[index].AnimationSprites[spriteFrames[index]];
+                image.sprite = VisibleResourcesList[index].AnimationSprites[spriteFrames[index]];
         }
         private void UpdateAmounts(VisualElement element, int index)
         {
@@ -149,7 +155,7 @@ namespace UI
                 return;
             var amountLabel = element.Q<Label>("currentAmount");
             if (amountLabel != null)
-                amountLabel.text = resourceStateSO.resourcesAmounts[index].ToString();
+                amountLabel.text = resourceStateSO.resourcesAmountsList[index].ToString();
         }
     }
 }

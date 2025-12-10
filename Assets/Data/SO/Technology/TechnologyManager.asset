@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47dad886714cb634db9c45032630aaae, type: 3}
   m_Name: TechnologyManager
   m_EditorClassIdentifier: Assembly-CSharp::SO.TechnologyManagerSO
-  allTechnologies: []
+  allTechnologies:
+  - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
+  - {fileID: 11400000, guid: fd75237c6d0827d45a0954e84a89b041, type: 2}
   startingTech: {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}

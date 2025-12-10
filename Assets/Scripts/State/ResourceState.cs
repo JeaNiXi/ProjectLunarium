@@ -6,7 +6,7 @@ namespace State
     public class ResourceState
     {
         private ResourceStateSO resourceStateSO;
-        private Dictionary<ResourceSO, int> ResourcesAmounts = new Dictionary<ResourceSO, int>();
+        private Dictionary<ResourceSO, float> ResourcesAmounts = new Dictionary<ResourceSO, float>();
 
         public ResourceState(ResourceManagerSO resourceManagerSO)
         {
@@ -15,15 +15,19 @@ namespace State
                 ResourcesAmounts.Add(resource, 0);
             }
             resourceStateSO = Resources.Load<ResourceStateSO>("SO/ResourceState");
-            UpdateStateSO();
+            InitializeStateSO();
         }
 
-        private void UpdateStateSO()
+        private void InitializeStateSO()
         {
+            if (resourceStateSO.resourceAmountsDictionary != null)
+                resourceStateSO.ClearAmountsDictionary();
+            foreach (var (resource, value) in ResourcesAmounts)
+                resourceStateSO.resourceAmountsDictionary.Add(resource, value);
             if (resourceStateSO != null)
                 resourceStateSO.ClearAmountsList();
             foreach (var resource in ResourcesAmounts.Values)
-                resourceStateSO.resourcesAmounts.Add(resource);
+                resourceStateSO.resourcesAmountsList.Add(resource);
         }
     }
 }
