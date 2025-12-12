@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22d44ad11e57b94286d929f99e92479, type: 3}
   m_Name: ResourceState
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceStateSO
-  resourcesAmounts:
-  - 0
-  - 0
-  - 0
+  resourcesAmountsList:
+  - 4.11
+  - 2.13
+  - 3.1

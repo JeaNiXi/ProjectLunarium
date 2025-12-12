@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Pages/TechnologyPage.uss?fileID=7433441132597879392&amp;guid=cd04ec729039d77408af649abac2828a&amp;type=3#TechnologyPage"/>
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement style="flex-basis: 10%;"/>
+        <ui:VisualElement style="flex-direction: row; flex-basis: 90%;">
+            <ui:VisualElement style="flex-basis: 10%;"/>
+            <ui:VisualElement name="techPageMainView" style="flex-direction: row; flex-basis: 90%;">
+                <ui:ScrollView name="mainScrollView" mode="Horizontal" style="flex-basis: 100%;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

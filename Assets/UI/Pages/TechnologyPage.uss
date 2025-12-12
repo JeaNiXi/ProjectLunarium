@@ -1,0 +1,18 @@
+:root {
+}
+
+.unity-scroll-view__content-container {
+    flex-direction: row;
+}
+
+.techColumn {
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.techPanel{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

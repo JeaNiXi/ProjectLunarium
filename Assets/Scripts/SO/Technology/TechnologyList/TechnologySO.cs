@@ -9,7 +9,11 @@ namespace SO
         [Header("Main Info:")]
         public string NameKey;
         public string DescriptionKey;
-        [Header("Visualisation")]
+        [Header("Technology Info:")]
+        public int Tier;
+        public List<TechnologySO> NextTech;
+        public List<TechnologySO> PreviousTech;
+        [Header("Visualisation:")]
         public List<ResourceSO> opensResources;
     }
 }

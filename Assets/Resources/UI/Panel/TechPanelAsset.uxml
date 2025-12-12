@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(72, 115, 94); flex-basis: 100%; flex-direction: row;">
+        <ui:Button text="Button" name="mainTechInfoButton"/>
+        <ui:Label text="Label" name="techNameLabel" style="font-size: 24px; flex-grow: 1; flex-direction: row; align-self: center; -unity-text-align: upper-center;"/>
+    </ui:VisualElement>
+</ui:UXML>

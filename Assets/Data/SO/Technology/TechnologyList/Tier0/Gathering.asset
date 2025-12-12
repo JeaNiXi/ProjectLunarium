@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0d15fce6aa4264198f6eb46032999f, type: 3}
+  m_Name: Gathering
+  m_EditorClassIdentifier: Assembly-CSharp::SO.TechnologySO
+  ID: tGathering
+  NameKey: nkGathering
+  DescriptionKey: dkGathering
+  Tier: 0
+  NextTech:
+  - {fileID: 11400000, guid: fd75237c6d0827d45a0954e84a89b041, type: 2}
+  - {fileID: 11400000, guid: dda95a3dabd221b4dbeac58e228846f1, type: 2}
+  PreviousTech: []
+  opensResources:
+  - {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+  - {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
