@@ -1,5 +1,6 @@
 using SO;
 using State;
+using System.Collections.Generic;
 using UnityEngine;
 namespace Managers
 {
@@ -23,10 +24,6 @@ namespace Managers
         {
             ResourceState resourceState = new ResourceState(ResourceManagerSO);
         }
-        public bool IsResourceResearched(ResourceSO resource)
-        {
-            return true;
-        }
-
+        public List<ResourceSO> GetAllResourcesList() => ResourceManagerSO.AllResourcesList;
     }
 }

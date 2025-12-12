@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f22d44ad11e57b94286d929f99e92479, type: 3}
-  m_Name: ResourceState
-  m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceStateSO
-  resourcesAmountsList:
-  - 8.72
-  - 0
-  - 0
+  m_Script: {fileID: 11500000, guid: 1056bb6e160420240864c84c5e1cd59b, type: 3}
+  m_Name: WorkersManager
+  m_EditorClassIdentifier: Assembly-CSharp::SO.WorkersManagerSO

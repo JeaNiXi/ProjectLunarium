@@ -1,6 +1,5 @@
 using Mono.Cecil;
 using SO;
-using State;
 using System.Collections.Generic;
 using System.Resources;
 using Unity.Collections;
@@ -20,6 +19,7 @@ namespace UI
         private List<ResourceSO> VisibleResourcesList;
         private bool listUpdated;
         private bool isUpdating;
+        private bool isSwitchingToPage;
         private List<float> spriteTimers;
         private List<int> spriteFrames;
         private float frameTime = 0f;
@@ -27,6 +27,7 @@ namespace UI
         private Dictionary<int, VisualElement> visibleElements;
         private ResourceStateSO resourceStateSO;
         private TechnologyStateSO technologyStateSO;
+        private WorkersStateSO workersStateSO;
         public void InitializePage(VisualElement page, ScriptableObject data)
         {
             this.page = page;
@@ -38,6 +39,7 @@ namespace UI
             resourcePanelAsset = Resources.Load<VisualTreeAsset>("UI/Panel/ResourcePanelAsset");
             resourceStateSO = Resources.Load<ResourceStateSO>("SO/ResourceState");
             technologyStateSO = Resources.Load<TechnologyStateSO>("SO/TechnologyState");
+            workersStateSO = Resources.Load<WorkersStateSO>("SO/WorkersState");
 
             visibleElements = new Dictionary<int, VisualElement>();
             InitializeData(this.data);
@@ -89,10 +91,14 @@ namespace UI
 
                 Label resourceNameLabel = element.Q<Label>("nameLabel");
                 Image resourceImage = element.Q<Image>("resourceImage");
+                Button addWorkerButton = element.Q<Button>("addWorkerButton");
+                Label currenWorkers = element.Q<Label>("currentWorkers");
                 Label currentAmount = element.Q<Label>("currentAmount");
 
                 resourceNameLabel.text = VisibleResourcesList[index].NameKey;
                 resourceImage.sprite = VisibleResourcesList[index].AnimationSprites[0];
+                addWorkerButton.RegisterCallback<ClickEvent, ResourceSO>(OnAddWorkerButtonClicked, VisibleResourcesList[index]);
+                currenWorkers.text = workersStateSO.GetWorkersAmount(VisibleResourcesList[index]).ToString();
                 currentAmount.text = resourceStateSO.GetResourceAmount(VisibleResourcesList[index]).ToString();
 
                 listUpdated = true;
@@ -103,10 +109,14 @@ namespace UI
                     visibleElements.Remove(index);
             };
         }
-
+        private void OnAddWorkerButtonClicked(ClickEvent evt, ResourceSO resource)
+        {
+            Managers.WorkersManager.Instance.AddWorkerToResource(resource);
+        }
         public void ShowPage()
         {
             page.style.display = DisplayStyle.Flex;
+            isSwitchingToPage = true;
         }
         public void HidePage()
         {
@@ -124,7 +134,7 @@ namespace UI
             if (visibleElements == null || visibleElements.Count == 0)
                 return;
             frameTime += Time.deltaTime;
-            if (frameTime < globalFrameTime)
+            if (!isSwitchingToPage && frameTime < globalFrameTime)
                 return;
             isUpdating = true;
             foreach (var kv in visibleElements)
@@ -134,9 +144,12 @@ namespace UI
 
                 UpdateSprites(element, index);
                 UpdateAmounts(element, index);
+                UpdateWorkersAmounts(element, index);
 
                 frameTime = 0;
             }
+            if (isSwitchingToPage)
+                isSwitchingToPage = false;
             isUpdating = false;
         }
         private void UpdateSprites(VisualElement element, int index)
@@ -156,6 +169,14 @@ namespace UI
             var amountLabel = element.Q<Label>("currentAmount");
             if (amountLabel != null)
                 amountLabel.text = resourceStateSO.resourcesAmountsList[index].ToString();
+        }
+        private void UpdateWorkersAmounts(VisualElement element, int index)
+        {
+            if (visibleElements == null || visibleElements.Count == 0)
+                return;
+            var workersLabel = element.Q<Label>("currentWorkers");
+            if (workersLabel != null)
+                workersLabel.text = workersStateSO.currentWorkersStateList[index].ToString();
         }
     }
 }

@@ -7,7 +7,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="rightLVE" style="flex-basis: 80%;">
                     <ui:VisualElement name="nameVE" style="flex-basis: 40%;">
-                        <ui:Label text="&#1053;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077;" name="nameLabel"/>
+                        <ui:Label text="&#1053;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077;" name="nameLabel" style="font-size: 22px; -unity-text-align: middle-center;"/>
                     </ui:VisualElement>
                     <ui:VisualElement name="animationVE" style="flex-basis: 60%;">
                         <ui:Image source="project://database/Assets/Data/Test/elf_walk.gif?fileID=145885272568563908&amp;guid=e470b151ddeef604ca261877c959f2a1&amp;type=3#elf_walk_0" name="resourceImage"/>
@@ -16,8 +16,20 @@
             </ui:VisualElement>
             <ui:VisualElement name="rightElement" style="flex-basis: 70%;">
                 <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-                    <ui:Label text="Label"/>
-                    <ui:Label text="Label" name="currentAmount" binding-path="Amount"/>
+                    <ui:VisualElement style="flex-basis: 10%; -unity-text-auto-size: none; flex-grow: 1;">
+                        <ui:Button text="&#1044;&#1086;&#1073;&#1072;&#1074;&#1080;&#1090;&#1100; &#1046;&#1080;&#1090;&#1077;&#1083;&#1103;" name="addWorkerButton" style="flex-grow: 1; white-space: pre-wrap; font-size: 13px;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 1; flex-basis: 90%; flex-direction: row;">
+                        <ui:VisualElement style="flex-basis: 20%;">
+                            <ui:Label text="&#1058;&#1077;&#1082;&#1091;&#1097;&#1080;&#1077; &#1078;&#1080;&#1090;&#1077;&#1083;&#1080;:?"/>
+                            <ui:Label text="Label" name="currentWorkers"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-basis: 25%;">
+                            <ui:Label text="&#1058;&#1077;&#1082;&#1091;&#1097;&#1077;&#1077; &#1050;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086;:"/>
+                            <ui:Label text="Label" name="currentAmount" binding-path="Amount"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                    </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-grow: 1;"/>
             </ui:VisualElement>
