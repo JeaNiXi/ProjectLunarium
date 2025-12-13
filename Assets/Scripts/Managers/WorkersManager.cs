@@ -23,10 +23,6 @@ namespace Managers
         {
             workersState = new WorkersState(WorkersManagerSO);
         }
-        public void AddNullWorkerToResource(ResourceSO resource) => workersState.AddEmptyWorker(resource);
-        public void AddWorkerToResource(ResourceSO resource)
-        {
-            // To Add Later.
-        }
+        public void AddWorkerToResource(ResourceSO resource) => workersState.AddWorkerToResource(resource);
     }
 }

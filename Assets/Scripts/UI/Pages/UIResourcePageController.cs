@@ -1,6 +1,7 @@
 using Mono.Cecil;
 using SO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Resources;
 using Unity.Collections;
 using UnityEditor.UIElements;
@@ -144,7 +145,7 @@ namespace UI
 
                 UpdateSprites(element, index);
                 UpdateAmounts(element, index);
-                UpdateWorkersAmounts(element, index);
+                UpdateWorkersAmounts(element, VisibleResourcesList[index]);
 
                 frameTime = 0;
             }
@@ -170,13 +171,15 @@ namespace UI
             if (amountLabel != null)
                 amountLabel.text = resourceStateSO.resourcesAmountsList[index].ToString();
         }
-        private void UpdateWorkersAmounts(VisualElement element, int index)
+        private void UpdateWorkersAmounts(VisualElement element, ResourceSO resource)
         {
             if (visibleElements == null || visibleElements.Count == 0)
                 return;
-            var workersLabel = element.Q<Label>("currentWorkers");
-            if (workersLabel != null)
-                workersLabel.text = workersStateSO.currentWorkersStateList[index].ToString();
+            if (workersStateSO.currentWorkersAmountStateList.Count == 0)
+                return;
+            var workerLabel = element.Q<Label>("currentWorkers");
+            if (workerLabel != null)
+                workerLabel.text = workersStateSO.GetWorkersAmount(resource).ToString();
         }
     }
 }
