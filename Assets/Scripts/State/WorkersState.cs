@@ -21,6 +21,7 @@ namespace State
         {
             //OnGame Start/Load to change Amounts;
         }
+        #region SO 
         private void InitializeStateSO()
         {
             ClearStateSODictionary();
@@ -67,7 +68,6 @@ namespace State
             if (workersStateSO.currentWorkersStateDictionary.Count > 0)
                 workersStateSO.ClearWorkersDictionary();
         }
-
         private void ClearStateSOLists()
         {
             if (workersStateSO.currentWorkersResourcesStateList.Count > 0 || workersStateSO.currentWorkersAmountStateList.Count > 0)
@@ -76,8 +76,10 @@ namespace State
                 workersStateSO.ClearWorkersAmountStateList();
             }
         }
+        #endregion
         public void AddWorkerToResource(ResourceSO resource)
         {
+            //Check for non-available worker population.
             if (WorkersAmounts.TryGetValue(resource, out var value))
             {
                 WorkersAmounts[resource] += GetWorkersAmountToAdd(resource);
@@ -91,5 +93,9 @@ namespace State
         }
         public int GetWorkersAmountToAdd(ResourceSO resource) => 1;
         public int GetWorkersAmountToAddOnCreate(ResourceSO resource) => 1;
+        public void InitializeWorkerTypesFromWorkerPopulation(int availiableWorkersPopulation)
+        {
+
+        }
     }
 }

@@ -7,6 +7,9 @@ namespace SO
     public class ResourceManagerSO : ScriptableObject
     {
         public List<ResourceSO> AllResourcesList = new List<ResourceSO>();
+        public ResourceSO GathererFoodResource;
+        public ResourceSO GathererWaterResource;
+        public ResourceSO GahrererWoodResource;
         public bool IsResourceVisible(ResourceSO resource, TechnologyStateSO techState)
         {
             if (resource.TechNeeded == null)

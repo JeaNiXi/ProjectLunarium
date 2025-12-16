@@ -6,6 +6,8 @@ namespace Managers
     // 1 неделя     = 7 секунд          = 420 тиков
     // 1 месяц      = 31 секунда        = 1860 тиков
     // 1 год        = 6.2 минуты        = 22320 тиков
+    // 10 лет       = 1 час 2 минуты    = 223200 тиков
+    // 100 лет      = 10 часов, 20 мин  = 2232000 тиков
 
     public class TickManager : MonoBehaviour
     {
@@ -26,7 +28,7 @@ namespace Managers
         }
         private void FixedUpdate()
         {
-            if (GameManager.Instance.CurrentGameState == GameManager.GameState.RUNNING)
+            if (GameManager.Instance.CurrentGameState == GameManager.GameState.RUNNING && GameManager.Instance.IsTickPossible)
                 UpdateTick();
         }
         private void UpdateTick()
@@ -34,7 +36,7 @@ namespace Managers
             timer += Time.deltaTime;
             if(timer > SECONDS_PER_DAY)
             {
-                //DebugExtensions.ConsoleGetCurrentDate();
+                GameManager.Instance.DisableTickPossibility();
                 TimeManager.Instance.OnTickUpdate();
                 timer = 0f;
             }

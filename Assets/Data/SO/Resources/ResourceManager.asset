@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceManagerSO
   AllResourcesList:
   - {fileID: 11400000, guid: 109fe67aa07885446b81869f8686022b, type: 2}
+  - {fileID: 11400000, guid: ac34504bf884f8d49ad8487616b845c5, type: 2}
   - {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
   - {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+  GathererFoodResource: {fileID: 11400000, guid: ac34504bf884f8d49ad8487616b845c5, type: 2}
+  GathererWaterResource: {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
+  GahrererWoodResource: {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}

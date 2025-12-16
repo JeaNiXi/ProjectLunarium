@@ -15,7 +15,9 @@ namespace SO
         public void ClearWorkersAmountStateList() => currentWorkersAmountStateList.Clear();
         public void ClearWorkersDictionary() => currentWorkersStateDictionary.Clear();
         public int GetWorkersAmount(ResourceSO resource) => currentWorkersStateDictionary.TryGetValue(resource, out var amount) ? amount : 0;
+
     }
+
     [Serializable]
     public struct ResourceWorkersAmounts
     {

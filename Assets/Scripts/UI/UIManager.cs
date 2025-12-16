@@ -19,12 +19,15 @@ namespace UI
         [SerializeField] private VisualTreeAsset populationMainAsset;
         [SerializeField] private VisualTreeAsset resourcesMainAsset;
         [SerializeField] private VisualTreeAsset technologyMainAsset;
+        [SerializeField] private VisualTreeAsset workersMainAsset;
         [SerializeField] private PopulationManagerSO populationManagerSO;
         [SerializeField] private ResourceManagerSO resourceManagerSO;
         [SerializeField] private TechnologyManagerSO technologyManagerSO;
+        [SerializeField] private WorkersManagerSO workersManagerSO;
         private Button categoryPopulationButton;
         private Button categoryResourcesButton;
         private Button categoryTechnologyButton;
+        private Button categoryWorkersButton;
         private Dictionary<string, VisualElement> cachedPages;
         private Dictionary<string, IUIPageController> cachedIUIPageControllers;
         private void Awake()
@@ -57,6 +60,7 @@ namespace UI
             CachePage("population", populationMainAsset, new UIPopulationPageController(), populationManagerSO);
             CachePage("resources", resourcesMainAsset, new UIResourcePageController(), resourceManagerSO);
             CachePage("technologies", technologyMainAsset, new UITechnologyPageController(), technologyManagerSO);
+            CachePage("workers", workersMainAsset, new UIWorkersPageController(), workersManagerSO);
         }
         private void CachePage(string category, VisualTreeAsset asset, IUIPageController controller, ScriptableObject data)
         {
@@ -81,12 +85,14 @@ namespace UI
             categoryPopulationButton = RootVE.Q<Button>("populationButton");
             categoryResourcesButton = RootVE.Q<Button>("resourcesButton");
             categoryTechnologyButton = RootVE.Q<Button>("technologyButton");
+            categoryWorkersButton = RootVE.Q<Button>("workersButton");
         }
         private void InitializeButtonEvents()
         {
             categoryPopulationButton.clicked += () => ShowPage("population");
             categoryResourcesButton.clicked += () => ShowPage("resources");
             categoryTechnologyButton.clicked += () => ShowPage("technologies");
+            categoryWorkersButton.clicked += () => ShowPage("workers");
         }
         private void ShowPage(string category)
         {
@@ -113,6 +119,8 @@ namespace UI
                 categoryResourcesButton.clicked -= () => ShowPage("resources");
             if (categoryTechnologyButton != null)
                 categoryTechnologyButton.clicked -= () => ShowPage("technologies");
+            if (categoryWorkersButton != null)
+                categoryWorkersButton.clicked -= () => ShowPage("workers");
         }
     }
 }

@@ -34,7 +34,7 @@ namespace UI
             this.page = page;
             this.data = data as ResourceManagerSO;
             if (this.data == null)
-                Debug.Log("NO DATA SO FOUND");
+                Debug.LogError($"NO DATA SO FOUND. Current data type is {data.GetType()}, but expected {typeof(ResourceManagerSO)}");
             listView = page.Q<ListView>("mainListView");
 
             resourcePanelAsset = Resources.Load<VisualTreeAsset>("UI/Panel/ResourcePanelAsset");
@@ -144,7 +144,7 @@ namespace UI
                 VisualElement element = kv.Value;
 
                 UpdateSprites(element, index);
-                UpdateAmounts(element, index);
+                UpdateAmounts(element, VisibleResourcesList[index]);
                 UpdateWorkersAmounts(element, VisibleResourcesList[index]);
 
                 frameTime = 0;
@@ -163,13 +163,13 @@ namespace UI
             if (image != null)
                 image.sprite = VisibleResourcesList[index].AnimationSprites[spriteFrames[index]];
         }
-        private void UpdateAmounts(VisualElement element, int index)
+        private void UpdateAmounts(VisualElement element, ResourceSO resource)
         {
             if (visibleElements == null || visibleElements.Count == 0)
                 return;
             var amountLabel = element.Q<Label>("currentAmount");
             if (amountLabel != null)
-                amountLabel.text = resourceStateSO.resourcesAmountsList[index].ToString();
+                amountLabel.text = resourceStateSO.GetResourceAmount(resource).ToString();
         }
         private void UpdateWorkersAmounts(VisualElement element, ResourceSO resource)
         {

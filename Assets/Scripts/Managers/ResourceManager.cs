@@ -8,6 +8,7 @@ namespace Managers
     {
         public static ResourceManager Instance;
         public ResourceManagerSO ResourceManagerSO;
+        private ResourceState resourceState;
 
         private void Awake()
         {
@@ -20,10 +21,24 @@ namespace Managers
             }
             InitializeStartingResourcesState();
         }
-        public void InitializeStartingResourcesState()
-        {
-            ResourceState resourceState = new ResourceState(ResourceManagerSO);
-        }
+        public void InitializeStartingResourcesState() => resourceState = new ResourceState(ResourceManagerSO);
         public List<ResourceSO> GetAllResourcesList() => ResourceManagerSO.AllResourcesList;
+        public void OnGlobalTick(TimeState timeState)
+        {
+
+            /*
+             * We check here what are the resources we collect first. 
+             * All this should be done After technologies and modifiers are in line. (Later Magic, Society, Population).
+             * Basically this shlould be the last step, duh. Every other step before this should already have updated everything.
+             */
+        }
+        public void UpdateGathererResourceIncome(int gatherersAmount)
+        {
+            resourceState.UpdateGatherersResourcesIncomes(gatherersAmount);
+        }
+        public void UpdateResourceUsage(int childAmount, int adultAmount, int elderAmount)
+        {
+            resourceState.UpdateResourceUsage(childAmount, adultAmount, elderAmount);
+        }    
     }
 }

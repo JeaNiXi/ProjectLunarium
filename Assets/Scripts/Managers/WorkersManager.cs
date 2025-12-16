@@ -24,5 +24,6 @@ namespace Managers
             workersState = new WorkersState(WorkersManagerSO);
         }
         public void AddWorkerToResource(ResourceSO resource) => workersState.AddWorkerToResource(resource);
+        public void UpdateWorkersAmount(int workingPopulation) => workersState.InitializeWorkerTypesFromWorkerPopulation(workingPopulation);
     }
 }

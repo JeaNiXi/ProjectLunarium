@@ -1,3 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; background-color: rgb(197, 98, 98);"/>
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(197, 98, 98);">
+        <ui:Label text="&#1058;&#1077;&#1082;&#1091;&#1097;&#1077;&#1077; &#1053;&#1072;&#1089;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077;"/>
+        <ui:Label text="Label" name="currentPopulation"/>
+    </ui:VisualElement>
 </ui:UXML>

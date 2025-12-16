@@ -23,6 +23,10 @@ namespace Managers
 
         public string GetCurrentTimeString() => timeState.GetCurrentTimeString();
         public void GetCurrentDay() => timeState.GetCurrentDay();
-        public void OnTickUpdate() => timeState.UpdateTick();
+        public void OnTickUpdate()
+        {
+            timeState.UpdateTick();
+            GameManager.Instance.OnGlobalTick(timeState);
+        }
     }
 }

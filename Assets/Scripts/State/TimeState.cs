@@ -1,37 +1,36 @@
-using UnityEngine;
 namespace State
 {
     public class TimeState
     {
-        public int CurrentDay;
-        public int CurrentMonth;
-        public int CurrentYear;
+        private int currentDay;
+        private int currentMonth;
+        private int currentYear;
 
         public TimeState()
         {
-            CurrentDay = 1;
-            CurrentMonth = 1;
-            CurrentYear = 1;
+            currentDay = 0;
+            currentMonth = 1;
+            currentYear = 1;
         }
-        public string GetCurrentTimeString() => $"Current Day: {CurrentDay}, Current Month: {CurrentMonth}, Current Year: {CurrentYear}.";
-        public int GetCurrentDay() => CurrentDay;
-        public int GetCurrentMonth() => CurrentMonth;
-        public int GetCurrentYear() => CurrentYear;
+        public string GetCurrentTimeString() => $"Current Day: {currentDay}, Current Month: {currentMonth}, Current Year: {currentYear}.";
+        public int GetCurrentDay() => currentDay;
+        public int GetCurrentMonth() => currentMonth;
+        public int GetCurrentYear() => currentYear;
         public void UpdateTick()
         {
             AddDay();
         }
         private void AddDay()
         {
-            CurrentDay++;
-            if (CurrentDay == 31)
+            currentDay++;
+            if (currentDay == 31)
             {
-                CurrentDay = 1;
-                CurrentMonth++;
-                if (CurrentMonth == 13)
+                currentDay = 1;
+                currentMonth++;
+                if (currentMonth == 13)
                 {
-                    CurrentMonth = 1;
-                    CurrentYear++;
+                    currentMonth = 1;
+                    currentYear++;
                 }
             }
         }

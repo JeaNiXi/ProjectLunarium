@@ -9,6 +9,7 @@ namespace Initialization
         {
             Debug.Log("Started Game Initialization!");
             GameManager.Instance.SetGameState(GameManager.GameState.RUNNING);
+            GameManager.Instance.EnableTickPossibility();
         }
     }
 }
