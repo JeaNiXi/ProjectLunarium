@@ -4,8 +4,13 @@
         <ui:VisualElement style="flex-basis: 10%;"/>
         <ui:VisualElement style="flex-direction: row; flex-basis: 90%;">
             <ui:VisualElement style="flex-basis: 10%;"/>
-            <ui:VisualElement name="techPageMainView" style="flex-direction: row; flex-basis: 90%;">
-                <ui:ScrollView name="mainScrollView" mode="Horizontal" style="flex-basis: 100%;"/>
+            <ui:VisualElement style="flex-basis: 90%;">
+                <ui:VisualElement style="flex-basis: 90%;">
+                    <ui:VisualElement name="techPageMainView" style="flex-direction: row; flex-basis: 90%; justify-content: space-around;">
+                        <ui:ScrollView name="mainScrollView" mode="Horizontal" style="flex-basis: 100%;"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-basis: 10%;"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -1,6 +1,18 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; background-color: rgb(72, 115, 94); flex-basis: 100%; flex-direction: row;">
-        <ui:Button text="Button" name="mainTechInfoButton"/>
-        <ui:Label text="Label" name="techNameLabel" style="font-size: 24px; flex-grow: 1; flex-direction: row; align-self: center; -unity-text-align: upper-center;"/>
+    <ui:VisualElement style="flex-grow: 1; flex-basis: 100%; flex-direction: row; background-color: rgb(233, 206, 155);">
+        <ui:VisualElement style="flex-basis: 30%; justify-content: space-around;">
+            <ui:Button text="&#1058;&#1077;&#1093;&#1085;&#1086;&#1083;&#1086;&#1075;&#1080;&#1103;" name="mainTechInfoButton" style="flex-grow: 1;"/>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-basis: 70%;">
+            <ui:VisualElement style="flex-basis: 30%;">
+                <ui:Label text="&#1053;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077; &#1058;&#1077;&#1093;&#1085;&#1086;&#1083;&#1086;&#1075;&#1080;&#1080;" name="techNameLabel" style="font-size: 24px; flex-grow: 1; flex-direction: row; align-self: center; -unity-text-align: upper-center;"/>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-basis: 40%;"/>
+            <ui:VisualElement style="flex-basis: 30%;">
+                <ui:VisualElement style="flex-grow: 1; justify-content: space-around;">
+                    <ui:ProgressBar value="22" title="my-progress"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac967096491f404892e837a08926ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceDanceDance
-  isDanceTime: 1
+  isDanceTime: 0
   audioSource: {fileID: 1331742183}
   audioClip: {fileID: 8300000, guid: 58b37bac6b8d01443ac4cac0de34d43b, type: 3}
 --- !u!82 &1331742183
