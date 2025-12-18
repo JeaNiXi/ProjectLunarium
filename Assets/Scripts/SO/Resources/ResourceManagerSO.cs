@@ -1,3 +1,4 @@
+using Managers;
 using SO;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +18,9 @@ namespace SO
                 Debug.Log($" Tech Needed is null, returing TRUE");
                 return true;
             }
-            foreach(var tech in resource.TechNeeded)
+            foreach (var tech in resource.TechNeeded)
             {
-                if (!techState.researchedTechnologies.Contains(tech))
+                if (!TechnologyManager.Instance.IsTechnologyResearched(tech))
                 {
                     Debug.Log($"Researched Tech does not contain {tech.ID}. Returning False");
                     return false;

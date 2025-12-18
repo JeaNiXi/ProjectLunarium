@@ -7,7 +7,7 @@ namespace SO
     public class TechnologyManagerSO : ScriptableObject
     {
         public List<TechnologySO> allTechnologies = new List<TechnologySO>();
-        public TechnologySO startingTech;
+        public List<TechnologySO> startingTech;
         public List<TechnologySO> GetTechByTier(int tier) => allTechnologies.Where(t => t.Tier == tier).ToList();
         public int GetMaxTechTier() => allTechnologies.Max(t => t.Tier);
     }

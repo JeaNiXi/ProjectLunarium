@@ -1,5 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; flex-basis: 100%; flex-direction: row; background-color: rgb(233, 206, 155);">
+    <ui:VisualElement name="mainColorElement" style="flex-grow: 1; flex-basis: 100%; flex-direction: row; background-color: rgb(255, 255, 255);">
         <ui:VisualElement style="flex-basis: 30%; justify-content: space-around;">
             <ui:Button text="&#1058;&#1077;&#1093;&#1085;&#1086;&#1083;&#1086;&#1075;&#1080;&#1103;" name="mainTechInfoButton" style="flex-grow: 1;"/>
         </ui:VisualElement>
@@ -9,8 +9,13 @@
             </ui:VisualElement>
             <ui:VisualElement style="flex-basis: 40%;"/>
             <ui:VisualElement style="flex-basis: 30%;">
-                <ui:VisualElement style="flex-grow: 1; justify-content: space-around;">
-                    <ui:ProgressBar value="22" title="my-progress"/>
+                <ui:VisualElement style="flex-grow: 1; justify-content: space-around; flex-direction: row;">
+                    <ui:VisualElement style="flex-basis: 30%; align-self: center;">
+                        <ui:Button text="&#1048;&#1089;&#1089;&#1083;&#1077;&#1076;&#1086;&#1074;&#1072;&#1090;&#1100;" name="techStartResearchButton" style="flex-grow: 1;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-basis: 70%;">
+                        <ui:ProgressBar value="0" title="" name="techResearchProgressBar"/>
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

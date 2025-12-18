@@ -6,6 +6,10 @@ using UnityEngine.UIElements;
 using UnityEngine.XR;
 namespace UI
 {
+    // Research Not available Color D74E63
+    // Research Available Color
+    // Researched Color
+    // Research in Progress Color
     public class UITechnologyPageController : IUIPageController
     {
         private VisualElement page;
@@ -16,7 +20,12 @@ namespace UI
         private ScrollView scrollView;
         private TechnologyStateSO technologyStateSO;
         private Dictionary<string, VisualElement> cachedTechInfoPanels;
+        private Dictionary<TechnologySO, VisualElement> visibleElements;
+        private TechnologySO currentResearchedTechCache;
         private int maxTechTier;
+        private bool isUpdating;
+        private readonly float updateTime = 0.2f;
+        private float pageTime;
         public void InitializePage(VisualElement page, ScriptableObject data)
         {
             this.page = page;
@@ -29,6 +38,7 @@ namespace UI
             technologyPanelInfoAsset = Resources.Load<VisualTreeAsset>("UI/Panel/TechPanelInfoAsset");
             technologyStateSO = Resources.Load<TechnologyStateSO>("SO/TechnologyState");
             cachedTechInfoPanels = new Dictionary<string, VisualElement>();
+            visibleElements = new Dictionary<TechnologySO, VisualElement>();
             InitializeData(this.data);
             InitializeScrollView();
             CreateTechInfoPanels(this.data);
@@ -52,9 +62,17 @@ namespace UI
                 {
                     TemplateContainer ve = technologyPanelAsset.CloneTree();
                     ve.AddToClassList("techPanel");
+                    visibleElements.Add(tech, ve);
+                    var techMainColorVE = ve.Q<VisualElement>("mainColorElement");
                     var techInfoPanelButton = ve.Q<Button>("mainTechInfoButton");
                     var techNameLabel = ve.Q<Label>("techNameLabel");
-                    techInfoPanelButton.RegisterCallback<ClickEvent, string>(OnTechInfoPanelClicked, tech.ID);
+                    var techResearchProgressBar = ve.Q<ProgressBar>("techResearchProgressBar");
+                    var techStartResearchButton = ve.Q<Button>("techStartResearchButton");
+                    techMainColorVE.style.backgroundColor = GetTechResearchColor(tech);
+                    techInfoPanelButton.RegisterCallback<ClickEvent, string>(OnTechInfoPanelButtonClicked, tech.ID);
+                    techStartResearchButton.SetEnabled(GetResearchButtonAvailability(tech));
+                    techStartResearchButton.text = GetResearchButtonLabelText(tech);
+                    techStartResearchButton.RegisterCallback<ClickEvent, TechnologySO>(OnStartResearchButtonClicked, tech);
                     techNameLabel.text = tech.NameKey;
                     column.Add(ve);
                     Debug.Log($"Adding Technology Tier: {tech.Tier}, Name: {tech.NameKey}");
@@ -80,11 +98,37 @@ namespace UI
                 Debug.Log($"Added to Cache Tech Info Panel: {tech.ID}");
             }
         }
-
-        private void OnTechInfoPanelClicked(ClickEvent evt, string techID)
+        private Color GetTechResearchColor(TechnologySO tech)
+        {
+            if (technologyStateSO.researchedTechnologies.Contains(tech))
+                return Color.green;
+            else return Color.red;
+        }
+        private bool GetResearchButtonAvailability(TechnologySO tech)
+            => TechnologyManager.Instance.IsTechResearchAvailable(tech);
+        private string GetResearchButtonLabelText(TechnologySO tech)
+            => TechnologyManager.Instance.GetReseachButtonLabelText(tech);
+        private bool IsTechnologyResearchInProgress()
+            => TechnologyManager.Instance.IsTechnologyResearchInProgress();
+        private TechnologySO GetCurrentResearchedTechnology()
+            => TechnologyManager.Instance.GetCurrentResearchInProgressTechnology();
+        private VisualElement GetElementByTechSO(TechnologySO tech)
+        {
+            if (visibleElements.TryGetValue(tech, out var element))
+                return element;
+            return null;
+        }
+        private float GetCurrentReseachProgressBarValue()
+            => TechnologyManager.Instance.GetCurrentReseachProgressBarValue();
+        private void OnTechInfoPanelButtonClicked(ClickEvent evt, string techID)
         {
             Debug.Log($"Clicked Button: {techID}");
             ShowTechInfoPanel(techID);
+        }
+        private void OnStartResearchButtonClicked(ClickEvent evt, TechnologySO tech)
+        {
+            Debug.Log($"Started researching: {tech}.");
+            TechnologyManager.Instance.QueueTechnologyResearch(tech);
         }
         private void OnTechInfoPanelBackClicked(ClickEvent evt, string techID)
         {
@@ -113,7 +157,54 @@ namespace UI
         }
         public void UpdatePage()
         {
-            //throw new System.NotImplementedException();
+            if (!isUpdating)
+            {
+                pageTime += Time.deltaTime;
+                if (pageTime > updateTime)
+                {
+                    if (visibleElements == null || visibleElements.Count == 0)
+                        return;
+                    isUpdating = true;
+                    UpdateTechPanels();
+                    UpdateTechnologyResearchStatus();
+                    pageTime = 0;
+                    isUpdating = false;
+                }
+            }
+        }
+        private void UpdateTechPanels()
+        {
+            foreach (var key in visibleElements)
+                UpdateButtons(key.Value, key.Key);
+        }
+        private void UpdateButtons(VisualElement element, TechnologySO tech)
+        {
+            var researchButton = element.Q<Button>("techStartResearchButton");
+            if (researchButton != null)
+            {
+                researchButton.SetEnabled(GetResearchButtonAvailability(tech));
+                researchButton.text = GetResearchButtonLabelText(tech);
+            }
+        }
+        private void UpdateTechnologyResearchStatus()
+        {
+            var previousTech = currentResearchedTechCache;
+
+            if (!IsTechnologyResearchInProgress() && previousTech == null)
+                return;
+            if (!IsTechnologyResearchInProgress() && previousTech != null)
+                SetProgressBarValue(previousTech, 100f);
+            currentResearchedTechCache = GetCurrentResearchedTechnology();
+            if (currentResearchedTechCache == null)
+                return;
+            SetProgressBarValue(currentResearchedTechCache, GetCurrentReseachProgressBarValue());
+        }
+        private void SetProgressBarValue(TechnologySO tech, float value)
+        {
+            var techProgressBarElement = GetElementByTechSO(tech);
+            var techProgressBar = techProgressBarElement.Q<ProgressBar>("techResearchProgressBar");
+            if (techProgressBar != null)
+                techProgressBar.value = value;
         }
     }
 }

@@ -20,6 +20,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd75237c6d0827d45a0954e84a89b041, type: 2}
   - {fileID: 11400000, guid: dda95a3dabd221b4dbeac58e228846f1, type: 2}
   PreviousTech: []
-  opensResources:
-  - {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+  OpensResources:
+  - {fileID: 11400000, guid: ac34504bf884f8d49ad8487616b845c5, type: 2}
   - {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
+  - {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+  ResearchRequirements:
+    TechnologiesRequiredToResearch: []
+    ResourceOneTimeCost: []
+    ResourceDailyCost: []

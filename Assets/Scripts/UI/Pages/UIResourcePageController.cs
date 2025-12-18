@@ -1,3 +1,4 @@
+using Managers;
 using Mono.Cecil;
 using SO;
 using System.Collections.Generic;
@@ -72,7 +73,12 @@ namespace UI
                     Debug.Log($"Adding to Visible: {resource.ID}");
                 }
             }
-
+            if(GameManager.Instance.IsVisibleResourcesUpdateNeeded)
+                GameManager.Instance.SetIsVisibleResourcesUpdateNeeded(false);
+        }
+        private void RefreshListView()
+        {
+            listView.Rebuild();
         }
         private void InitializeListView()
         {
@@ -138,6 +144,11 @@ namespace UI
             if (!isSwitchingToPage && frameTime < globalFrameTime)
                 return;
             isUpdating = true;
+            if (GameManager.Instance.IsVisibleResourcesUpdateNeeded)
+            {
+                UpdateVisibleResources(data);
+                RefreshListView();
+            }
             foreach (var kv in visibleElements)
             {
                 int index = kv.Key;

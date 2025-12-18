@@ -1,4 +1,7 @@
+using SO;
 using State;
+using System;
+using UI;
 using UnityEngine;
 namespace Managers
 {
@@ -11,8 +14,15 @@ namespace Managers
             PAUSE,
             RUNNING
         }
+        public enum TechnologyResearchState
+        {
+            NOT_RESEARCHING,
+            RESEARCHING
+        }
         public GameState CurrentGameState { get; private set; }
+        public TechnologyResearchState CurrentTechnologyResearchState { get; private set; }
         public bool IsTickPossible { get; private set; }
+        public bool IsVisibleResourcesUpdateNeeded { get; private set; }
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -23,8 +33,12 @@ namespace Managers
                 DontDestroyOnLoad(gameObject);
             }
             CurrentGameState = GameState.INIT;
+            CurrentTechnologyResearchState = TechnologyResearchState.NOT_RESEARCHING;
         }
         public void SetGameState(GameState state) => CurrentGameState = state;
+        public void SetTechnologyResearchState(TechnologyResearchState state) => CurrentTechnologyResearchState = state;
+        public void SetIsVisibleResourcesUpdateNeeded(bool value)
+            => IsVisibleResourcesUpdateNeeded = value;
         public void DisableTickPossibility()
             => IsTickPossible = false;
         public void EnableTickPossibility()
@@ -47,14 +61,22 @@ namespace Managers
              */
             ResourceManager.Instance.UpdateGathererResourceIncome(18); //Need to give gatherer Amount in future.
             ResourceManager.Instance.UpdateResourceUsage(9, 18, 3); // Need to give populations and other in future.
-
+            TechnologyManager.Instance.UpdateTechResearchProgressBar();
+            TechnologyManager.Instance.CheckForTechReseachStatus();
             TechnologyManager.Instance.OnGlobalTick(timeState);
             ResourceManager.Instance.OnGlobalTick(timeState);
             EnableTickPossibility();
         }
+        public bool IsResearchInProgress()
+            => CurrentTechnologyResearchState == TechnologyResearchState.RESEARCHING ? true : false;
         private void InitializePopulation()
         {
 
+        }
+
+        public void QueueTechResearched(TechnologySO currentResearchInProgressTechnology)
+        {
+            Debug.Log("Congrats tech is researched! ");
         }
     }
 }

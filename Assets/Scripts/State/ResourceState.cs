@@ -1,4 +1,5 @@
 using SO;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 namespace State
@@ -108,6 +109,14 @@ namespace State
             foreach (var resource in ResourcesAmounts.Keys)
                 resourceStateSO.UpdateResourceRuntimeAmountsDictionary(resource, ResourcesAmounts[resource]);
             resourceStateSO.UpdateRuntimeResourceAmountsList();
+        }
+
+        public bool HasResourceAmount(ResourceSO resource, int amount)
+        {
+            if(ResourcesAmounts.ContainsKey(resource))
+                if(ResourcesAmounts[resource] >= amount)
+                    return true;
+            return false;
         }
     }
 }

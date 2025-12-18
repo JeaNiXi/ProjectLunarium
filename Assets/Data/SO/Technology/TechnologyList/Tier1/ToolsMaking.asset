@@ -19,4 +19,12 @@ MonoBehaviour:
   NextTech: []
   PreviousTech:
   - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
-  opensResources: []
+  OpensResources:
+  - {fileID: 11400000, guid: 109fe67aa07885446b81869f8686022b, type: 2}
+  ResearchRequirements:
+    TechnologiesRequiredToResearch:
+    - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
+    ResourceOneTimeCost:
+    - <Resource>k__BackingField: {fileID: 11400000, guid: ac34504bf884f8d49ad8487616b845c5, type: 2}
+      <Amount>k__BackingField: 120
+    ResourceDailyCost: []

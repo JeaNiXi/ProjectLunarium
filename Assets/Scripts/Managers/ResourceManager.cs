@@ -39,6 +39,8 @@ namespace Managers
         public void UpdateResourceUsage(int childAmount, int adultAmount, int elderAmount)
         {
             resourceState.UpdateResourceUsage(childAmount, adultAmount, elderAmount);
-        }    
+        }
+        public bool HasResourceAmount(ResourceSO resource, int amount)
+            => resourceState.HasResourceAmount(resource, amount);
     }
 }
