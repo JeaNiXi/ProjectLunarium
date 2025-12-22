@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Food
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
   ID: rFood
-  NameKey: nkFood
-  DescriptionKey: dkFood
+  <NameKey>k__BackingField: resource.food.name
+  <DescriptionKey>k__BackingField: resource.food.description
   AnimationSprites:
   - {fileID: 145885272568563908, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
   TechNeeded:
   - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
+  NameRU: 
+  DescriptionRU: 
+  NameEN: 
+  DescriptionEN: 

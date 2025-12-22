@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
   ID: rWater
-  NameKey: nkWater
-  DescriptionKey: dkWater
+  <NameKey>k__BackingField: resource.water.name
+  <DescriptionKey>k__BackingField: resource.water.description
   AnimationSprites:
   - {fileID: 4926131633840504183, guid: 786bda613287e76439e941764bdb25b3, type: 3}
   - {fileID: 8060041809488466418, guid: 786bda613287e76439e941764bdb25b3, type: 3}
@@ -22,3 +22,7 @@ MonoBehaviour:
   - {fileID: -8422885080058932615, guid: 786bda613287e76439e941764bdb25b3, type: 3}
   TechNeeded:
   - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
+  NameRU: "\u0412\u043E\u0434\u0438\u0447\u043A\u0430"
+  DescriptionRU: "\u0421\u0438\u043B\u0430 \u0432\u043E\u0434\u044B."
+  NameEN: 
+  DescriptionEN: 

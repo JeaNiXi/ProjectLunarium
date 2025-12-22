@@ -1,0 +1,36 @@
+{
+    "Entries": [
+        {
+            "Key": "",
+            "Value": ""
+        },
+        {
+            "Key": "",
+            "Value": ""
+        },
+        {
+            "Key": "resource.food.name",
+            "Value": ""
+        },
+        {
+            "Key": "resource.food.description",
+            "Value": ""
+        },
+        {
+            "Key": "resource.water.name",
+            "Value": ""
+        },
+        {
+            "Key": "resource.water.description",
+            "Value": ""
+        },
+        {
+            "Key": "resource.wood.name",
+            "Value": "Wood"
+        },
+        {
+            "Key": "resource.wood.description",
+            "Value": "Just Random Wood.\nTest.\nTest.\nTest.\nTest.\nTest.\nTest.\nTest End."
+        }
+    ]
+}

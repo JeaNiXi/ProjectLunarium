@@ -22,11 +22,13 @@ namespace UI
         private bool listUpdated;
         private bool isUpdating;
         private bool isSwitchingToPage;
-        private List<float> spriteTimers;
-        private List<int> spriteFrames;
+        private Dictionary<ResourceSO, float> spriteTimers;
+        private Dictionary<ResourceSO, int> spriteFrames;
         private float frameTime = 0f;
         private float globalFrameTime = 0.2f;
-        private Dictionary<int, VisualElement> visibleElements;
+        //private Dictionary<int, VisualElement> visibleElements;
+        private Dictionary<ResourceSO, VisualElement> visibleResourceElements;
+        //private Dictionary<int, ResourceSO> visibleResourceIndexes;
         private ResourceStateSO resourceStateSO;
         private TechnologyStateSO technologyStateSO;
         private WorkersStateSO workersStateSO;
@@ -43,7 +45,9 @@ namespace UI
             technologyStateSO = Resources.Load<TechnologyStateSO>("SO/TechnologyState");
             workersStateSO = Resources.Load<WorkersStateSO>("SO/WorkersState");
 
-            visibleElements = new Dictionary<int, VisualElement>();
+            //visibleElements = new Dictionary<int, VisualElement>();
+            visibleResourceElements = new Dictionary<ResourceSO, VisualElement>();
+            //visibleResourceIndexes = new Dictionary<int, ResourceSO>();
             InitializeData(this.data);
             InitializeListView();
         }
@@ -54,12 +58,12 @@ namespace UI
             foreach (var resource in data.AllResourcesList)
                 AllResourcesList.Add(resource);
             UpdateVisibleResources(data);
-            spriteTimers = new List<float>(AllResourcesList.Count);
-            spriteFrames = new List<int>(AllResourcesList.Count);
+            spriteTimers = new Dictionary<ResourceSO, float>();
+            spriteFrames = new Dictionary<ResourceSO, int>();
             for (int i = 0; i < AllResourcesList.Count; i++)
             {
-                spriteTimers.Add(0f);
-                spriteFrames.Add(0);
+                spriteTimers.Add(AllResourcesList[i], 0f);
+                spriteFrames.Add(AllResourcesList[i], 0);
             }
         }
         private void UpdateVisibleResources(ResourceManagerSO data)
@@ -73,7 +77,7 @@ namespace UI
                     Debug.Log($"Adding to Visible: {resource.ID}");
                 }
             }
-            if(GameManager.Instance.IsVisibleResourcesUpdateNeeded)
+            if (GameManager.Instance.IsVisibleResourcesUpdateNeeded)
                 GameManager.Instance.SetIsVisibleResourcesUpdateNeeded(false);
         }
         private void RefreshListView()
@@ -94,7 +98,15 @@ namespace UI
             };
             listView.bindItem = (element, index) =>
             {
-                visibleElements[index] = element;
+                var resource = VisibleResourcesList[index];
+                visibleResourceElements[resource] = element;
+                element.userData = resource;
+
+                //visibleElements[index] = element;
+                //visibleResourceIndexes[index] = VisibleResourcesList[index];
+                //private Dictionary<ResourceSO, VisualElement> visibleResourceElements;
+                //private Dictionary<int, ResourceSO> visibleResourceIndexes;
+
 
                 Label resourceNameLabel = element.Q<Label>("nameLabel");
                 Image resourceImage = element.Q<Image>("resourceImage");
@@ -102,8 +114,14 @@ namespace UI
                 Label currenWorkers = element.Q<Label>("currentWorkers");
                 Label currentAmount = element.Q<Label>("currentAmount");
 
-                resourceNameLabel.text = VisibleResourcesList[index].NameKey;
-                resourceImage.sprite = VisibleResourcesList[index].AnimationSprites[0];
+                resourceNameLabel.text = LocalizationManager.Instance.GetLocalizedResourceName(resource.NameKey);
+                resourceNameLabel.RegisterCallback<MouseEnterEvent>(evt
+                    => TooltipManager.Instance.Show(LocalizationManager.Instance.GetLocalizedResourceDescription(resource.DescriptionKey), evt.mousePosition));
+                resourceNameLabel.RegisterCallback<MouseMoveEvent>(evt
+                    => TooltipManager.Instance.Move(evt.mousePosition));
+                resourceNameLabel.RegisterCallback<MouseLeaveEvent>(evt
+                    => TooltipManager.Instance.Hide());
+                resourceImage.sprite = resource.AnimationSprites[0];
                 addWorkerButton.RegisterCallback<ClickEvent, ResourceSO>(OnAddWorkerButtonClicked, VisibleResourcesList[index]);
                 currenWorkers.text = workersStateSO.GetWorkersAmount(VisibleResourcesList[index]).ToString();
                 currentAmount.text = resourceStateSO.GetResourceAmount(VisibleResourcesList[index]).ToString();
@@ -112,8 +130,9 @@ namespace UI
             };
             listView.unbindItem = (element, index) =>
             {
-                if (visibleElements.ContainsKey(index))
-                    visibleElements.Remove(index);
+                if (element.userData is ResourceSO resource)
+                    visibleResourceElements.Remove(resource);
+                element.userData = null;
             };
         }
         private void OnAddWorkerButtonClicked(ClickEvent evt, ResourceSO resource)
@@ -138,7 +157,7 @@ namespace UI
         }
         private void UpdateUIResourceData()
         {
-            if (visibleElements == null || visibleElements.Count == 0)
+            if (visibleResourceElements == null || visibleResourceElements.Count == 0)
                 return;
             frameTime += Time.deltaTime;
             if (!isSwitchingToPage && frameTime < globalFrameTime)
@@ -149,14 +168,14 @@ namespace UI
                 UpdateVisibleResources(data);
                 RefreshListView();
             }
-            foreach (var kv in visibleElements)
+            foreach (var kv in visibleResourceElements)
             {
-                int index = kv.Key;
+                ResourceSO resource = kv.Key;
                 VisualElement element = kv.Value;
 
-                UpdateSprites(element, index);
-                UpdateAmounts(element, VisibleResourcesList[index]);
-                UpdateWorkersAmounts(element, VisibleResourcesList[index]);
+                UpdateSprites(element, resource);
+                UpdateAmounts(element, resource);
+                UpdateWorkersAmounts(element, resource);
 
                 frameTime = 0;
             }
@@ -164,19 +183,18 @@ namespace UI
                 isSwitchingToPage = false;
             isUpdating = false;
         }
-        private void UpdateSprites(VisualElement element, int index)
+        private void UpdateSprites(VisualElement element, ResourceSO resource)
         {
-            spriteFrames[index]++;
-            if (spriteFrames[index] >= VisibleResourcesList[index].AnimationSprites.Count)
-                spriteFrames[index] = 0;
-
-            var image = element.Q<Image>("resourceImage");
-            if (image != null)
-                image.sprite = VisibleResourcesList[index].AnimationSprites[spriteFrames[index]];
+            if (!spriteFrames.ContainsKey(resource))
+                spriteFrames[resource] = 0;
+            spriteFrames[resource]++;
+            if (spriteFrames[resource] >= resource.AnimationSprites.Count)
+                spriteFrames[resource] = 0;
+            element.Q<Image>("resourceImage").sprite = resource.AnimationSprites[spriteFrames[resource]];
         }
         private void UpdateAmounts(VisualElement element, ResourceSO resource)
         {
-            if (visibleElements == null || visibleElements.Count == 0)
+            if (visibleResourceElements == null || visibleResourceElements.Count == 0)
                 return;
             var amountLabel = element.Q<Label>("currentAmount");
             if (amountLabel != null)
@@ -184,7 +202,7 @@ namespace UI
         }
         private void UpdateWorkersAmounts(VisualElement element, ResourceSO resource)
         {
-            if (visibleElements == null || visibleElements.Count == 0)
+            if (visibleResourceElements == null || visibleResourceElements.Count == 0)
                 return;
             if (workersStateSO.currentWorkersAmountStateList.Count == 0)
                 return;

@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Fish
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
   ID: rFish
-  NameKey: nkFish
-  DescriptionKey: dkFish
+  <NameKey>k__BackingField: 
+  <DescriptionKey>k__BackingField: 
   AnimationSprites:
   - {fileID: 145885272568563908, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
   TechNeeded:
   - {fileID: 11400000, guid: fd75237c6d0827d45a0954e84a89b041, type: 2}
+  NameRU: "\u0420\u044B\u0431\u0430"
+  DescriptionRU: "\u041F\u0440\u043E\u0441\u0442\u043E \u0440\u044B\u0431\u0430,
+    \u0431\u0443\u043B\u044C."
+  NameEN: 
+  DescriptionEN: 

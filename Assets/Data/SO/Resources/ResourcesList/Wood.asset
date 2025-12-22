@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
   ID: rWood
-  NameKey: nkWood
-  DescriptionKey: dkWood
+  <NameKey>k__BackingField: resource.wood.name
+  <DescriptionKey>k__BackingField: resource.wood.description
   AnimationSprites:
   - {fileID: 145885272568563908, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
   - {fileID: -7066570445600034450, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
@@ -29,3 +29,23 @@ MonoBehaviour:
   - {fileID: -159541765, guid: f4c6dc0cec1757347a64e73865f2fd28, type: 3}
   TechNeeded:
   - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
+  NameRU: "\u0414\u0435\u0440\u0435\u0432\u043E"
+  DescriptionRU: "\u041E\u0431\u044B\u0447\u043D\u043E\u0435 \u0434\u0435\u0440\u0435\u0432\u043E,
+    \u0432\u0430\u043B\u044F\u044E\u0449\u0435\u0435\u0441\u044F \u0432\u0435\u0437\u0434\u0435."
+  NameEN: Wood
+  DescriptionEN: 'Just Random Wood.
+
+    Test.
+
+    Test.
+
+    Test.
+
+    Test.
+
+    Test.
+
+    Test.
+
+    Test
+    End.'
