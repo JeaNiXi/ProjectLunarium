@@ -1,3 +1,4 @@
+using Data;
 using SO;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace State
         private readonly float BaseElderFoodUsage = .8f;
         private readonly float BaseElderWaterUsage = .6f;
         private readonly float BaseElederWoodUsage = .6f;
+
         public ResourceState(ResourceManagerSO resourceManagerSO)
         {
             GathererFoodResource = resourceManagerSO.GathererFoodResource;
@@ -37,6 +39,8 @@ namespace State
             //InitializeResourceStateSO();
             InitializeRuntimeResourcesDictionary();
         }
+        public Dictionary<ResourceSO, int> GetResourceAmountsDictionary()
+            => ResourcesAmounts;
         public void InitializeRuntimeResourcesDictionary()
         {
             resourceStateSO.ClearRuntimeResourceAmountsDictionary();
@@ -79,7 +83,7 @@ namespace State
             var waterUsage = Mathf.RoundToInt(BaseChildWaterUsage * childAmount + BaseAdultWaterUsage * adultAmount + BaseElderWaterUsage * elderAmount);
             var woodUsage = Mathf.RoundToInt(BaseChildWoodUsage * childAmount + BaseAdultWoodUsage * adultAmount + BaseElederWoodUsage * elderAmount);
             RemoveResourceAmount(GathererFoodResource, foodUsage);
-            RemoveResourceAmount (GathererWaterResource, waterUsage);
+            RemoveResourceAmount(GathererWaterResource, waterUsage);
             RemoveResourceAmount(GathererWoodResource, woodUsage);
             Debug.Log($"Removing: " +
                 $"food: {foodUsage}, " +
@@ -110,11 +114,14 @@ namespace State
                 resourceStateSO.UpdateResourceRuntimeAmountsDictionary(resource, ResourcesAmounts[resource]);
             resourceStateSO.UpdateRuntimeResourceAmountsList();
         }
-
+        public void ClearResourceAmounts()
+            => ResourcesAmounts.Clear();
+        public void UpdateResourceAmountsFromSaveData(Dictionary<ResourceSO, int> resourcesAmountsDictionary)
+            => ResourcesAmounts = resourcesAmountsDictionary;
         public bool HasResourceAmount(ResourceSO resource, int amount)
         {
-            if(ResourcesAmounts.ContainsKey(resource))
-                if(ResourcesAmounts[resource] >= amount)
+            if (ResourcesAmounts.ContainsKey(resource))
+                if (ResourcesAmounts[resource] >= amount)
                     return true;
             return false;
         }
