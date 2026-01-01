@@ -2,6 +2,7 @@ using Managers;
 using UnityEngine;
 namespace Initialization
 {
+    // HAPPY NEW YEAR 2026
     public class OnGameInit : MonoBehaviour
     {
         public bool PlayGIF;
