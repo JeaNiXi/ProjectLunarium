@@ -16,14 +16,17 @@ namespace UI
         private VisualElement CurrentPage;
         private string CurrentPageName;
         private IUIPageController CurrentController;
+        [SerializeField] private VisualTreeAsset mainMenuMainAsset;
         [SerializeField] private VisualTreeAsset populationMainAsset;
         [SerializeField] private VisualTreeAsset resourcesMainAsset;
         [SerializeField] private VisualTreeAsset technologyMainAsset;
         [SerializeField] private VisualTreeAsset workersMainAsset;
+        [SerializeField] private MainMenuManagerSO mainMenuManagerSO;
         [SerializeField] private PopulationManagerSO populationManagerSO;
         [SerializeField] private ResourceManagerSO resourceManagerSO;
         [SerializeField] private TechnologyManagerSO technologyManagerSO;
         [SerializeField] private WorkersManagerSO workersManagerSO;
+        private Button categoryMainMenuButton;
         private Button categoryPopulationButton;
         private Button categoryResourcesButton;
         private Button categoryTechnologyButton;
@@ -57,6 +60,7 @@ namespace UI
         }
         private void InitializePagesDictionaries()
         {
+            CachePage("mainMenu", mainMenuMainAsset, new UIMainManuPageController(), mainMenuManagerSO);
             CachePage("population", populationMainAsset, new UIPopulationPageController(), populationManagerSO);
             CachePage("resources", resourcesMainAsset, new UIResourcePageController(), resourceManagerSO);
             CachePage("technologies", technologyMainAsset, new UITechnologyPageController(), technologyManagerSO);
@@ -82,6 +86,7 @@ namespace UI
         }
         private void InitializeButtons()
         {
+            categoryMainMenuButton = RootVE.Q<Button>("menuButton");
             categoryPopulationButton = RootVE.Q<Button>("populationButton");
             categoryResourcesButton = RootVE.Q<Button>("resourcesButton");
             categoryTechnologyButton = RootVE.Q<Button>("technologyButton");
@@ -89,6 +94,7 @@ namespace UI
         }
         private void InitializeButtonEvents()
         {
+            categoryMainMenuButton.clicked += () => ShowPage("mainMenu");
             categoryPopulationButton.clicked += () => ShowPage("population");
             categoryResourcesButton.clicked += () => ShowPage("resources");
             categoryTechnologyButton.clicked += () => ShowPage("technologies");
@@ -113,6 +119,8 @@ namespace UI
         }
         private void OnDestroy()
         {
+            if (categoryMainMenuButton != null)
+                categoryMainMenuButton.clicked -= () => ShowPage("mainMenu");
             if (categoryPopulationButton != null)
                 categoryPopulationButton.clicked -= () => ShowPage("population");
             if (categoryResourcesButton != null)

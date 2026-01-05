@@ -20,6 +20,18 @@ namespace State
                 $"Elders: {populationAgedistribution.GetElderPopulationAmount()}.");
             InitializePopulationStateSO();
         }
+        public enum RaceType
+        {
+            Human,
+            Elf,
+            Dwarf
+        }
+        public enum PopulationType
+        {
+            Children,
+            Adults,
+            Elders
+        }
         public int CurrentPopulation { get { return currentPopulation; } private set { } }
         public void AddPopulation(int population) => currentPopulation += population;
         private void InitializePopulationStateSO() => populationStateSO.SetCurrentPopulation(currentPopulation);
@@ -49,5 +61,17 @@ namespace State
         public int GetChildPopulationAmount() => childPopulation;
         public int GetAdultPopulationAmount() => adultPopulation;
         public int GetElderPopulationAmount() => elderPopulation;
+    }
+    public class RaceRow
+    {
+        public PopulationState.RaceType Race;
+        public ulong Population;
+        public float Happiness;
+        public ulong ChildrenAmount;
+        public ulong AdultsAmount;
+        public ulong EldersAmount;
+        public ulong ActivePopulationAmount;
+        public ulong DependablePopulationAmount;
+        public string Modifiers;
     }
 }

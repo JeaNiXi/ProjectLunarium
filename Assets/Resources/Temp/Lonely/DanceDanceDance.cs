@@ -5,8 +5,10 @@ using UnityEngine;
 public class DanceDanceDance : MonoBehaviour
 {
     public bool isDanceTime;
+    public bool isVictoriaTime;
     public AudioSource audioSource;
     public AudioClip[] clips;
+    public AudioClip[] victoriaSounds;
     public SpriteRenderer sRenderer;
     public SpriteRenderer[] lonelySprites;
     public float lonelyTime;
@@ -18,6 +20,11 @@ public class DanceDanceDance : MonoBehaviour
         {
             var danceInt = Random.Range(0,clips.Length);
             audioSource.PlayOneShot(clips[danceInt]);
+        }
+        if(isVictoriaTime)
+        {
+            var victoriaInt = Random.Range(0,clips.Length);
+            audioSource.PlayOneShot(victoriaSounds[victoriaInt]);
         }
         StartCoroutine(startSprite());
         StartCoroutine(startLanelySprites(lonelyTime));

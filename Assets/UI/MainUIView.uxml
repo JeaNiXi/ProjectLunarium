@@ -4,10 +4,11 @@
         <ui:VisualElement style="flex-basis: 80%; flex-direction: row;">
             <ui:VisualElement style="flex-basis: 10%;">
                 <ui:VisualElement style="flex-grow: 1;">
-                    <ui:Button text="&#1053;&#1072;&#1089;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077;" name="populationButton"/>
-                    <ui:Button text="&#1056;&#1077;&#1089;&#1091;&#1088;&#1089;&#1099;" name="resourcesButton"/>
-                    <ui:Button text="&#1058;&#1077;&#1093;&#1085;&#1086;&#1083;&#1086;&#1075;&#1080;&#1080;" name="technologyButton"/>
-                    <ui:Button text="&#1056;&#1072;&#1073;&#1086;&#1095;&#1080;&#1077;" name="workersButton"/>
+                    <ui:Button text="menuBNK" name="menuButton"/>
+                    <ui:Button text="popsBNK" name="populationButton"/>
+                    <ui:Button text="ResBNK" name="resourcesButton"/>
+                    <ui:Button text="techBNK" name="technologyButton"/>
+                    <ui:Button text="workersBNK" name="workersButton"/>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="mainView" style="flex-basis: 75%;"/>

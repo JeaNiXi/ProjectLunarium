@@ -7,7 +7,7 @@ namespace Managers
     {
         public static WorkersManager Instance;
         public WorkersManagerSO WorkersManagerSO;
-        WorkersState workersState;
+        WorkersState WorkersState;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -21,9 +21,9 @@ namespace Managers
         }
         private void InitializeWorkersState()
         {
-            workersState = new WorkersState(WorkersManagerSO);
+            WorkersState = new WorkersState(WorkersManagerSO);
         }
-        public void AddWorkerToResource(ResourceSO resource) => workersState.AddWorkerToResource(resource);
-        public void UpdateWorkersAmount(int workingPopulation) => workersState.InitializeWorkerTypesFromWorkerPopulation(workingPopulation);
+        public void AddWorkerToResource(ResourceSO resource) => WorkersState.AddWorkerToResource(resource);
+        public void UpdateWorkersAmount(int workingPopulation) => WorkersState.InitializeWorkerTypesFromWorkerPopulation(workingPopulation);
     }
 }

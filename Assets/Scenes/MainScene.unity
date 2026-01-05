@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &35808921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 35808923}
+  - component: {fileID: 35808922}
+  m_Layer: 0
+  m_Name: MainMenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &35808922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35808921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1feba40efca9afe4b9e60648eb493f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.MainMenuManager
+--- !u!4 &35808923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35808921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &138836526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,11 +1455,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac967096491f404892e837a08926ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceDanceDance
-  isDanceTime: 1
+  isDanceTime: 0
+  isVictoriaTime: 1
   audioSource: {fileID: 1331742183}
   clips:
   - {fileID: 8300000, guid: 58b37bac6b8d01443ac4cac0de34d43b, type: 3}
   - {fileID: 8300000, guid: 55a49d893eb89244d93bf015e0489af4, type: 3}
+  victoriaSounds:
+  - {fileID: 8300000, guid: 2d5171476ff599a46b8ffd5a17f4db00, type: 3}
+  - {fileID: 8300000, guid: 1a05c0feb1ae759409fda90a79d90d8a, type: 3}
   sRenderer: {fileID: 734722438}
   lonelySprites:
   - {fileID: 291338221}
@@ -2019,10 +2067,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.UIManager
   MainUIDocument: {fileID: 662766995}
+  mainMenuMainAsset: {fileID: 9197481963319205126, guid: 207f11153c30fb34ea8e270ff5858da4, type: 3}
   populationMainAsset: {fileID: 9197481963319205126, guid: 43c92a6e972b17e4099d23d7a4d6bd33, type: 3}
   resourcesMainAsset: {fileID: 9197481963319205126, guid: d325fbf4f170a034ea9c414ff267d3a3, type: 3}
   technologyMainAsset: {fileID: 9197481963319205126, guid: bef2e4f277b693949834162eccd169ba, type: 3}
   workersMainAsset: {fileID: 9197481963319205126, guid: b0ad84512c7981f419a3b5c9ddf93400, type: 3}
+  mainMenuManagerSO: {fileID: 11400000, guid: 29af17c4818f94e40bd2b76ec13eb643, type: 2}
   populationManagerSO: {fileID: 11400000, guid: 11d023d4b20a73d4a91f65dcfba98edf, type: 2}
   resourceManagerSO: {fileID: 11400000, guid: 7f188bce8d522644ca39f6d847123ac9, type: 2}
   technologyManagerSO: {fileID: 11400000, guid: 893084ea2791fce479eb9b835eda496b, type: 2}
@@ -2191,10 +2241,11 @@ SceneRoots:
   - {fileID: 2080695634}
   - {fileID: 979607009}
   - {fileID: 691069412}
+  - {fileID: 35808923}
+  - {fileID: 834654569}
   - {fileID: 1961297786}
   - {fileID: 1348775185}
   - {fileID: 191522286}
-  - {fileID: 834654569}
   - {fileID: 1804471871}
   - {fileID: 1331742181}
   - {fileID: 734722439}

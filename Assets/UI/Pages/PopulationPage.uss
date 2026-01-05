@@ -1,0 +1,186 @@
+:root {
+}
+
+.race-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.population-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.happiness-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-population-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.dependable-population-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.children-population-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.adult-population-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.elder-population-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.modifiers-cell {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.race-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.population-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.happiness-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.active-population-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.dependable-population-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.children-population-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.adult-population-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.elder-population-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.modifiers-cell-label {
+    -unity-text-align: middle-center;
+}
+
+.good {
+    color: rgb(120, 220, 120);
+}
+
+.bad {
+    color: rgb(220, 120, 120);
+}
+
+.race-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.population-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.happiness-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.active-population-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.dependable-population-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.children-population-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.adult-population-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.elder-population-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.modifiers-header{
+    justify-content: center;
+    align-items: center;
+}
+
+.race-header-label{
+    -unity-text-align: middle-center;
+}
+
+.population-header-label{
+    -unity-text-align: middle-center;
+}
+
+.happiness-header-label{
+    -unity-text-align: middle-center;
+}
+
+.active-population-header-label{
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.dependable-population-header-label{
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.children-population-header-label{
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.adult-population-header-label{
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.elder-population-header-label{
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.modifiers-header-label{
+    -unity-text-align: middle-center;
+}

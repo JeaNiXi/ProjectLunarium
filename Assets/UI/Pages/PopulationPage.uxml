@@ -1,6 +1,22 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; background-color: rgb(197, 98, 98);">
-        <ui:Label text="&#1058;&#1077;&#1082;&#1091;&#1097;&#1077;&#1077; &#1053;&#1072;&#1089;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077;"/>
-        <ui:Label text="Label" name="currentPopulation"/>
+    <Style src="project://database/Assets/UI/Pages/PopulationPage.uss?fileID=7433441132597879392&amp;guid=843d8bd37480ad3468a82d81503cff75&amp;type=3#PopulationPage"/>
+    <ui:VisualElement name="" style="flex-grow: 1; flex-direction: row; background-color: rgb(255, 255, 255);">
+        <ui:VisualElement style="flex-basis: 29%;">
+            <ui:VisualElement name="upperInfoVE" style="flex-basis: 30%;">
+                <ui:VisualElement name="currentPopulationVE" style="flex-grow: 1;">
+                    <ui:Label text="&#1058;&#1077;&#1082;&#1091;&#1097;&#1077;&#1077; &#1053;&#1072;&#1089;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077;" name="currentPopulationNKLabel"/>
+                    <ui:Label text="Label" name="currentPopulation"/>
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="" style="flex-basis: 70%;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="mainBorder" style="flex-basis: 2%; color: rgba(27, 27, 27, 0);"/>
+        <ui:VisualElement style="flex-basis: 69%;">
+            <ui:VisualElement name="populationRaceHeaderVE" style="flex-basis: 30%;"/>
+            <ui:VisualElement name="populationRaceListVE" style="flex-basis: 70%;">
+                <ui:MultiColumnListView columns="" sort-column-descriptions="" name="RacesMCLV"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
