@@ -1,4 +1,5 @@
 using Data;
+using Mono.Cecil;
 using SO;
 using System;
 using System.Collections.Generic;
@@ -101,10 +102,7 @@ namespace State
         public void AddResourceAmount(ResourceSO resource, int amount)
         {
             if (ResourcesAmounts.ContainsKey(resource))
-            {
                 ResourcesAmounts[resource] += amount;
-                OnResourceAmountChanged?.Invoke(resource, ResourcesAmounts[resource]);
-            }
         }
         public void RemoveResourceAmount(ResourceSO resource, int amount)
         {
@@ -116,9 +114,14 @@ namespace State
         public void UpdateResourceState()
         {
             foreach (var resource in ResourcesAmounts.Keys)
+            {
                 resourceStateSO.UpdateResourceRuntimeAmountsDictionary(resource, ResourcesAmounts[resource]);
+                UpdateLedgerResource(resource);
+            }
             resourceStateSO.UpdateRuntimeResourceAmountsList();
         }
+        public void UpdateLedgerResource(ResourceSO resource)
+            => OnResourceAmountChanged?.Invoke(resource, ResourcesAmounts[resource]);
         public void ClearResourceAmounts()
             => ResourcesAmounts.Clear();
         public void UpdateResourceAmountsFromSaveData(Dictionary<ResourceSO, int> resourcesAmountsDictionary)
