@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement style="flex-basis: 20%;"/>
-        <ui:VisualElement style="flex-basis: 80%; flex-direction: row;">
+        <ui:VisualElement style="flex-basis: 70%; flex-direction: row;">
             <ui:VisualElement style="flex-basis: 10%;">
                 <ui:VisualElement style="flex-grow: 1;">
                     <ui:Button text="menuBNK" name="menuButton"/>
@@ -12,7 +12,10 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="mainView" style="flex-basis: 75%;"/>
-            <ui:VisualElement style="flex-basis: 15%;"/>
+            <ui:VisualElement style="flex-basis: 15%;">
+                <ui:VisualElement name="ledgerVE" style="flex-grow: 1;"/>
+            </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement style="flex-basis: 10%;"/>
     </ui:VisualElement>
 </ui:UXML>

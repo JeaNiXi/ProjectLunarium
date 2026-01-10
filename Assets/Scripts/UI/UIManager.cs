@@ -1,3 +1,4 @@
+using Managers;
 using SO;
 using System.Collections.Generic;
 using System.Resources;
@@ -10,22 +11,27 @@ namespace UI
     {
         public static UIManager Instance { get; private set; }
         public UIDocument MainUIDocument;
-
+        public ResourceSO testResource;
         private VisualElement RootVE;
         private VisualElement MainView;
         private VisualElement CurrentPage;
+        private VisualElement LedgerVE;
         private string CurrentPageName;
         private IUIPageController CurrentController;
+        [Header("Page Assets")]
         [SerializeField] private VisualTreeAsset mainMenuMainAsset;
         [SerializeField] private VisualTreeAsset populationMainAsset;
         [SerializeField] private VisualTreeAsset resourcesMainAsset;
         [SerializeField] private VisualTreeAsset technologyMainAsset;
         [SerializeField] private VisualTreeAsset workersMainAsset;
+        [Header("Manager Scriptable Objects")]
         [SerializeField] private MainMenuManagerSO mainMenuManagerSO;
         [SerializeField] private PopulationManagerSO populationManagerSO;
         [SerializeField] private ResourceManagerSO resourceManagerSO;
         [SerializeField] private TechnologyManagerSO technologyManagerSO;
         [SerializeField] private WorkersManagerSO workersManagerSO;
+        [Header("Ledger Assets")]
+        [SerializeField] private VisualTreeAsset ledgerResourceAsset;
         private Button categoryMainMenuButton;
         private Button categoryPopulationButton;
         private Button categoryResourcesButton;
@@ -33,6 +39,8 @@ namespace UI
         private Button categoryWorkersButton;
         private Dictionary<string, VisualElement> cachedPages;
         private Dictionary<string, IUIPageController> cachedIUIPageControllers;
+        private LedgerManager ledgerManager;
+        private HashSet<ResourceSO> ledgerResources;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -44,14 +52,18 @@ namespace UI
             }
             RootVE = MainUIDocument.rootVisualElement;
             MainView = RootVE.Q<VisualElement>("mainView");
+            LedgerVE = RootVE.Q<VisualElement>("ledgerVE");
             cachedPages = new Dictionary<string, VisualElement>();
             cachedIUIPageControllers = new Dictionary<string, IUIPageController>();
+            ledgerManager = new LedgerManager(LedgerVE);
+            ledgerResources = new HashSet<ResourceSO>();
         }
         private void Start()
         {
             InitializePagesDictionaries();
             InitializeButtons();
             InitializeButtonEvents();
+            AddLedgerElement(testResource);
         }
         private void FixedUpdate()
         {
@@ -117,6 +129,34 @@ namespace UI
                 Debug.Log("Showing Page: " + CurrentPageName);
             }
         }
+        public void AddLedgerElement(ResourceSO resource)
+        {
+            ledgerManager.AddOrUpdate(new LedgerViewDescriptor
+            {
+                ID = resource.ID,
+                Type = LedgerManager.LedgerEntryType.Resource,
+                Asset = ledgerResourceAsset,
+                Bind = ve =>
+                {
+                    ve.Q<Label>("titleLabel").text = resource.NameEN;
+                    ve.Q<Label>("valueLabel").text = Managers.ResourceManager.Instance.GetResourceAmount(resource).ToString();
+                    ve.Q<Label>("extraLabel").text = resource.ID;
+                }
+            });
+            ObserveResource(resource);
+        }
+        private void ObserveResource(ResourceSO resource)
+        {
+            if (ledgerResources.Contains(resource))
+                return;
+            ledgerResources.Add(resource);
+            Managers.ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged += OnObservedResourceAmountChanged;
+        }
+        private void OnObservedResourceAmountChanged(ResourceSO resource, int newAmount)
+        {
+            if (!ledgerResources.Contains(resource)) return;
+            AddLedgerElement(resource);
+        }
         private void OnDestroy()
         {
             if (categoryMainMenuButton != null)
@@ -129,6 +169,8 @@ namespace UI
                 categoryTechnologyButton.clicked -= () => ShowPage("technologies");
             if (categoryWorkersButton != null)
                 categoryWorkersButton.clicked -= () => ShowPage("workers");
+            if (ledgerResources != null)
+                Managers.ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged -= OnObservedResourceAmountChanged;
         }
     }
 }

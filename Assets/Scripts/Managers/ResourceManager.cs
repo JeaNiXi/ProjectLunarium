@@ -1,6 +1,7 @@
 using Data;
 using SO;
 using State;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,6 +38,8 @@ namespace Managers
                 ResourceIDs.Add(resource.ID, resource);
             AllResourcesList = allResources;
         }
+        public ResourceState GetCurrentResourceState()
+            => CurrentResourceState;
         public void InitializeStartingResourcesState() => CurrentResourceState = new ResourceState(ResourceManagerSO);
         public List<ResourceSO> GetAllResourcesList() => ResourceManagerSO.AllResourcesList;
         public void OnGlobalTick(TimeState timeState)
@@ -60,7 +63,8 @@ namespace Managers
             => CurrentResourceState.GetResourceAmountsDictionary();
         public bool HasResourceAmount(ResourceSO resource, int amount)
             => CurrentResourceState.HasResourceAmount(resource, amount);
-
+        public int GetResourceAmount(ResourceSO resource)
+            => CurrentResourceState.GetResourceAmount(resource);
         public object SaveState()
         {
             var data = new ResourceSaveData()

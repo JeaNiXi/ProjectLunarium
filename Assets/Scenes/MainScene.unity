@@ -1456,7 +1456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceDanceDance
   isDanceTime: 0
-  isVictoriaTime: 1
+  isVictoriaTime: 0
   audioSource: {fileID: 1331742183}
   clips:
   - {fileID: 8300000, guid: 58b37bac6b8d01443ac4cac0de34d43b, type: 3}
@@ -1474,7 +1474,7 @@ MonoBehaviour:
   - {fileID: 663330736}
   - {fileID: 1565718438}
   - {fileID: 756311117}
-  lonelyTime: 11
+  lonelyTime: 10.8
 --- !u!82 &1331742183
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2067,6 +2067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.UIManager
   MainUIDocument: {fileID: 662766995}
+  testResource: {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
   mainMenuMainAsset: {fileID: 9197481963319205126, guid: 207f11153c30fb34ea8e270ff5858da4, type: 3}
   populationMainAsset: {fileID: 9197481963319205126, guid: 43c92a6e972b17e4099d23d7a4d6bd33, type: 3}
   resourcesMainAsset: {fileID: 9197481963319205126, guid: d325fbf4f170a034ea9c414ff267d3a3, type: 3}
@@ -2077,6 +2078,7 @@ MonoBehaviour:
   resourceManagerSO: {fileID: 11400000, guid: 7f188bce8d522644ca39f6d847123ac9, type: 2}
   technologyManagerSO: {fileID: 11400000, guid: 893084ea2791fce479eb9b835eda496b, type: 2}
   workersManagerSO: {fileID: 11400000, guid: 6352c66a55ffb27448fcb0d57a7b5d07, type: 2}
+  ledgerResourceAsset: {fileID: 9197481963319205126, guid: 2a55a13fc585da640a150fc445b4ca02, type: 3}
 --- !u!4 &1804471871
 Transform:
   m_ObjectHideFlags: 0

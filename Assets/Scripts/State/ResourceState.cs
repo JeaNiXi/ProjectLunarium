@@ -7,6 +7,8 @@ namespace State
 {
     public class ResourceState
     {
+        public event Action<ResourceSO, int> OnResourceAmountChanged;
+
         private ResourceStateSO resourceStateSO;
         private Dictionary<ResourceSO, int> ResourcesAmounts = new Dictionary<ResourceSO, int>();
 
@@ -99,14 +101,17 @@ namespace State
         public void AddResourceAmount(ResourceSO resource, int amount)
         {
             if (ResourcesAmounts.ContainsKey(resource))
+            {
                 ResourcesAmounts[resource] += amount;
+                OnResourceAmountChanged?.Invoke(resource, ResourcesAmounts[resource]);
+            }
         }
         public void RemoveResourceAmount(ResourceSO resource, int amount)
         {
             if (ResourcesAmounts.ContainsKey(resource))
                 ResourcesAmounts[resource] -= amount;
         }
-        private int GetResourceAmount(ResourceSO resource)
+        public int GetResourceAmount(ResourceSO resource)
                     => ResourcesAmounts.TryGetValue(resource, out var amount) ? amount : 0;
         public void UpdateResourceState()
         {

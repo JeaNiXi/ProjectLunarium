@@ -6,7 +6,8 @@
                     <ui:Button text="&#1048;&#1082;&#1086;&#1085;&#1082;&#1072;" name="buttonIcon" style="flex-grow: 1;"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="rightLVE" style="flex-basis: 70%;">
-                    <ui:VisualElement name="nameVE" style="flex-basis: 40%;">
+                    <ui:VisualElement name="nameVE" style="flex-basis: 40%; flex-direction: row;">
+                        <ui:Button text="Pin" name="pinButton"/>
                         <ui:Label text="&#1053;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077;" name="nameLabel" style="font-size: 22px; -unity-text-align: middle-center;"/>
                     </ui:VisualElement>
                     <ui:VisualElement name="animationVE" style="flex-basis: 60%;">
