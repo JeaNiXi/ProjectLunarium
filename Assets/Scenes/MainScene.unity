@@ -1455,7 +1455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac967096491f404892e837a08926ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceDanceDance
-  isDanceTime: 0
+  isDanceTime: 1
   isVictoriaTime: 0
   audioSource: {fileID: 1331742183}
   clips:

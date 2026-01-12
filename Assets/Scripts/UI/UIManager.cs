@@ -1,5 +1,6 @@
 using Managers;
 using SO;
+using State;
 using System.Collections.Generic;
 using System.Resources;
 using Unity.VisualScripting;
@@ -9,6 +10,65 @@ namespace UI
 {
     public class UIManager : MonoBehaviour
     {
+        //  ¬ременные параметры.
+        #region TempParameters
+        public List<TechnologySO> ResearchedStartingTech;
+        #endregion
+
+
+
+
+
+        #region Initialization
+        /*  
+         *  »спользуетс€ дл€ инициализации основного меню при первом запуске игры.
+         *  «десь можно уже выбирать начинать новую игру, заходить в настройки, загружать игру, выходить из игры как через обычное меню.  
+         */
+        public void InitializeMainMenu() // —ейчас пропускаем инициализацию и обращаемс€ напр€мую к основному гейм менеджеру дл€ старта игры.
+        {
+            var TempGameState = new GameDataState(
+                new GameData(
+                    GameManager.Instance.GameVersion),
+                new KingdomStateData(
+                    "TempKingdom"),
+                new TechnologyStateData(
+                    ResearchedStartingTech));
+            GameManager.Instance.StartGame(TempGameState); // ¬ будущем надо убрать, игрок должен либо выбирать загрузку состо€ни€ из файла, либо создавать новую игру. 
+            //  ¬ любом случае создаЄтс€ файл GameState который несЄт в себе всю информацию о игре (новой с параметрами, или сохранени€ из параметров).
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static UIManager Instance { get; private set; }
         public UIDocument MainUIDocument;
         public ResourceSO testResource;

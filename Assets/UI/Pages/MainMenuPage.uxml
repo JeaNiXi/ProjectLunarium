@@ -10,10 +10,14 @@
                 <ui:Button text="infoBNK" name="infoButton"/>
                 <ui:Button text="exitBNK" name="exitButton"/>
             </ui:VisualElement>
-            <ui:VisualElement style="flex-grow: 0; flex-basis: 30%;"/>
+            <ui:VisualElement style="flex-grow: 0; flex-basis: 30%;">
+                <ui:Image source="project://database/Assets/Resources/Temp/burnice/frame_08_delay-0.07s.png?fileID=8228343941936815069&amp;guid=2934f901bed42d5479277398f6e3a273&amp;type=3#frame_08_delay-0.07s_0"/>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1; justify-content: center;">
-            <ui:Image source="project://database/Assets/Resources/Temp/burnice/frame_08_delay-0.07s.png?fileID=8228343941936815069&amp;guid=2934f901bed42d5479277398f6e3a273&amp;type=3#frame_08_delay-0.07s_0"/>
+            <ui:VisualElement style="flex-basis: 10%;"/>
+            <ui:VisualElement style="flex-basis: 80%;"/>
+            <ui:VisualElement style="flex-basis: 10%;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -7,6 +7,56 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+        public readonly string GameVersion = "0.1";
+        #region GameInitializations
+        /*
+         *  »спользуем дл€ начала новой игры или загрузки игры.
+         */
+        public void StartGame(GameDataState gameState)
+        {
+            SetGameState(GameState.RUNNING);
+            EnableTickPossibility();
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static GameManager Instance { get; private set; }
         public enum GameState
         {
