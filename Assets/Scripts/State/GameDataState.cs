@@ -23,7 +23,7 @@ namespace State
     }
     public class GameData
     {
-        public string GameVersion;
+        public string GameVersion { get; private set; }
         public GameData(string gameVersion)
         {
             GameVersion = gameVersion;
@@ -31,7 +31,7 @@ namespace State
     }
     public class KingdomStateData
     {
-        public string KingdomName;
+        public string KingdomName { get; private set; }
         public KingdomStateData(string kingdomName)
         {
             KingdomName = kingdomName;
@@ -39,7 +39,7 @@ namespace State
     }
     public class TechnologyStateData
     {
-        public List<TechnologySO> ResearchedTechnologies;
+        public List<TechnologySO> ResearchedTechnologies { get; private set; }
         public TechnologyStateData(List<TechnologySO> technologiesList)
         {
             ResearchedTechnologies = technologiesList;

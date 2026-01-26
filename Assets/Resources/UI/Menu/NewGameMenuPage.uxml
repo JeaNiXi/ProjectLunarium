@@ -1,0 +1,15 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="leftVE" style="flex-basis: 10%;"/>
+        <ui:VisualElement name="centerVE" style="flex-basis: 80%;">
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:VisualElement name="header" style="flex-basis: 10%;"/>
+                <ui:VisualElement name="body" style="flex-basis: 80%;">
+                    <ui:Label text="test"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="lower" style="flex-basis: 10%;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="rightVE" style="flex-basis: 10%;"/>
+    </ui:VisualElement>
+</ui:UXML>

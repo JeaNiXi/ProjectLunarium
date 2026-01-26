@@ -12,6 +12,11 @@ namespace Managers
         /*
          *  »спользуем дл€ начала новой игры или загрузки игры.
          */
+        public void StartGame()
+        {
+            SetGameState(GameState.RUNNING);
+            EnableTickPossibility();
+        }
         public void StartGame(GameDataState gameState)
         {
             SetGameState(GameState.RUNNING);

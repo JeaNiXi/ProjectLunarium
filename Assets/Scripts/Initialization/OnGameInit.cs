@@ -12,7 +12,8 @@ namespace Initialization
         public void Start()
         {
             Debug.Log("Started Game Initialization!");
-            UIManager.Instance.InitializeMainMenu();
+            UIManager.Instance.InitializeUI();
+            GameManager.Instance.StartGame(); // Temp
         }
         //public void Start()
         //{
