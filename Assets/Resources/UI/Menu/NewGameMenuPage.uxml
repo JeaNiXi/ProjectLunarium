@@ -1,13 +1,38 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="leftVE" style="flex-basis: 10%;"/>
-        <ui:VisualElement name="centerVE" style="flex-basis: 80%;">
+        <ui:VisualElement name="centerVE" style="flex-basis: 80%; background-color: rgb(255, 255, 255);">
             <ui:VisualElement style="flex-grow: 1;">
-                <ui:VisualElement name="header" style="flex-basis: 10%;"/>
-                <ui:VisualElement name="body" style="flex-basis: 80%;">
-                    <ui:Label text="test"/>
+                <ui:VisualElement name="header" style="flex-basis: 10%;">
+                    <ui:Label text="&#1057;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; &#1053;&#1086;&#1074;&#1086;&#1081; &#1048;&#1075;&#1088;&#1099;:"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="lower" style="flex-basis: 10%;"/>
+                <ui:VisualElement name="body" style="flex-basis: 80%;">
+                    <ui:VisualElement name="page1VE" style="flex-grow: 1; display: none;">
+                        <ui:Label text="&#1053;&#1072;&#1076;&#1077;&#1077;&#1084;&#1089;&#1103; &#1079;&#1076;&#1077;&#1089;&#1100; &#1073;&#1091;&#1076;&#1091;&#1090; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1085;&#1086;&#1074;&#1086;&#1081; &#1080;&#1075;&#1088;&#1099;, &#1085;&#1086; &#1087;&#1086;&#1082;&#1072; &#1095;&#1090;&#1086; &#1087;&#1088;&#1086;&#1089;&#1090;&#1086; &#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1076;&#1072;&#1083;&#1077;&#1077; :D" style="font-size: 26px; white-space: pre-wrap;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="page2VE" style="flex-grow: 1; display: none;">
+                        <ui:Label text="&#1057;&#1077;&#1081;&#1095;&#1072;&#1089; &#1073;&#1091;&#1076;&#1077;&#1090; &#1079;&#1072;&#1087;&#1091;&#1097;&#1077;&#1085;&#1072; &#1089;&#1090;&#1072;&#1085;&#1076;&#1072;&#1088;&#1090;&#1085;&#1072;&#1103; &#1085;&#1086;&#1074;&#1072;&#1103; &#1080;&#1075;&#1088;&#1072; &#1085;&#1072; 30 &#1078;&#1080;&#1090;&#1077;&#1083;&#1077;&#1081; &#1083;&#1102;&#1076;&#1077;&#1081; &#1080; &#1089;&#1090;&#1072;&#1085;&#1076;&#1072;&#1088;&#1090;&#1085;&#1086;&#1081; &#1090;&#1077;&#1093;&#1085;&#1086;&#1083;&#1086;&#1075;&#1080;&#1077;&#1081;. &#1069;&#1090;&#1086; &#1089;&#1076;&#1077;&#1083;&#1072;&#1085;&#1086; &#1076;&#1083;&#1103; &#1087;&#1086;&#1074;&#1077;&#1088;&#1082;&#1080;. &#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1057;&#1090;&#1072;&#1088;&#1090;" style="font-size: 30px; white-space: pre-wrap;"/>
+                        <ui:Toggle label="&#1043;&#1072;&#1083;&#1086;&#1095;&#1082;&#1072; &#1095;&#1090;&#1086;&#1073;&#1099; &#1087;&#1088;&#1086;&#1076;&#1086;&#1083;&#1078;&#1080;&#1090;&#1100;:" name="AcceptToggle"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="lower" style="flex-basis: 10%;">
+                    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                        <ui:VisualElement style="flex-basis: 20%;">
+                            <ui:Button text="&#1053;&#1072;&#1079;&#1072;&#1076;" name="newGameBackButtonPage"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-basis: 60%;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:VisualElement style="flex-grow: 1;"/>
+                                <ui:VisualElement style="flex-grow: 1;">
+                                    <ui:Button text="Start" name="newGameStartButtonPage"/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-basis: 20%;">
+                            <ui:Button text="&#1044;&#1072;&#1083;&#1077;&#1077;" name="newGameNextButtonPage"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="rightVE" style="flex-basis: 10%;"/>
