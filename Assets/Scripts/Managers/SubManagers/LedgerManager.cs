@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine.UIElements;
 namespace Managers
 {
+    /*
+     *  Класс используется как менеджер панели боковой информации (Ledger)
+     */
     public class LedgerManager
     {
-        private readonly VisualElement root; //Readonly
-        private readonly Dictionary<string, VisualElement> elements; //Func
+        private readonly VisualElement root;
+        private readonly Dictionary<string, VisualElement> elements;
         private readonly Dictionary<LedgerEntryType, VisualElement> groups;
         public enum LedgerEntryType
         {

@@ -13,12 +13,6 @@ namespace Initialization
         {
             Debug.Log("Started Game Initialization!");
             UIManager.Instance.InitializeUI();
-            GameManager.Instance.StartGame(); // Temp
         }
-        //public void Start()
-        //{
-        //    GameManager.Instance.SetGameState(GameManager.GameState.RUNNING);
-        //    GameManager.Instance.EnableTickPossibility();
-        //}
     }
 }

@@ -114,10 +114,7 @@ namespace State
         public void UpdateResourceState()
         {
             foreach (var resource in ResourcesAmounts.Keys)
-            {
                 resourceStateSO.UpdateResourceRuntimeAmountsDictionary(resource, ResourcesAmounts[resource]);
-                UpdateLedgerResource(resource);
-            }
             resourceStateSO.UpdateRuntimeResourceAmountsList();
         }
         public void UpdateLedgerResource(ResourceSO resource)

@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 /*  GLOBAL TO DO:
- *  1. Rework ledger.
- *  2. CurrentPageName is not used.
+ *  1. Переработать в будущем боковую панель. Сейчас она не обновляется.
  */
 namespace UI
 {
@@ -14,10 +13,10 @@ namespace UI
      */
     public class UIManager : MonoBehaviour
     {
-        #region Vars
         /*
         *  Переменные и другое.
         */
+        #region Vars
         public static UIManager Instance { get; private set; }
 
         [Header("Main Information")]
@@ -57,13 +56,15 @@ namespace UI
 
         [Header("Page and Controller Info")]
         private VisualElement CurrentPage;
-        private string CurrentPageName;
         private IUIPageController CurrentController;
 
         [Header("Ledger Elements")]
         private LedgerManager ledgerManager;
         private HashSet<ResourceSO> ledgerResources;
         #endregion
+        /*
+        *  Awake
+        */
         #region Awake
         /*
          *  Awake и инициализация всех данных.
@@ -80,6 +81,9 @@ namespace UI
             InitializeMainDataOnAwake();
         }
         #endregion
+        /*
+         *  Инициализация
+         */
         #region Initialization
         /*  
          *  Используется для инициализации основного интерфейса.
@@ -138,14 +142,18 @@ namespace UI
         }
         private void InitializeButtonEvents()
         {
-            categoryMainMenuButton.clicked += () => ShowPage("mainMenu");
+            categoryMainMenuButton.clicked += OnMainMenuButtonClicked;
             categoryPopulationButton.clicked += () => ShowPage("population");
             categoryResourcesButton.clicked += () => ShowPage("resources");
             categoryTechnologyButton.clicked += () => ShowPage("technologies");
             categoryWorkersButton.clicked += () => ShowPage("workers");
         }
+        private void OnMainMenuButtonClicked() => ShowPage("mainMenu");
         #endregion
-        #region PageManipulation
+        /*
+         *  Управление UI
+         */
+        #region UIActions
         private void ShowPage(string category)
         {
             if (CurrentPage != null && CurrentController != null)
@@ -155,82 +163,14 @@ namespace UI
                 controller.ShowPage();
                 CurrentPage = page;
                 CurrentController = controller;
-                CurrentPageName = category;
             }
         }
         #endregion
-        #region OnDestroy
-        private void OnDestroy()
-        {
-            if (categoryMainMenuButton != null)
-                categoryMainMenuButton.clicked -= () => ShowPage("mainMenu");
-            if (categoryPopulationButton != null)
-                categoryPopulationButton.clicked -= () => ShowPage("population");
-            if (categoryResourcesButton != null)
-                categoryResourcesButton.clicked -= () => ShowPage("resources");
-            if (categoryTechnologyButton != null)
-                categoryTechnologyButton.clicked -= () => ShowPage("technologies");
-            if (categoryWorkersButton != null)
-                categoryWorkersButton.clicked -= () => ShowPage("workers");
-            if (ledgerResources != null)
-                Managers.ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged -= OnObservedResourceAmountChanged;
-        }
-        #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public ResourceSO testResource;
-
-
-
-
-
-
-        private void Start()
-        {
-
-
-            AddLedgerElement(testResource);
-        }
-        private void FixedUpdate()
-        {
-            if (CurrentController != null)
-                CurrentController.UpdatePage();
-        }
-
-
-
-
-
-        public void AddLedgerElement(ResourceSO resource)
+        /*
+         *  Управление боковой панелью.
+         */
+        #region LedgerActions
+        public void AddOrUpdateLedgerElement(ResourceSO resource)
         {
             ledgerManager.AddOrUpdate(new LedgerViewDescriptor
             {
@@ -240,24 +180,43 @@ namespace UI
                 Bind = ve =>
                 {
                     ve.Q<Label>("titleLabel").text = resource.NameEN;
-                    ve.Q<Label>("valueLabel").text = Managers.ResourceManager.Instance.GetResourceAmount(resource).ToString();
+                    ve.Q<Label>("valueLabel").text = ResourceManager.Instance.GetResourceAmount(resource).ToString();
                     ve.Q<Label>("extraLabel").text = resource.ID;
                 }
             });
-            ObserveResource(resource);
+            ObserveLedgerElement(resource);
         }
-        private void ObserveResource(ResourceSO resource)
+        private void ObserveLedgerElement(ResourceSO resource)
         {
             if (ledgerResources.Contains(resource))
                 return;
             ledgerResources.Add(resource);
-            Managers.ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged += OnObservedResourceAmountChanged;
+            ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged += OnObservedResourceAmountChanged;
         }
         private void OnObservedResourceAmountChanged(ResourceSO resource, int newAmount)
         {
             if (!ledgerResources.Contains(resource)) return;
-            AddLedgerElement(resource);
+            AddOrUpdateLedgerElement(resource);
         }
-
+        #endregion
+        /*
+         *  OnDestroy
+         */
+        #region OnDestroy
+        private void OnDestroy()
+        {
+            categoryMainMenuButton.clicked -= OnMainMenuButtonClicked;
+            if (categoryPopulationButton != null)
+                categoryPopulationButton.clicked -= () => ShowPage("population");
+            if (categoryResourcesButton != null)
+                categoryResourcesButton.clicked -= () => ShowPage("resources");
+            if (categoryTechnologyButton != null)
+                categoryTechnologyButton.clicked -= () => ShowPage("technologies");
+            if (categoryWorkersButton != null)
+                categoryWorkersButton.clicked -= () => ShowPage("workers");
+            if (ledgerResources != null)
+                ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged -= OnObservedResourceAmountChanged;
+        }
+        #endregion
     }
 }
