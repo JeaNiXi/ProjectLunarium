@@ -1,0 +1,20 @@
+{
+    "Entries": [
+        {
+            "Key": "nk_elf",
+            "Value": "Elves"
+        },
+        {
+            "Key": "dk_elf",
+            "Value": "Elves Presley"
+        },
+        {
+            "Key": "nk_human",
+            "Value": "Humans"
+        },
+        {
+            "Key": "dk_human",
+            "Value": "Humanux description."
+        }
+    ]
+}

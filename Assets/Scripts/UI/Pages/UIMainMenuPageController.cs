@@ -78,7 +78,7 @@ namespace UI
         }
         private void InitializeButtonEvents()
         {
-            categoryMainMenuNewGameButton.clicked += () => ShowMenuCategoryPage("mainMenuNewGame");
+            categoryMainMenuNewGameButton.clicked += OnNewGameButtonClicked;
         }
         #endregion
         #region PageManipulation
@@ -86,6 +86,7 @@ namespace UI
             => RootVE.style.display = DisplayStyle.Flex;
         public void HidePage()
             => RootVE.style.display = DisplayStyle.None;
+        private void OnNewGameButtonClicked() => ShowMenuCategoryPage("mainMenuNewGame");
         private void ShowMenuCategoryPage(string category)
         {
             if (CurrentMenuCategoryPage != null && CurrentMenuController != null)
@@ -100,13 +101,6 @@ namespace UI
         public void UpdatePage()
         {
             //throw new System.NotImplementedException();
-        }
-        #endregion
-        #region OnDestroy
-        private void OnDestroy()
-        {
-            if (categoryMainMenuNewGameButton != null)
-                categoryMainMenuNewGameButton.clicked -= () => ShowMenuCategoryPage("mainMenuNewGame");
         }
         #endregion
     }

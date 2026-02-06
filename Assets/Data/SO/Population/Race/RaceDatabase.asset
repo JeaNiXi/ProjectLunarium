@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34a220d5c8eda1d479a41dda581203eb, type: 3}
+  m_Name: RaceDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::SO.RaceDatabaseSO
+  Races:
+  - RaceType: 1
+    RaceSO: {fileID: 11400000, guid: d96008e48385bb74ab7bb141bebb20f3, type: 2}
+  - RaceType: 2
+    RaceSO: {fileID: 11400000, guid: c5807b84df2ed854a8320558ec5264b3, type: 2}

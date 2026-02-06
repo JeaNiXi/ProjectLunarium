@@ -1,4 +1,5 @@
 using SO;
+using System;
 using System.Collections.Generic;
 
 namespace State
@@ -44,5 +45,21 @@ namespace State
         {
             ResearchedTechnologies = technologiesList;
         }
+    }
+    public class NewGameState
+    {
+        public RaceSO SelectedRace { get; private set; }
+
+        public bool IsDataCompleted =>
+            SelectedRace != null;
+
+        public event Action OnStateChanged;
+        public void SetStartingRace(RaceSO race)
+        {
+            SelectedRace = race;
+            Notify();
+        }
+        public void Notify()
+            => OnStateChanged?.Invoke();
     }
 }

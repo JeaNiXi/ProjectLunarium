@@ -6,6 +6,7 @@ namespace Localization
     public class LocalizationData
     {
         private Dictionary<string, string> ResourceLocalization;
+        private Dictionary<string, string> RaceLocalization;
         public enum Localizations
         {
             RU,
@@ -20,12 +21,15 @@ namespace Localization
         private void InitializeLocalizationFiles()
         {
             ResourceLocalization = new Dictionary<string, string>();
+            RaceLocalization = new Dictionary<string, string>();
             LoadTextAssets();
         }
         private void LoadTextAssets()
         {
             TextAsset ResourceLocalizationAsset = Resources.Load<TextAsset>($"Localization/Resources/{CurrentLocalization}");
             ResourceLocalization = GetLocalizationDictionary(ResourceLocalizationAsset);
+            TextAsset RaceLocalizationAsset = Resources.Load<TextAsset>($"Localization/Population/Races/{CurrentLocalization}");
+            RaceLocalization = GetLocalizationDictionary(RaceLocalizationAsset);
         }
         private Dictionary<string, string> GetLocalizationDictionary(TextAsset textAsset)
             => JsonUtility.FromJson<LocalizationWrapper>(textAsset.text).ToDictionary();
@@ -35,6 +39,8 @@ namespace Localization
             => ResourceLocalization.TryGetValue(resourceNameKey, out string value) ? value : "ERR. No Localization Name KEY";
         public string GetLocalizedResourceDescription(string resourceDescriptionKey)
             => ResourceLocalization.TryGetValue(resourceDescriptionKey, out string value) ? value : "ERR. No Localization Description Key";
+        public string GetLocalizedRaceDescription(string raceDescriptionKey)
+            => RaceLocalization.TryGetValue(raceDescriptionKey, out string value) ? value : "ERR. No Localization Description Key";
     }
     [Serializable]
     public class LocalizationWrapper

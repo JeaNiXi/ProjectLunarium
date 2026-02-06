@@ -143,12 +143,16 @@ namespace UI
         private void InitializeButtonEvents()
         {
             categoryMainMenuButton.clicked += OnMainMenuButtonClicked;
-            categoryPopulationButton.clicked += () => ShowPage("population");
-            categoryResourcesButton.clicked += () => ShowPage("resources");
-            categoryTechnologyButton.clicked += () => ShowPage("technologies");
-            categoryWorkersButton.clicked += () => ShowPage("workers");
+            categoryPopulationButton.clicked += OnPopulationButtonClicked;
+            categoryResourcesButton.clicked += OnResourcesButtonClicked;
+            categoryTechnologyButton.clicked += OnTechnologyButtonClicked;
+            categoryWorkersButton.clicked += OnWorkersButtonClicked;
         }
         private void OnMainMenuButtonClicked() => ShowPage("mainMenu");
+        private void OnPopulationButtonClicked() => ShowPage("population");
+        private void OnResourcesButtonClicked() => ShowPage("resources");
+        private void OnTechnologyButtonClicked() => ShowPage("technologies");
+        private void OnWorkersButtonClicked() => ShowPage("workers");
         #endregion
         /*
          *  ”правление UI
@@ -206,14 +210,10 @@ namespace UI
         private void OnDestroy()
         {
             categoryMainMenuButton.clicked -= OnMainMenuButtonClicked;
-            if (categoryPopulationButton != null)
-                categoryPopulationButton.clicked -= () => ShowPage("population");
-            if (categoryResourcesButton != null)
-                categoryResourcesButton.clicked -= () => ShowPage("resources");
-            if (categoryTechnologyButton != null)
-                categoryTechnologyButton.clicked -= () => ShowPage("technologies");
-            if (categoryWorkersButton != null)
-                categoryWorkersButton.clicked -= () => ShowPage("workers");
+            categoryPopulationButton.clicked -= OnPopulationButtonClicked;
+            categoryResourcesButton.clicked -= OnResourcesButtonClicked;
+            categoryTechnologyButton.clicked -= OnTechnologyButtonClicked;
+            categoryWorkersButton.clicked -= OnWorkersButtonClicked;
             if (ledgerResources != null)
                 ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged -= OnObservedResourceAmountChanged;
         }

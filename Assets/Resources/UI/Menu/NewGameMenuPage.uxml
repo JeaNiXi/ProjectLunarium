@@ -18,16 +18,15 @@
                             <ui:Label text="&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1089;&#1090;&#1072;&#1088;&#1090;&#1086;&#1074;&#1091;&#1102; &#1088;&#1072;&#1089;&#1091;:" style="font-size: 31px; -unity-text-align: upper-center;"/>
                         </ui:VisualElement>
                         <ui:VisualElement style="flex-basis: 50%;">
-                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-around;">
-                                <ui:VisualElement style="flex-grow: 1;">
-                                    <ui:VisualElement style="flex-grow: 1;"/>
-                                    <ui:Button text="&#1103; &#1074;&#1099;&#1073;&#1080;&#1088;&#1072;&#1102; &#1083;&#1102;&#1076;&#1077;&#1081;" name="chooseHumanButton" style="position: absolute; align-self: center;"/>
-                                    <ui:Label text="&#1082;&#1088;&#1091;&#1090;&#1099;&#1077; &#1083;&#1102;&#1076;&#1080;" style="-unity-text-align: upper-center;"/>
+                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: column; justify-content: space-around;">
+                                <ui:VisualElement style="flex-basis: 20%; flex-direction: row;">
+                                    <ui:Button text="&#1103; &#1074;&#1099;&#1073;&#1080;&#1088;&#1072;&#1102; &#1083;&#1102;&#1076;&#1077;&#1081;" name="StartRaceSelectHumansButton" style="align-self: center;"/>
+                                    <ui:Button text="&#1080;&#1075;&#1088;&#1072;&#1090;&#1100; &#1079;&#1072; &#1101;&#1083;&#1100;&#1092;&#1086;&#1074;" name="StartRaceSelectElfButton" style="align-self: center;"/>
                                 </ui:VisualElement>
-                                <ui:VisualElement style="flex-grow: 1;">
-                                    <ui:VisualElement style="flex-grow: 1;"/>
-                                    <ui:Button text="&#1080;&#1075;&#1088;&#1072;&#1090;&#1100; &#1079;&#1072; &#1101;&#1083;&#1100;&#1092;&#1086;&#1074;" name="chooseElfButton" style="position: absolute; align-self: center;"/>
-                                    <ui:Label text="&#1084;&#1086;&#1076;&#1085;&#1099;&#1077; &#1101;&#1083;&#1100;&#1092;&#1099;" style="-unity-text-align: upper-center;"/>
+                                <ui:VisualElement style="flex-basis: 80%;">
+                                    <ui:VisualElement style="flex-grow: 1;">
+                                        <ui:Label name="raceDescriptionLabel" text="" style="-unity-text-align: upper-center;"/>
+                                    </ui:VisualElement>
                                 </ui:VisualElement>
                             </ui:VisualElement>
                         </ui:VisualElement>
@@ -45,7 +44,7 @@
                             <ui:VisualElement style="flex-grow: 1;">
                                 <ui:VisualElement style="flex-grow: 1;"/>
                                 <ui:VisualElement style="flex-grow: 1;">
-                                    <ui:Button text="Start" name="newGameStartButtonPage"/>
+                                    <ui:Button text="Start" name="newGameStartButtonPage" enabled="false"/>
                                 </ui:VisualElement>
                             </ui:VisualElement>
                         </ui:VisualElement>

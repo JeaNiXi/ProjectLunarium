@@ -3,21 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace SO
 {
-    [CreateAssetMenu(fileName = "Resource", menuName = "Scriptable Objects/Resources/Resource")]
-    public class ResourceSO : ScriptableObject, ILocalizable
+    [CreateAssetMenu(fileName = "Race", menuName = "Scriptable Objects/Population/Races/Race")]
+    public class RaceSO : ScriptableObject, ILocalizable
     {
         [Header("ID")]
         public string ID;
 
         [Header("Localization Keys:")]
         [field: SerializeField] public string NameKey { get; private set; }
-        [field: SerializeField] public string DescriptionKey { get; private set; }
-
-        [Header("Visualisation")]
-        public List<Sprite> AnimationSprites = new List<Sprite>();
-
-        [Header("Unlock Conditions")]
-        public List<TechnologySO> TechNeeded;
+        [field: SerializeField] public string DescriptionKey {  get; private set; }
 
         [Header("RU Localization Data")]
         public string NameRU;
@@ -30,13 +24,13 @@ namespace SO
         public string DescriptionEN;
 
         public string LocalizationOutputFolder(LocalizationGeneratorSO config)
-            => config.ResourcesLocalizationOutputFolder;
-
+            => config.RacesLocalizationOutputFolder;
         public IEnumerable<LocalizationEntry> GetLocalizationEntriesRU()
         {
             yield return new(NameKey, NameRU);
             yield return new(DescriptionKey, DescriptionRU);
         }
+
         public IEnumerable<LocalizationEntry> GetLocalizationEntriesEN()
         {
             yield return new(NameKey, NameEN);

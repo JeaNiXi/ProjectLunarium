@@ -12,6 +12,8 @@ public class LocalizationGenerationEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Generate Resource Localization JSON"))
             GenerateLocalizationForType<ResourceSO>();
+        if (GUILayout.Button("Gen. Races Localization JSON"))
+            GenerateLocalizationForType<RaceSO>();
         if (GUILayout.Button("Generate Technology Localization JSON"))
             Debug.Log("AH, this is not realised");
     }
@@ -40,6 +42,8 @@ public class LocalizationGenerationEditor : Editor
     {
         if (typeof(T) == typeof(ResourceSO))
             return config.ResourcesLocalizationOutputFolder;
+        if (typeof(T) == typeof(RaceSO))
+            return config.RacesLocalizationOutputFolder;
         if (typeof(T) == typeof(TechnologySO))
             return config.TechnologyLocalizationOutputFolder;
         return config.DefaultPath;

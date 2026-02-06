@@ -1,5 +1,8 @@
+using Managers;
 using SO;
+using State;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace UI
@@ -22,6 +25,13 @@ namespace UI
         private List<VisualElement> newGamePages;
         private int currentPageIndex;
 
+        private NewGameState newGameState;
+
+        private Button startRaceSelectHumansButton;
+        private Button startRaceSelectElfButton;
+
+        private Label raceDescriptionLabel;
+
         #endregion
         #region Initialization
         public void InitializePage(VisualElement page, ScriptableObject data)
@@ -43,6 +53,10 @@ namespace UI
                 RootVE.Q<VisualElement>("page2VE")
             };
             currentPageIndex = 0;
+            newGameState = new NewGameState();
+            newGameState.OnStateChanged += UpdateStartButton;
+
+            raceDescriptionLabel = RootVE.Q<Label>("raceDescriptionLabel");
 
             acceptToggle = RootVE.Q<Toggle>("AcceptToggle");
         }
@@ -51,12 +65,18 @@ namespace UI
             newGameForwardPageButton = RootVE.Q<Button>("newGameNextButtonPage");
             newGameBackPageButton = RootVE.Q<Button>("newGameBackButtonPage");
             newGameStartPageButton = RootVE.Q<Button>("newGameStartButtonPage");
+
+            startRaceSelectHumansButton = RootVE.Q<Button>("StartRaceSelectHumansButton");
+            startRaceSelectElfButton = RootVE.Q<Button>("StartRaceSelectElfButton");
         }
         private void InitializeButtonEvents()
         {
-            newGameForwardPageButton.clicked += () => OnNextPageButtonClicked();
-            newGameBackPageButton.clicked += () => OnBackPageButtonClicked();
-            newGameStartPageButton.clicked += () => OnStartPageButtonClicked();
+            newGameForwardPageButton.clicked += OnNextPageButtonClicked;
+            newGameBackPageButton.clicked += OnBackPageButtonClicked;
+            newGameStartPageButton.clicked += OnStartPageButtonClicked;
+
+            startRaceSelectHumansButton.clicked += OnRaceHumansSelected;
+            startRaceSelectElfButton.clicked += OnRaceElfSelected;
         }
         private void InitializeFirstPage()
         {
@@ -95,6 +115,10 @@ namespace UI
 
             newGameStartPageButton.style.display = HasNextPage() ? DisplayStyle.None : DisplayStyle.Flex;
         }
+        private void UpdateStartButton()
+        {
+            newGameStartPageButton.SetEnabled(newGameState.IsDataCompleted);
+        }
         private bool HasNextPage()
             => currentPageIndex < newGamePages.Count - 1;
         private bool HasPreviousPage()
@@ -108,15 +132,23 @@ namespace UI
             //throw new System.NotImplementedException();
         }
         #endregion
-        #region OnDestroy
-        private void OnDestroy()
+        #region NewGameConfig
+        private void OnRaceHumansSelected()
+            => SelectRace(RaceDatabaseSO.RaceType.Human);
+        private void OnRaceElfSelected()
+            => SelectRace(RaceDatabaseSO.RaceType.Elf);
+        private void SelectRace(RaceDatabaseSO.RaceType raceType)
         {
-            if (newGameForwardPageButton != null)
-                newGameForwardPageButton.clicked -= OnNextPageButtonClicked;
-            if (newGameBackPageButton != null)
-                newGameBackPageButton.clicked -= OnBackPageButtonClicked;
-            if (newGameStartPageButton != null)
-                newGameStartPageButton.clicked -= OnStartPageButtonClicked;
+            if (PopulationManager.Instance.TryGetRace(raceType, out var race))
+            {
+                newGameState.SetStartingRace(race);
+                UpdateRaceDescriptionLabel(race);
+                Debug.Log($"StartingRace = {race}");
+            }
+        }
+        private void UpdateRaceDescriptionLabel(RaceSO race)
+        {
+            raceDescriptionLabel.text = LocalizationManager.Instance.GetLocalizedRaceDescription(race.DescriptionKey);
         }
         #endregion
     }

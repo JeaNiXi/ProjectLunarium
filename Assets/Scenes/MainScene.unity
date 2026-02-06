@@ -192,7 +192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2cc2de1f71f0b4ebd9050e6c1eb43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Initialization.OnGameInit
-  PlayGIF: 0
 --- !u!4 &138836528
 Transform:
   m_ObjectHideFlags: 0
@@ -1110,6 +1109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6169c10e3dd9a244b8233ab98db91009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.PopulationManager
+  RaceDatabaseSO: {fileID: 11400000, guid: 0bfbe469c79fcbe4b8b8e7772e3ab066, type: 2}
 --- !u!4 &834654569
 Transform:
   m_ObjectHideFlags: 0
@@ -1455,7 +1455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac967096491f404892e837a08926ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DanceDanceDance
-  isDanceTime: 1
+  isDanceTime: 0
   isVictoriaTime: 0
   audioSource: {fileID: 1331742183}
   clips:
@@ -2067,18 +2067,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.UIManager
   MainUIDocument: {fileID: 662766995}
-  testResource: {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
   mainMenuMainAsset: {fileID: 9197481963319205126, guid: 207f11153c30fb34ea8e270ff5858da4, type: 3}
   populationMainAsset: {fileID: 9197481963319205126, guid: 43c92a6e972b17e4099d23d7a4d6bd33, type: 3}
   resourcesMainAsset: {fileID: 9197481963319205126, guid: d325fbf4f170a034ea9c414ff267d3a3, type: 3}
   technologyMainAsset: {fileID: 9197481963319205126, guid: bef2e4f277b693949834162eccd169ba, type: 3}
   workersMainAsset: {fileID: 9197481963319205126, guid: b0ad84512c7981f419a3b5c9ddf93400, type: 3}
+  ledgerResourceAsset: {fileID: 9197481963319205126, guid: 2a55a13fc585da640a150fc445b4ca02, type: 3}
   mainMenuManagerSO: {fileID: 11400000, guid: 29af17c4818f94e40bd2b76ec13eb643, type: 2}
   populationManagerSO: {fileID: 11400000, guid: 11d023d4b20a73d4a91f65dcfba98edf, type: 2}
   resourceManagerSO: {fileID: 11400000, guid: 7f188bce8d522644ca39f6d847123ac9, type: 2}
   technologyManagerSO: {fileID: 11400000, guid: 893084ea2791fce479eb9b835eda496b, type: 2}
   workersManagerSO: {fileID: 11400000, guid: 6352c66a55ffb27448fcb0d57a7b5d07, type: 2}
-  ledgerResourceAsset: {fileID: 9197481963319205126, guid: 2a55a13fc585da640a150fc445b4ca02, type: 3}
 --- !u!4 &1804471871
 Transform:
   m_ObjectHideFlags: 0

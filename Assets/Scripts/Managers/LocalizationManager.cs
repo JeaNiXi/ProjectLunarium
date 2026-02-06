@@ -26,5 +26,7 @@ namespace Managers
             => localizationData.GetLocalizedResourceName(resourceNameKey);
         public string GetLocalizedResourceDescription(string resourceDescriptionKey)
             => localizationData.GetLocalizedResourceDescription(resourceDescriptionKey);
+        public string GetLocalizedRaceDescription(string raceDescriptionKey)
+            => localizationData.GetLocalizedRaceDescription(raceDescriptionKey);
     }
 }

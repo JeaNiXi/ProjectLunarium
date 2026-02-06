@@ -5,10 +5,10 @@
             <ui:VisualElement style="flex-basis: 10%;">
                 <ui:VisualElement style="flex-grow: 1;">
                     <ui:Button text="menuBNK" name="menuButton"/>
-                    <ui:Button text="popsBNK" name="populationButton"/>
-                    <ui:Button text="ResBNK" name="resourcesButton"/>
-                    <ui:Button text="techBNK" name="technologyButton"/>
-                    <ui:Button text="workersBNK" name="workersButton"/>
+                    <ui:Button text="popsBNK" name="populationButton" enabled="false"/>
+                    <ui:Button text="ResBNK" name="resourcesButton" enabled="false"/>
+                    <ui:Button text="techBNK" name="technologyButton" enabled="false"/>
+                    <ui:Button text="workersBNK" name="workersButton" enabled="false"/>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="mainView" style="flex-basis: 75%;"/>

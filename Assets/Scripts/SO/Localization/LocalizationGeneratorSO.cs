@@ -6,6 +6,7 @@ namespace SO
     {
         [HideInInspector]
         public string DefaultPath = "Assets/Resources/Localization/Default";
+        public string RacesLocalizationOutputFolder = "Assets/Resources/Localization/Population/Races";
         public string ResourcesLocalizationOutputFolder = "Assets/Resources/Localization/Resources";
         public string TechnologyLocalizationOutputFolder = "Assets/Resources/Localization/Technologies";
 
