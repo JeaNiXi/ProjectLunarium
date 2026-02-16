@@ -49,6 +49,11 @@ namespace State
     public class NewGameState
     {
         public RaceSO SelectedRace { get; private set; }
+        public int TotalPopulation { get; private set; }
+        public int ChildPopultaion { get; private set; }
+        public int AdultPopulation { get; private set; }
+        public int ElderPopulation { get; private set; }
+        public List<TechnologySO> ResearchedTechnologies { get; private set; }
 
         public bool IsDataCompleted =>
             SelectedRace != null;

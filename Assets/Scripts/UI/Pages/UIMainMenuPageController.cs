@@ -10,7 +10,6 @@ namespace UI
      */
     public class UIMainMenuPageController : IUIPageController
     {
-        #region Vars
         private VisualElement RootVE;
         private VisualElement MainMenuViewVE;
         private VisualElement CurrentMenuCategoryPage;
@@ -28,7 +27,6 @@ namespace UI
 
         private MainMenuManagerSO ManagerData;
 
-        #endregion
         public void InitializePage(VisualElement page, ScriptableObject data)
         {
             RootVE = page;
@@ -40,7 +38,6 @@ namespace UI
             InitializeButtons();
             InitializeButtonEvents();
         }
-        #region Initialization
         private void InitializeMainData()
         {
             MainMenuViewVE = RootVE.Q<VisualElement>("mainMenuMainVE");
@@ -80,8 +77,6 @@ namespace UI
         {
             categoryMainMenuNewGameButton.clicked += OnNewGameButtonClicked;
         }
-        #endregion
-        #region PageManipulation
         public void ShowPage()
             => RootVE.style.display = DisplayStyle.Flex;
         public void HidePage()
@@ -102,6 +97,5 @@ namespace UI
         {
             //throw new System.NotImplementedException();
         }
-        #endregion
     }
 }

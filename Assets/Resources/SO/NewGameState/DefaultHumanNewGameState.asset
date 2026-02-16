@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9caff0cadeff31741943f498f34c4b15, type: 3}
+  m_Name: DefaultHumanNewGameState
+  m_EditorClassIdentifier: Assembly-CSharp::SO.NewGameStateSO
+  StartIDString: DefHumanNewGame
+  AllStartingRaces:
+  - {fileID: 11400000, guid: d96008e48385bb74ab7bb141bebb20f3, type: 2}
+  MainRace: {fileID: 11400000, guid: d96008e48385bb74ab7bb141bebb20f3, type: 2}
+  MainRaceChildPopulation: 6
+  MainRaceAdultPopulation: 14
+  MainRaceElderPopulation: 10
+  ReaserchedTechnologies:
+  - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}

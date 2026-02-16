@@ -7,77 +7,21 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+        public static GameManager Instance { get; private set; }
         public readonly string GameVersion = "0.1";
-        #region GameInitializations
         /*
          *  »спользуем дл€ начала новой игры или загрузки игры.
          */
-        public void StartGame()
-        {
-            SetGameState(GameState.RUNNING);
-            EnableTickPossibility();
-        }
-        public void StartGame(GameDataState gameState)
-        {
-            SetGameState(GameState.RUNNING);
-            EnableTickPossibility();
-        }
-        #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public static GameManager Instance { get; private set; }
         public enum GameState
         {
             INIT,
             PAUSE,
             RUNNING
         }
-        public enum TechnologyResearchState
-        {
-            NOT_RESEARCHING,
-            RESEARCHING
-        }
-        public GameState CurrentGameState { get; private set; }
-        public TechnologyResearchState CurrentTechnologyResearchState { get; private set; }
+        public event Action<GameState> OnGameStateChanged;
+
         public bool IsTickPossible { get; private set; }
-        public bool IsVisibleResourcesUpdateNeeded { get; private set; }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -90,14 +34,35 @@ namespace Managers
             CurrentGameState = GameState.INIT;
             CurrentTechnologyResearchState = TechnologyResearchState.NOT_RESEARCHING;
         }
-        public void SetGameState(GameState state) => CurrentGameState = state;
-        public void SetTechnologyResearchState(TechnologyResearchState state) => CurrentTechnologyResearchState = state;
-        public void SetIsVisibleResourcesUpdateNeeded(bool value)
-            => IsVisibleResourcesUpdateNeeded = value;
-        public void DisableTickPossibility()
-            => IsTickPossible = false;
+        //public void StartGame()
+        //{
+        //    SetGameState(GameState.RUNNING);
+        //    EnableTickPossibility();
+        //}
+        //public void StartGame(GameDataState gameState)
+        //{
+        //    SetGameState(GameState.RUNNING);
+        //    EnableTickPossibility();
+        //}
+
+        public void StartNewGame(NewGameState newGameState)
+        {
+            SetGameState(GameState.RUNNING);
+            EnableTickPossibility();
+        }
+        public void SetGameState(GameState state)
+        {
+            CurrentGameState = state;
+            NotifyGameStateChange(state);
+        }
+        private void NotifyGameStateChange(GameState state)
+        {
+            OnGameStateChanged?.Invoke(state);
+        }
         public void EnableTickPossibility()
             => IsTickPossible = true;
+        public void DisableTickPossibility()
+            => IsTickPossible = false;
         public void OnGlobalTick(TimeState timeState)
         {
             /*
@@ -122,6 +87,59 @@ namespace Managers
             ResourceManager.Instance.OnGlobalTick(timeState);
             EnableTickPossibility();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public enum TechnologyResearchState
+        {
+            NOT_RESEARCHING,
+            RESEARCHING
+        }
+        public GameState CurrentGameState { get; private set; }
+        public TechnologyResearchState CurrentTechnologyResearchState { get; private set; }
+
+        public bool IsVisibleResourcesUpdateNeeded { get; private set; }
+
+        public void SetTechnologyResearchState(TechnologyResearchState state) => CurrentTechnologyResearchState = state;
+        public void SetIsVisibleResourcesUpdateNeeded(bool value)
+            => IsVisibleResourcesUpdateNeeded = value;
+
+
+
         public bool IsResearchInProgress()
             => CurrentTechnologyResearchState == TechnologyResearchState.RESEARCHING ? true : false;
         private void InitializePopulation()

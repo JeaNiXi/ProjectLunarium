@@ -7,7 +7,7 @@ namespace Managers
     {
         public static TimeManager Instance { get; private set; }
 
-        private TimeState timeState;
+        private TimeState TimeState;
 
         private void Awake()
         {
@@ -18,15 +18,15 @@ namespace Managers
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-            timeState = new TimeState();
+            TimeState = new TimeState();
         }
 
-        public string GetCurrentTimeString() => timeState.GetCurrentTimeString();
-        public void GetCurrentDay() => timeState.GetCurrentDay();
+        public string GetCurrentTimeString() => TimeState.GetCurrentTimeString();
+        public void GetCurrentDay() => TimeState.GetCurrentDay();
         public void OnTickUpdate()
         {
-            timeState.UpdateTick();
-            GameManager.Instance.OnGlobalTick(timeState);
+            TimeState.UpdateTick();
+            GameManager.Instance.OnGlobalTick(TimeState);
         }
     }
 }

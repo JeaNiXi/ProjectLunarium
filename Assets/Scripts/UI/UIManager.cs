@@ -16,7 +16,6 @@ namespace UI
         /*
         *  Переменные и другое.
         */
-        #region Vars
         public static UIManager Instance { get; private set; }
 
         [Header("Main Information")]
@@ -27,18 +26,15 @@ namespace UI
         private VisualElement MainViewVE;
         private VisualElement LedgerVE;
 
-        [Header("Page and Other Assets")]
+        [Header("Page Assets")]
         [SerializeField] private VisualTreeAsset mainMenuMainAsset;
         [SerializeField] private VisualTreeAsset populationMainAsset;
         [SerializeField] private VisualTreeAsset resourcesMainAsset;
         [SerializeField] private VisualTreeAsset technologyMainAsset;
         [SerializeField] private VisualTreeAsset workersMainAsset;
 
+        [Header("Other Assets")]
         [SerializeField] private VisualTreeAsset ledgerResourceAsset;
-
-        [Header("Dictionaries")]
-        private Dictionary<string, VisualElement> cachedPages;
-        private Dictionary<string, IUIPageController> cachedIUIPageControllers;
 
         [Header("Manager Scriptable Objects")]
         [SerializeField] private MainMenuManagerSO mainMenuManagerSO;
@@ -47,25 +43,21 @@ namespace UI
         [SerializeField] private TechnologyManagerSO technologyManagerSO;
         [SerializeField] private WorkersManagerSO workersManagerSO;
 
-        [Header("Main Category Buttons")]
+        private Dictionary<string, VisualElement> cachedPages;
+        private Dictionary<string, IUIPageController> cachedIUIPageControllers;
+        private Dictionary<Button, bool> cachedCategoryButtonIsEnabledDictionary;
+
         private Button categoryMainMenuButton;
         private Button categoryPopulationButton;
         private Button categoryResourcesButton;
         private Button categoryTechnologyButton;
         private Button categoryWorkersButton;
 
-        [Header("Page and Controller Info")]
         private VisualElement CurrentPage;
         private IUIPageController CurrentController;
 
-        [Header("Ledger Elements")]
         private LedgerManager ledgerManager;
         private HashSet<ResourceSO> ledgerResources;
-        #endregion
-        /*
-        *  Awake
-        */
-        #region Awake
         /*
          *  Awake и инициализация всех данных.
          */
@@ -80,12 +72,9 @@ namespace UI
             }
             InitializeMainDataOnAwake();
         }
-        #endregion
         /*
          *  Инициализация
-         */
-        #region Initialization
-        /*  
+         *
          *  Используется для инициализации основного интерфейса.
          *  Здесь можно также выбирать начинать новую игру, заходить в настройки, загружать игру, выходить из игры как через обычное меню.  
          */
@@ -96,14 +85,21 @@ namespace UI
             LedgerVE = RootVE.Q<VisualElement>("ledgerVE");
             cachedPages = new Dictionary<string, VisualElement>();
             cachedIUIPageControllers = new Dictionary<string, IUIPageController>();
+            cachedCategoryButtonIsEnabledDictionary = new Dictionary<Button, bool>();
             ledgerManager = new LedgerManager(LedgerVE);
             ledgerResources = new HashSet<ResourceSO>();
         }
         public void InitializeUI()
         {
+            InitializeConnections();
             InitializeCategoryPagesDictionaries();
             InitializeButtons();
             InitializeButtonEvents();
+            SetButtonEnabled(categoryMainMenuButton, true);
+        }
+        private void InitializeConnections()
+        {
+            GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
         }
         //  Используется для кэширования всех основных категорий.
         private void InitializeCategoryPagesDictionaries()
@@ -139,7 +135,28 @@ namespace UI
             categoryResourcesButton = RootVE.Q<Button>("resourcesButton");
             categoryTechnologyButton = RootVE.Q<Button>("technologyButton");
             categoryWorkersButton = RootVE.Q<Button>("workersButton");
+
+            AddAllCategoryButtonsToList(
+                categoryMainMenuButton,
+                categoryPopulationButton,
+                categoryResourcesButton,
+                categoryTechnologyButton,
+                categoryWorkersButton);
         }
+        private void AddAllCategoryButtonsToList(params Button[] buttons)
+        {
+            foreach (var button in buttons)
+                cachedCategoryButtonIsEnabledDictionary.Add(button, false);
+        }
+        private void SetButtonEnabled(Button button, bool value)
+            => button.SetEnabled(value);
+        private void EnableAllCategoryButtons()
+        {
+            foreach (Button button in cachedCategoryButtonIsEnabledDictionary.Keys)
+                button.SetEnabled(true);
+        }
+        private bool IsButtonEnabled(Button button)
+            => cachedCategoryButtonIsEnabledDictionary.TryGetValue(button, out var value);
         private void InitializeButtonEvents()
         {
             categoryMainMenuButton.clicked += OnMainMenuButtonClicked;
@@ -153,11 +170,14 @@ namespace UI
         private void OnResourcesButtonClicked() => ShowPage("resources");
         private void OnTechnologyButtonClicked() => ShowPage("technologies");
         private void OnWorkersButtonClicked() => ShowPage("workers");
-        #endregion
+        private void OnGameStateChanged(GameManager.GameState gameState)
+        {
+            if (gameState == GameManager.GameState.RUNNING)
+                EnableAllCategoryButtons();
+        }
         /*
          *  Управление UI
          */
-        #region UIActions
         private void ShowPage(string category)
         {
             if (CurrentPage != null && CurrentController != null)
@@ -169,11 +189,14 @@ namespace UI
                 CurrentController = controller;
             }
         }
-        #endregion
+        private void FixedUpdate()
+        {
+            if (CurrentController != null)
+                CurrentController.UpdatePage();
+        }
         /*
          *  Управление боковой панелью.
          */
-        #region LedgerActions
         public void AddOrUpdateLedgerElement(ResourceSO resource)
         {
             ledgerManager.AddOrUpdate(new LedgerViewDescriptor
@@ -202,11 +225,6 @@ namespace UI
             if (!ledgerResources.Contains(resource)) return;
             AddOrUpdateLedgerElement(resource);
         }
-        #endregion
-        /*
-         *  OnDestroy
-         */
-        #region OnDestroy
         private void OnDestroy()
         {
             categoryMainMenuButton.clicked -= OnMainMenuButtonClicked;
@@ -217,6 +235,5 @@ namespace UI
             if (ledgerResources != null)
                 ResourceManager.Instance.GetCurrentResourceState().OnResourceAmountChanged -= OnObservedResourceAmountChanged;
         }
-        #endregion
     }
 }

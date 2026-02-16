@@ -3,15 +3,15 @@
         <ui:VisualElement style="flex-basis: 20%;"/>
         <ui:VisualElement style="flex-basis: 70%; flex-direction: row;">
             <ui:VisualElement style="flex-basis: 10%;">
-                <ui:VisualElement style="flex-grow: 1;">
-                    <ui:Button text="menuBNK" name="menuButton"/>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(28, 29, 50, 0.8);">
+                    <ui:Button text="menuBNK" name="menuButton" enabled="false"/>
                     <ui:Button text="popsBNK" name="populationButton" enabled="false"/>
                     <ui:Button text="ResBNK" name="resourcesButton" enabled="false"/>
                     <ui:Button text="techBNK" name="technologyButton" enabled="false"/>
                     <ui:Button text="workersBNK" name="workersButton" enabled="false"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="mainView" style="flex-basis: 75%;"/>
+            <ui:VisualElement name="mainView" style="flex-basis: 75%; background-color: rgba(28, 29, 50, 0.8);"/>
             <ui:VisualElement style="flex-basis: 15%;">
                 <ui:VisualElement name="ledgerVE" style="flex-grow: 1;"/>
             </ui:VisualElement>

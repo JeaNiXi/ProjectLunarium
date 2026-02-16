@@ -2,7 +2,6 @@ using Managers;
 using SO;
 using State;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 namespace UI
@@ -12,7 +11,6 @@ namespace UI
     */
     public class UIMainMenuNewGameController : IUIPageController
     {
-        #region Vars
         private VisualElement RootVE;
         private MainMenuNewGameSO ManagerData;
 
@@ -24,16 +22,22 @@ namespace UI
 
         private List<VisualElement> newGamePages;
         private int currentPageIndex;
+        private Dictionary<int, string> NewGamePagesStringsByIndex;
 
         private NewGameState newGameState;
+
+        private Button selectStandardNewGameButton;
 
         private Button startRaceSelectHumansButton;
         private Button startRaceSelectElfButton;
 
         private Label raceDescriptionLabel;
 
-        #endregion
-        #region Initialization
+        public bool IsNewGameModeSelected;
+
+        private NewGameStateSO defaultHumanNewGameState;
+        private NewGameStateSO defaultElfNewGameState;
+
         public void InitializePage(VisualElement page, ScriptableObject data)
         {
             RootVE = page;
@@ -47,7 +51,14 @@ namespace UI
         }
         private void InitializeMainData()
         {
-            newGamePages = new List<VisualElement>
+            defaultHumanNewGameState = Resources.Load<NewGameStateSO>("SO/NewGameState/DefaultHumanNewGameState");
+            defaultElfNewGameState = Resources.Load<NewGameStateSO>("SO/NewGameState/DefaultElfNewGameState");
+            NewGamePagesStringsByIndex = new Dictionary<int, string>()
+            {
+                {0, "page1VE"},
+                {1, "page2VE"}
+            };
+            newGamePages = new List<VisualElement>()
             {
                 RootVE.Q<VisualElement>("page1VE"),
                 RootVE.Q<VisualElement>("page2VE")
@@ -66,6 +77,8 @@ namespace UI
             newGameBackPageButton = RootVE.Q<Button>("newGameBackButtonPage");
             newGameStartPageButton = RootVE.Q<Button>("newGameStartButtonPage");
 
+            selectStandardNewGameButton = RootVE.Q<Button>("selectStandardNewGameButton");
+
             startRaceSelectHumansButton = RootVE.Q<Button>("StartRaceSelectHumansButton");
             startRaceSelectElfButton = RootVE.Q<Button>("StartRaceSelectElfButton");
         }
@@ -75,6 +88,8 @@ namespace UI
             newGameBackPageButton.clicked += OnBackPageButtonClicked;
             newGameStartPageButton.clicked += OnStartPageButtonClicked;
 
+            selectStandardNewGameButton.clicked += OnStandardNewGameButtonClicked;
+
             startRaceSelectHumansButton.clicked += OnRaceHumansSelected;
             startRaceSelectElfButton.clicked += OnRaceElfSelected;
         }
@@ -82,8 +97,6 @@ namespace UI
         {
 
         }
-        #endregion
-        #region PageManipulation
         private void OnNextPageButtonClicked()
         {
             if (!HasNextPage())
@@ -96,9 +109,18 @@ namespace UI
                 return;
             ActivatePage(currentPageIndex - 1);
         }
+        private void OnStandardNewGameButtonClicked()
+        {
+            IsNewGameModeSelected = true;
+            UpdateButtons();
+        }
         private void OnStartPageButtonClicked()
         {
+            GameManager.Instance.StartNewGame(newGameState);
+            //GameManager.Instance.SetGameState(GameManager.GameState.RUNNING);
+            //UIManager.Instance.EnableAllCategoryButtons();
 
+            //GameManager.Instance.StartGame(newGameState);
         }
         private void ActivatePage(int index)
         {
@@ -110,10 +132,21 @@ namespace UI
         }
         private void UpdateButtons()
         {
-            newGameForwardPageButton.SetEnabled(HasNextPage());
+            newGameForwardPageButton.SetEnabled(HasNextPage() && IsAllowedToGoNext(NewGamePagesStringsByIndex[currentPageIndex]));
             newGameBackPageButton.SetEnabled(HasPreviousPage());
 
+
+
             newGameStartPageButton.style.display = HasNextPage() ? DisplayStyle.None : DisplayStyle.Flex;
+        }
+        private bool IsAllowedToGoNext(string currentPage)
+        {
+            if (currentPage == "page1VE")
+                if (IsNewGameModeSelected)
+                    return true;
+            if (currentPage == "page2VE")
+                return true;
+            return false;
         }
         private void UpdateStartButton()
         {
@@ -131,8 +164,6 @@ namespace UI
         {
             //throw new System.NotImplementedException();
         }
-        #endregion
-        #region NewGameConfig
         private void OnRaceHumansSelected()
             => SelectRace(RaceDatabaseSO.RaceType.Human);
         private void OnRaceElfSelected()
@@ -150,6 +181,5 @@ namespace UI
         {
             raceDescriptionLabel.text = LocalizationManager.Instance.GetLocalizedRaceDescription(race.DescriptionKey);
         }
-        #endregion
     }
 }

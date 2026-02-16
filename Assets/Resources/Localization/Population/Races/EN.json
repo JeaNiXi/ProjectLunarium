@@ -6,7 +6,7 @@
         },
         {
             "Key": "dk_elf",
-            "Value": "Elves Presley"
+            "Value": "Elves.\r\nLords of the forests and mountains.\r\nThey try to keep their distance from everyone.\r\n\r\nStarting technologies:\r\n\t- Gathering."
         },
         {
             "Key": "nk_human",
@@ -14,7 +14,7 @@
         },
         {
             "Key": "dk_human",
-            "Value": "Humanux description."
+            "Value": "Humans.\r\nLords of the steppes.\r\nVery prolific.\r\n\r\nStarting technologies:\r\n\t- Gathering."
         }
     ]
 }
