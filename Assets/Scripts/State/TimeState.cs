@@ -1,3 +1,5 @@
+using System;
+
 namespace State
 {
     public class TimeState
@@ -6,20 +8,24 @@ namespace State
         private int currentMonth;
         private int currentYear;
 
+        public event Action<int> OnDayChanged;
+        public event Action<int> OnMonthChanged;
+        public event Action<int> OnYearChanged;
+
         public TimeState()
         {
-            currentDay = 0;
+            currentDay = 1;
             currentMonth = 1;
             currentYear = 1;
         }
         public string GetCurrentTimeString() => $"Current Day: {currentDay}, Current Month: {currentMonth}, Current Year: {currentYear}.";
-        public int GetCurrentDay() => currentDay;
-        public int GetCurrentMonth() => currentMonth;
-        public int GetCurrentYear() => currentYear;
-        public void UpdateTick()
-        {
-            AddDay();
-        }
+        public int GetCurrentDay() =>
+            currentDay;
+        public int GetCurrentMonth() =>
+            currentMonth;
+        public int GetCurrentYear() =>
+            currentYear;
+        public void UpdateTick() => AddDay();
         private void AddDay()
         {
             currentDay++;
@@ -31,8 +37,11 @@ namespace State
                 {
                     currentMonth = 1;
                     currentYear++;
+                    OnYearChanged?.Invoke(currentYear);
                 }
+                OnMonthChanged?.Invoke(currentMonth);
             }
+            OnDayChanged?.Invoke(currentDay);
         }
     }
 }

@@ -9,9 +9,20 @@ namespace SO
         [Header("ID")]
         public string ID;
 
+        public LocalizationCategory Category => LocalizationCategory.Races;
+        public List<LocalizedString> LocalizedStrings;
+        public IEnumerable<LocalizationEntry> GetLocalizationEntries(string lang)
+        {
+            foreach (var s in LocalizedStrings)
+            {
+                if (!string.IsNullOrEmpty(s.Key))
+                    yield return new LocalizationEntry(s.Key, s.Get(lang));
+            }
+        }
+
         [Header("Localization Keys:")]
         [field: SerializeField] public string NameKey { get; private set; }
-        [field: SerializeField] public string DescriptionKey {  get; private set; }
+        [field: SerializeField] public string DescriptionKey { get; private set; }
 
         [Header("RU Localization Data")]
         public string NameRU;
@@ -23,18 +34,12 @@ namespace SO
         [TextArea(2, 6)]
         public string DescriptionEN;
 
-        public string LocalizationOutputFolder(LocalizationGeneratorSO config)
-            => config.RacesLocalizationOutputFolder;
+        //public string LocalizationOutputFolder(LocalizationGeneratorSO config)
+        //    => config.RacesLocalizationOutputFolder;
         public IEnumerable<LocalizationEntry> GetLocalizationEntriesRU()
-        {
-            yield return new(NameKey, NameRU);
-            yield return new(DescriptionKey, DescriptionRU);
-        }
+            => LocalizationHelper.GetAllEntries(this, "RU");
 
         public IEnumerable<LocalizationEntry> GetLocalizationEntriesEN()
-        {
-            yield return new(NameKey, NameEN);
-            yield return new(DescriptionKey, DescriptionEN);
-        }
+            => LocalizationHelper.GetAllEntries(this, "EN");
     }
 }

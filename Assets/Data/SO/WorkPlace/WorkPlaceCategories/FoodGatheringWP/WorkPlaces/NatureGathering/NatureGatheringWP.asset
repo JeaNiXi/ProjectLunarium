@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c1035c2fdd1cf4d910485ec575ad05, type: 3}
+  m_Name: NatureGatheringWP
+  m_EditorClassIdentifier: Assembly-CSharp::SO.WorkPlaceSO
+  <ID>k__BackingField: wpNatureGathering
+  <WorkPlaceTypes>k__BackingField:
+  - {fileID: 11400000, guid: 863ccc7539ef2e247b485f8e75f2c7b1, type: 2}
+  <DefaultWorkPlaceCapacity>k__BackingField: 20
+  LocalizedStrings:
+  - Key: nkwpNatureGathering
+    RU: "\u0421\u043E\u0431\u0438\u0440\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"
+    EN: Gathering
+  <NameKey>k__BackingField: nkwpNatureGathering
+  NameRU: "\u0421\u043E\u0431\u0438\u0440\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"
+  NameEN: Gathering

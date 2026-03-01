@@ -1,5 +1,3 @@
-using Data;
-using Mono.Cecil;
 using SO;
 using System;
 using System.Collections.Generic;
@@ -8,127 +6,89 @@ namespace State
 {
     public class ResourceState
     {
+
         public event Action<ResourceSO, int> OnResourceAmountChanged;
 
-        private ResourceStateSO resourceStateSO;
-        private Dictionary<ResourceSO, int> ResourcesAmounts = new Dictionary<ResourceSO, int>();
+        private Dictionary<ResourceSO, int> ResourceAmounts;
+        private Dictionary<ResourceSO, int> ResourceIncomes;
 
-        private readonly ResourceSO GathererFoodResource;
-        private readonly ResourceSO GathererWaterResource;
-        private readonly ResourceSO GathererWoodResource;
-        private readonly int BaseGathererFoodIncome = 2;
-        private readonly int BaseGathererWaterIncome = 1;
-        private readonly int BaseGathererWoodIncome = 1;
-        private readonly float BaseChildFoodUsage = .6f;
-        private readonly float BaseChildWaterUsage = .4f;
-        private readonly float BaseChildWoodUsage = .2f;
-        private readonly float BaseAdultFoodUsage = 1f;
-        private readonly float BaseAdultWaterUsage = .6f;
-        private readonly float BaseAdultWoodUsage = .8f;
-        private readonly float BaseElderFoodUsage = .8f;
-        private readonly float BaseElderWaterUsage = .6f;
-        private readonly float BaseElederWoodUsage = .6f;
-
-        public ResourceState(ResourceManagerSO resourceManagerSO)
+        public ResourceState(ResourceManagerSO MainSO)
         {
-            GathererFoodResource = resourceManagerSO.GathererFoodResource;
-            GathererWaterResource = resourceManagerSO.GathererWaterResource;
-            GathererWoodResource = resourceManagerSO.GahrererWoodResource;
-            foreach (ResourceSO resource in resourceManagerSO.AllResourcesList)
+            ResourceAmounts = new Dictionary<ResourceSO, int>();
+            ResourceIncomes = new Dictionary<ResourceSO, int>();
+
+            foreach (var resource in MainSO.AllResourcesList)
             {
-                ResourcesAmounts.Add(resource, 0);
+                if (resource == null)
+                    continue;
+                ResourceAmounts.Add(resource, 0);
+                ResourceIncomes.Add(resource, 0);
             }
-            resourceStateSO = Resources.Load<ResourceStateSO>("SO/ResourceState");
-            //InitializeResourceStateSO();
-            InitializeRuntimeResourcesDictionary();
-        }
-        public Dictionary<ResourceSO, int> GetResourceAmountsDictionary()
-            => ResourcesAmounts;
-        public void InitializeRuntimeResourcesDictionary()
-        {
-            resourceStateSO.ClearRuntimeResourceAmountsDictionary();
-            foreach (var (resource, amount) in ResourcesAmounts)
-                resourceStateSO.InitializeRuntimeResourceAmountsDictionary(resource, amount);
-            resourceStateSO.ClearRuntimeResourceAmountsList();
-            resourceStateSO.UpdateRuntimeResourceAmountsList();
-        }
-        private void InitializeResourceStateSO()
-        {
-            if (resourceStateSO.resourceAmountsDictionary != null)
-                resourceStateSO.ClearAmountsDictionary();
-            foreach (var (resource, value) in ResourcesAmounts)
-                resourceStateSO.resourceAmountsDictionary.Add(resource, value);
-            if (resourceStateSO != null)
-                resourceStateSO.ClearAmountsList();
-            foreach (var resource in ResourcesAmounts.Values)
-                resourceStateSO.resourcesAmountsList.Add(resource);
         }
 
-
-
-        public void UpdateGatherersResourcesIncomes(int gatherersAmount) // Remake to Income State
+        public bool HasResourceAmount(ResourceSO resource, int amount)
         {
-            var foodIncome = BaseGathererFoodIncome * gatherersAmount;
-            var waterIncome = BaseGathererWaterIncome * gatherersAmount;
-            var woodIncome = BaseGathererWoodIncome * gatherersAmount;
-
-            AddResourceAmount(GathererFoodResource, foodIncome);
-            AddResourceAmount(GathererWaterResource, waterIncome);
-            AddResourceAmount(GathererWoodResource, woodIncome);
-            Debug.Log($"Current Date :{DebugExtensions.GetCurrentDateString()}, adding " +
-                $"food: {foodIncome}, " +
-                $"water: {waterIncome}, " +
-                $"wood: {woodIncome},");
-        }
-        public void UpdateResourceUsage(int childAmount, int adultAmount, int elderAmount)
-        {
-            int foodUsage = Mathf.RoundToInt(BaseChildFoodUsage * childAmount + BaseAdultFoodUsage * adultAmount + BaseElderFoodUsage * elderAmount);
-            var waterUsage = Mathf.RoundToInt(BaseChildWaterUsage * childAmount + BaseAdultWaterUsage * adultAmount + BaseElderWaterUsage * elderAmount);
-            var woodUsage = Mathf.RoundToInt(BaseChildWoodUsage * childAmount + BaseAdultWoodUsage * adultAmount + BaseElederWoodUsage * elderAmount);
-            RemoveResourceAmount(GathererFoodResource, foodUsage);
-            RemoveResourceAmount(GathererWaterResource, waterUsage);
-            RemoveResourceAmount(GathererWoodResource, woodUsage);
-            Debug.Log($"Removing: " +
-                $"food: {foodUsage}, " +
-                $"water: {waterUsage}, " +
-                $"wood: {woodUsage},");
-            Debug.Log($"Resources Left: " +
-                $"Food: {GetResourceAmount(GathererFoodResource)}, " +
-                $"Water: {GetResourceAmount(GathererWaterResource)}, " +
-                $"Wood: {GetResourceAmount(GathererWoodResource)}.");
-            UpdateResourceState();
+            if (resource == null)
+                return false;
+            return ResourceAmounts.TryGetValue(resource, out var currentAmount) && currentAmount >= amount;
         }
 
         public void AddResourceAmount(ResourceSO resource, int amount)
         {
-            if (ResourcesAmounts.ContainsKey(resource))
-                ResourcesAmounts[resource] += amount;
+            if (resource == null || amount <= 0)
+                return;
+            if (ResourceAmounts.ContainsKey(resource))
+            {
+                ResourceAmounts[resource] += amount;
+                Debug.Log($"Added Resource: {resource.ID} : {amount} ! ");
+                OnResourceAmountChanged?.Invoke(resource, ResourceAmounts[resource]);
+            }
         }
-        public void RemoveResourceAmount(ResourceSO resource, int amount)
+
+        public void SpendResourceAmount(ResourceSO resource, int amount)
         {
-            if (ResourcesAmounts.ContainsKey(resource))
-                ResourcesAmounts[resource] -= amount;
+            if (resource == null || amount <= 0)
+                return;
+            if (ResourceAmounts.ContainsKey(resource))
+            {
+                ResourceAmounts[resource] -= amount;
+                OnResourceAmountChanged?.Invoke(resource, ResourceAmounts[resource]);
+            }
         }
-        public int GetResourceAmount(ResourceSO resource)
-                    => ResourcesAmounts.TryGetValue(resource, out var amount) ? amount : 0;
-        public void UpdateResourceState()
+
+        public int GetResourceAmount(ResourceSO resource) =>
+            resource != null && ResourceAmounts.TryGetValue(resource, out var currentAmount) ? currentAmount : 0;
+        public void ResetIncomes()
         {
-            foreach (var resource in ResourcesAmounts.Keys)
-                resourceStateSO.UpdateResourceRuntimeAmountsDictionary(resource, ResourcesAmounts[resource]);
-            resourceStateSO.UpdateRuntimeResourceAmountsList();
+            var keys = new List<ResourceSO>(ResourceIncomes.Keys);
+            foreach (var key in keys)
+                ResourceIncomes[key] = 0;
         }
-        public void UpdateLedgerResource(ResourceSO resource)
-            => OnResourceAmountChanged?.Invoke(resource, ResourcesAmounts[resource]);
-        public void ClearResourceAmounts()
-            => ResourcesAmounts.Clear();
-        public void UpdateResourceAmountsFromSaveData(Dictionary<ResourceSO, int> resourcesAmountsDictionary)
-            => ResourcesAmounts = resourcesAmountsDictionary;
-        public bool HasResourceAmount(ResourceSO resource, int amount)
+        public void SetResourceIncome(ResourceSO resource, int amount)
         {
-            if (ResourcesAmounts.ContainsKey(resource))
-                if (ResourcesAmounts[resource] >= amount)
-                    return true;
-            return false;
+            if (resource != null && ResourceIncomes.ContainsKey(resource))
+            {
+                ResourceIncomes[resource] = amount;
+            }
         }
+        public int GetResourceIncome(ResourceSO resource)
+        {
+            if (resource != null && ResourceIncomes.TryGetValue(resource, out var currentIncome))
+            {
+                return currentIncome;
+            }
+            return 0;
+        }
+        public void UpdateResourceAmountsFromSaveData(Dictionary<ResourceSO, int> newAmount)
+        {
+            foreach (var (res, val) in newAmount)
+            {
+                if (ResourceAmounts.ContainsKey(res))
+                    ResourceAmounts[res] = val;
+            }
+        }
+
+        public Dictionary<ResourceSO, int> GetResourceAmountDictionary()
+            => ResourceAmounts;
     }
 }

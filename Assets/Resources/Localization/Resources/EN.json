@@ -1,36 +1,52 @@
 {
     "Entries": [
         {
-            "Key": "",
-            "Value": ""
+            "Key": "nk_name_res_animalHide",
+            "Value": "eng desc"
         },
         {
-            "Key": "",
-            "Value": ""
+            "Key": "nk_description_res_animalHide",
+            "Value": "eng desc"
         },
         {
-            "Key": "resource.food.name",
-            "Value": ""
+            "Key": "nk_name_res_drySticks",
+            "Value": "Dry Sticks"
         },
         {
-            "Key": "resource.food.description",
-            "Value": ""
+            "Key": "nk_description_res_drySticks",
+            "Value": "Simple Sticks"
         },
         {
-            "Key": "resource.water.name",
-            "Value": ""
+            "Key": "nk_name_res_fish",
+            "Value": "Fish"
         },
         {
-            "Key": "resource.water.description",
-            "Value": ""
+            "Key": "nk_description_res_fish",
+            "Value": "Simple fish."
         },
         {
-            "Key": "resource.wood.name",
-            "Value": "Wood"
+            "Key": "nk_name_res_flintStone",
+            "Value": "res_eng"
         },
         {
-            "Key": "resource.wood.description",
-            "Value": "Just Random Wood.\nTest.\nTest.\nTest.\nTest.\nTest.\nTest.\nTest End."
+            "Key": "nk_description_res_flintStone",
+            "Value": "red_eng"
+        },
+        {
+            "Key": "nk_name_res_riverWater",
+            "Value": "River Water"
+        },
+        {
+            "Key": "nk_description_res_riverWater",
+            "Value": "Water from the nearest river."
+        },
+        {
+            "Key": "nk_name_res_wildBerries",
+            "Value": "Wild Berries"
+        },
+        {
+            "Key": "nk_description_res_wildBerries",
+            "Value": "Berries growing."
         }
     ]
 }

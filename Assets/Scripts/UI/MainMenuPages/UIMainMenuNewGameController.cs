@@ -90,8 +90,8 @@ namespace UI
 
             selectStandardNewGameButton.clicked += OnStandardNewGameButtonClicked;
 
-            startRaceSelectHumansButton.clicked += OnRaceHumansSelected;
-            startRaceSelectElfButton.clicked += OnRaceElfSelected;
+            startRaceSelectHumansButton.clicked += OnDefaultScenarioHumansSelected;
+            startRaceSelectElfButton.clicked += OnDefaultScenarioElfSelected;
         }
         private void InitializeFirstPage()
         {
@@ -117,6 +117,7 @@ namespace UI
         private void OnStartPageButtonClicked()
         {
             GameManager.Instance.StartNewGame(newGameState);
+            UIManager.Instance.HideCurrentPage();
             //GameManager.Instance.SetGameState(GameManager.GameState.RUNNING);
             //UIManager.Instance.EnableAllCategoryButtons();
 
@@ -164,22 +165,30 @@ namespace UI
         {
             //throw new System.NotImplementedException();
         }
-        private void OnRaceHumansSelected()
-            => SelectRace(RaceDatabaseSO.RaceType.Human);
-        private void OnRaceElfSelected()
-            => SelectRace(RaceDatabaseSO.RaceType.Elf);
-        private void SelectRace(RaceDatabaseSO.RaceType raceType)
+        private void OnDefaultScenarioHumansSelected()
+            => SelectDefaultScenario(RaceDatabaseSO.RaceType.Human, defaultHumanNewGameState);
+        private void OnDefaultScenarioElfSelected()
+            => SelectDefaultScenario(RaceDatabaseSO.RaceType.Elf, defaultElfNewGameState);
+        private void SelectDefaultScenario(RaceDatabaseSO.RaceType raceType, NewGameStateSO newGameStateSO)
         {
             if (PopulationManager.Instance.TryGetRace(raceType, out var race))
             {
-                newGameState.SetStartingRace(race);
+                InsertNewGameStateData(newGameStateSO, newGameState, race);
                 UpdateRaceDescriptionLabel(race);
                 Debug.Log($"StartingRace = {race}");
             }
         }
+        private void InsertNewGameStateData(NewGameStateSO newGameStateSO, NewGameState state, RaceSO race)
+        {
+            state.SetNGPopState(newGameStateSO.NGPopStateList);
+            state.SetNGTechState(newGameStateSO.NGTechStateList);
+        }
         private void UpdateRaceDescriptionLabel(RaceSO race)
         {
-            raceDescriptionLabel.text = LocalizationManager.Instance.GetLocalizedRaceDescription(race.DescriptionKey);
+            if (LocalizationManager.Instance.GetLocalizedRaceData(race.DescriptionKey, out string value))
+                UpdateLabelText(raceDescriptionLabel, value);
         }
+        private void UpdateLabelText(Label label, string text)
+            => label.text = text;
     }
 }

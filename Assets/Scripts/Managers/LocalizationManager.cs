@@ -1,5 +1,4 @@
 using Localization;
-using SO;
 using UnityEngine;
 using static Localization.LocalizationData;
 namespace Managers
@@ -22,11 +21,28 @@ namespace Managers
         }
         public void SetLocalization(LocalizationData.Localizations language)
             => localizationData.SetLocalization(language);
-        public string GetLocalizedResourceName(string resourceNameKey)
-            => localizationData.GetLocalizedResourceName(resourceNameKey);
-        public string GetLocalizedResourceDescription(string resourceDescriptionKey)
-            => localizationData.GetLocalizedResourceDescription(resourceDescriptionKey);
-        public string GetLocalizedRaceDescription(string raceDescriptionKey)
-            => localizationData.GetLocalizedRaceDescription(raceDescriptionKey);
+        public string GetLocalizedResourceData(string resourceDataKey)
+            => localizationData.GetLocalizedResourceData(resourceDataKey);
+        public string GetLocalizedTechnologySOData(string techDataKey) =>
+            localizationData.GetLocalizedTechnologySOData(techDataKey);
+        public string GetLocalizedWorkPlaceSOData(string workPlaceSODataKey)
+            => localizationData.GetLocalizedWorkPlaceSOData(workPlaceSODataKey);
+        public bool GetLocalizedWorkPlaceCategorySOData(string workPlaceCategorySODataKey, out string value) =>
+            localizationData.GetLocalizedWorkPlaceCategorySOData(workPlaceCategorySODataKey, out value);
+        public bool GetLocalizedWorkPlaceTypeSOData(string workPlaceTypeSODataKey, out string value) =>
+            localizationData.GetLocalizedWorkPlaceTypeSOData(workPlaceTypeSODataKey, out value);
+        public bool GetLocalizedRaceData(string raceDataKey, out string value)
+        {
+            if (localizationData.GetLocalizedRaceData(raceDataKey, out value))
+                return true;
+            else
+                return false;
+        }
+
+
+        public string GetLocalizedUIMenuData(string uiMenuDataKey)
+            => localizationData.GetLocalizedUIMenuData(uiMenuDataKey);
+        public string GetLocalizedUIWorkPlaceData(string uiWorkPlaceData) =>
+            localizationData.GetLocalizedUIWorkPlaceData(uiWorkPlaceData);
     }
 }

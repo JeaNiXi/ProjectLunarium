@@ -23,6 +23,11 @@ namespace Managers
         {
             WorkersState = new WorkersState(WorkersManagerSO);
         }
+
+        public void InitializeInitialWorkers() =>
+            AddWorkersToWorkPlace(PopulationManager.Instance.GetActivePopulation(out ulong population) ? population : 0);
+        public void AddWorkersToWorkPlace(ulong workersAmount) =>
+            WorkPlaceManager.Instance.AddWorkersToWorkPlace(workersAmount);
         public void AddWorkerToResource(ResourceSO resource) => WorkersState.AddWorkerToResource(resource);
         public void UpdateWorkersAmount(int workingPopulation) => WorkersState.InitializeWorkerTypesFromWorkerPopulation(workingPopulation);
     }

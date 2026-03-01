@@ -48,23 +48,39 @@ namespace State
     }
     public class NewGameState
     {
-        public RaceSO SelectedRace { get; private set; }
-        public int TotalPopulation { get; private set; }
-        public int ChildPopultaion { get; private set; }
-        public int AdultPopulation { get; private set; }
-        public int ElderPopulation { get; private set; }
-        public List<TechnologySO> ResearchedTechnologies { get; private set; }
+        public event Action OnStateChanged;
+        private List<NGPopState> ngPopStateList;
+        private List<NGTechState> ngTechStateList;
+
+        public NewGameState()
+        {
+            ngPopStateList = new List<NGPopState>();
+            ngTechStateList = new List<NGTechState>();
+        }
+        public NewGameState(NewGameStateSO newGameStateSO)
+        {
+            ngPopStateList = new List<NGPopState>();
+            ngTechStateList = new List<NGTechState>();
+            ngPopStateList = newGameStateSO.NGPopStateList;
+            ngTechStateList = newGameStateSO.NGTechStateList;
+        }
 
         public bool IsDataCompleted =>
-            SelectedRace != null;
-
-        public event Action OnStateChanged;
-        public void SetStartingRace(RaceSO race)
+            ngPopStateList != null &&
+            ngTechStateList != null;
+        public void SetNGPopState(List<NGPopState> popStateList)
         {
-            SelectedRace = race;
-            Notify();
+            ngPopStateList = popStateList;
+            OnStateChanged?.Invoke();
         }
-        public void Notify()
-            => OnStateChanged?.Invoke();
+        public List<NGPopState> GetNGPopState()
+            => ngPopStateList;
+        public void SetNGTechState(List<NGTechState> techStateList)
+        {
+            ngTechStateList = techStateList;
+            OnStateChanged?.Invoke();
+        }
+        public List<NGTechState> GetNGTechState()
+            => ngTechStateList;
     }
 }

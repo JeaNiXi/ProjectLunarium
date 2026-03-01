@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75b1f1571da7f642a4fc9310192260d, type: 3}
+  m_Name: SimpleSurviving
+  m_EditorClassIdentifier: Assembly-CSharp::SO.WorkPlaceTypeSO
+  <ID>k__BackingField: wptSimpleSurviving
+  LocalizedStrings:
+  - Key: nkwptSimpleSurviving
+    RU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0412\u044B\u0436\u0438\u0432\u0430\u043D\u0438\u0435"
+    EN: Simple Surviving
+  <TechNeeded>k__BackingField: []
+  ProducedResources:
+  - Resource: {fileID: 11400000, guid: 767bbd604a4c7c5409d9c187415aa7ce, type: 2}
+    Amount: 1
+  - Resource: {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
+    Amount: 1
+  RequiredResources: []
+  <NameKey>k__BackingField: nkwptSimpleSurviving
+  NameRU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0412\u044B\u0436\u0438\u0432\u0430\u043D\u0438\u0435"
+  NameEN: Simple Surviving

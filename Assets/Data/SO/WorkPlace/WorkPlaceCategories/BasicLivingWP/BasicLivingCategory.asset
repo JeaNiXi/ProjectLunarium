@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 079afb096502b0e43a03f776ab216c81, type: 3}
+  m_Name: BasicLivingCategory
+  m_EditorClassIdentifier: Assembly-CSharp::SO.WorkPlaceCategorySO
+  CategoryID: basicLivingWPCategory
+  WorkPlaces:
+  - {fileID: 11400000, guid: a93861d9d2a55f74db09afd0b72e0134, type: 2}
+  LocalizedStrings:
+  - Key: nkwpcBasicLiving
+    RU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0421\u0443\u0449\u0435\u0441\u0442\u0432\u043E\u0432\u0430\u043D\u0438\u0435"
+    EN: Basic Living
+  <CategoryNameKey>k__BackingField: nkwpcBasicLiving
+  CategoryNameRU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0421\u0443\u0449\u0435\u0441\u0442\u0432\u043E\u0432\u0430\u043D\u0438\u0435"
+  CategoryNameEN: Basic Living

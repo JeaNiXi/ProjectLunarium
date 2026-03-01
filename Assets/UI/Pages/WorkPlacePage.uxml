@@ -1,0 +1,18 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Pages/WorkPlacePage.uss?fileID=7433441132597879392&amp;guid=feb5ab33c73ad6442822f509070d853c&amp;type=3#WorkPlacePage"/>
+    <ui:VisualElement style="flex-grow: 1; flex-direction: column;">
+        <ui:VisualElement style="flex-basis: 20%;"/>
+        <ui:VisualElement style="flex-basis: 80%; flex-direction: row;">
+            <ui:VisualElement style="flex-basis: 20%;">
+                <ui:VisualElement name="workPlacesVE" style="flex-grow: 1;">
+                    <ui:Button text="basicLivingWPB" name="basicLivingWPButton" class="work-place-button"/>
+                    <ui:Button text="foodWPB" name="foodWPButton" class="work-place-button"/>
+                    <ui:Button text="Button"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-basis: 80%;">
+                <ui:VisualElement name="mainWPPage" style="flex-grow: 1;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

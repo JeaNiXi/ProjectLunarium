@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5959684dcee5734bb6bc4792be52d8f, type: 3}
+  m_Name: RiverWater
+  m_EditorClassIdentifier: Assembly-CSharp::SO.ResourceSO
+  ID: res_riverWater
+  Localization:
+    Name:
+      Key: nk_name_res_riverWater
+      RU: "\u0420\u0435\u0447\u043D\u0430\u044F \u0412\u043E\u0434\u0430"
+      EN: River Water
+    Description:
+      Key: nk_description_res_riverWater
+      RU: "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u0430 \u0434\u043B\u044F
+        \u0432\u044B\u0436\u0438\u0432\u0430\u043D\u0438\u044F. \u0414\u043E\u0431\u044B\u0432\u0430\u0435\u0442\u0441\u044F
+        \u0443 \u0431\u0435\u0440\u0435\u0433\u0430."
+      EN: Water from the nearest river.
+  AnimationSprites:
+  - {fileID: 4926131633840504183, guid: 786bda613287e76439e941764bdb25b3, type: 3}
+  - {fileID: 8060041809488466418, guid: 786bda613287e76439e941764bdb25b3, type: 3}
+  - {fileID: 2335775811206459273, guid: 786bda613287e76439e941764bdb25b3, type: 3}
+  - {fileID: -8422885080058932615, guid: 786bda613287e76439e941764bdb25b3, type: 3}
+  TechNeeded:
+  - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}

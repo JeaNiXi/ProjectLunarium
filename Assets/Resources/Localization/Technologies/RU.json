@@ -1,0 +1,44 @@
+{
+    "Entries": [
+        {
+            "Key": "nk_name_tech_Fire",
+            "Value": "Огонь"
+        },
+        {
+            "Key": "nk_description_tech_Fire",
+            "Value": "Cнижает потребление еды поселенцами (через модификатор)"
+        },
+        {
+            "Key": "nk_name_tech_Gathering",
+            "Value": "Собирательство"
+        },
+        {
+            "Key": "nk_description_tech_Gathering",
+            "Value": "Открывает рабочие места \"Кустарник\" и \"Валежник\""
+        },
+        {
+            "Key": "nk_name_tech_basketWieving",
+            "Value": "Плетение корзин"
+        },
+        {
+            "Key": "nk_description_tech_basketWieving",
+            "Value": "Увеличивает лимит хранения для всех ресурсов на 20%."
+        },
+        {
+            "Key": "nk_name_tech_fishing",
+            "Value": "Рыбная Ловля"
+        },
+        {
+            "Key": "nk_description_tech_fishing",
+            "Value": "Открывает Ресурс Рыбов"
+        },
+        {
+            "Key": "nk_name_tech_primitiveHunting",
+            "Value": "Примитивная Охота"
+        },
+        {
+            "Key": "nk_description_tech_primitiveHunting",
+            "Value": "Открывает сбор кожи животных и увеличивает доход еды."
+        }
+    ]
+}

@@ -48,7 +48,7 @@ namespace SO
         }
         public void UpdateResourceAmount(ResourceSO resource, int amount)
         {
-            if(runtimeResourceAmountsDictionary.ContainsKey(resource))
+            if (runtimeResourceAmountsDictionary.ContainsKey(resource))
                 runtimeResourceAmountsDictionary[resource].UpdateAmount(amount);
         }
         #endregion

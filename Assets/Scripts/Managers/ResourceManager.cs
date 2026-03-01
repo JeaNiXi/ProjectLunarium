@@ -3,18 +3,19 @@ using SO;
 using State;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 namespace Managers
 {
     public class ResourceManager : MonoBehaviour, ISaveableState
     {
         public static ResourceManager Instance;
-        public ResourceManagerSO ResourceManagerSO;
-        private ResourceState CurrentResourceState;
-        private Dictionary<string, ResourceSO> ResourceIDs;
-        private List<ResourceSO> AllResourcesList;
+        public ResourceManagerSO MainSO;
 
+        public event Action OnVisibleUIResourcesUpdateNeeded;
+
+        private ResourceState CurrentResourceState;
+
+        private Dictionary<string, ResourceSO> ResourceIDs;
         public string SaveDataFileName => "ResourcesSaveData.json";
 
         private void Awake()
@@ -26,45 +27,60 @@ namespace Managers
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-            ResourceIDs = new Dictionary<string, ResourceSO>();
-            AllResourcesList = new List<ResourceSO>();
+            InitializeData();
             InitializeHelperData();
-            InitializeStartingResourcesState();
+        }
+
+        private void InitializeData()
+        {
+            CurrentResourceState = new ResourceState(MainSO);
+            ResourceIDs = new Dictionary<string, ResourceSO>();
         }
         private void InitializeHelperData()
         {
-            var allResources = GetAllResourcesList();
-            foreach (var resource in allResources)
-                ResourceIDs.Add(resource.ID, resource);
-            AllResourcesList = allResources;
+            ResourceIDs.Clear();
+            foreach (var resource in MainSO.AllResourcesList)
+            {
+                if (resource != null)
+                    ResourceIDs.Add(resource.ID, resource);
+            }
         }
+
         public ResourceState GetCurrentResourceState()
             => CurrentResourceState;
-        public void InitializeStartingResourcesState() => CurrentResourceState = new ResourceState(ResourceManagerSO);
-        public List<ResourceSO> GetAllResourcesList() => ResourceManagerSO.AllResourcesList;
-        public void OnGlobalTick(TimeState timeState)
-        {
 
-            /*
-             * We check here what are the resources we collect first. 
-             * All this should be done After technologies and modifiers are in line. (Later Magic, Society, Population).
-             * Basically this shlould be the last step, duh. Every other step before this should already have updated everything.
-             */
-        }
-        public void UpdateGathererResourceIncome(int gatherersAmount)
+        public void OnGlobalTick()
         {
-            CurrentResourceState.UpdateGatherersResourcesIncomes(gatherersAmount);
+            CurrentResourceState.ResetIncomes();
+            CalculateGlobalProduction();
+            UpdateVisibleUIResources();
         }
-        public void UpdateResourceUsage(int childAmount, int adultAmount, int elderAmount)
+        public void CalculateGlobalProduction()
         {
-            CurrentResourceState.UpdateResourceUsage(childAmount, adultAmount, elderAmount);
+            foreach (WorkPlace workPlace in WorkPlaceManager.Instance.GetAllWorkPlaces())
+            {
+                if (workPlace.CurrentWorkModeType == null || workPlace.GetWorkersAmount() == 0)
+                    continue;
+                foreach(var stack in workPlace.CurrentWorkModeType.ProducedResources)
+                {
+                    int amount = (int)(stack.Amount * workPlace.GetWorkersAmount());
+                    int current = CurrentResourceState.GetResourceIncome(stack.Resource);
+                    CurrentResourceState.SetResourceIncome(stack.Resource, current + amount);
+                }
+            }
         }
-        public Dictionary<ResourceSO, int> GetResourceAmountsDictionary()
-            => CurrentResourceState.GetResourceAmountsDictionary();
-        public bool HasResourceAmount(ResourceSO resource, int amount)
-            => CurrentResourceState.HasResourceAmount(resource, amount);
-        public int GetResourceAmount(ResourceSO resource)
-            => CurrentResourceState.GetResourceAmount(resource);
+        public bool HasResourceAmount(ResourceSO resource, int amount) =>
+            CurrentResourceState.HasResourceAmount(resource, amount);
+
+        public int GetResourceAmount(ResourceSO resource) =>
+            CurrentResourceState.GetResourceAmount(resource);
+
+        public void AddResource(ResourceSO resource, int amount) =>
+            CurrentResourceState.AddResourceAmount(resource, amount);
+
+        public void SpendResource(ResourceSO resource, int amount) =>
+            CurrentResourceState.SpendResourceAmount(resource, amount);
+
         public object SaveState()
         {
             var data = new ResourceSaveData()
@@ -79,19 +95,6 @@ namespace Managers
                 data.Amounts.Add(amount);
             }
             return data;
-        }
-        public bool TryGetResourceByID(string ID, out ResourceSO resource)
-        {
-            if (ResourceIDs.ContainsKey(ID))
-            {
-                resource = ResourceIDs[ID];
-                return true;
-            }
-            else
-            {
-                resource = null;
-                return false;
-            }
         }
         public void LoadState(object saveData)
         {
@@ -108,10 +111,18 @@ namespace Managers
             CurrentResourceState.UpdateResourceAmountsFromSaveData(newAmounts);
         }
 
+        public Dictionary<ResourceSO, int> GetResourceAmountsDictionary()
+            => CurrentResourceState.GetResourceAmountDictionary();
+
+        public bool TryGetResourceByID(string id, out ResourceSO resource) =>
+            ResourceIDs.TryGetValue(id, out resource);
+
+        public void UpdateVisibleUIResources() =>
+            OnVisibleUIResourcesUpdateNeeded?.Invoke();
+
         public void ResetState()
         {
-            CurrentResourceState.ClearResourceAmounts();
-            CurrentResourceState.InitializeRuntimeResourcesDictionary();
+
         }
     }
 }

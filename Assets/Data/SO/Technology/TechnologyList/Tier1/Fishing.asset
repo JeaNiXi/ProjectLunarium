@@ -12,18 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0d15fce6aa4264198f6eb46032999f, type: 3}
   m_Name: Fishing
   m_EditorClassIdentifier: Assembly-CSharp::SO.TechnologySO
-  ID: tFishing
-  NameKey: nkFishing
-  DescriptionKey: ndFishing
+  ID: tech_fishing
+  Localization:
+    Name:
+      Key: nk_name_tech_fishing
+      RU: "\u0420\u044B\u0431\u043D\u0430\u044F \u041B\u043E\u0432\u043B\u044F"
+      EN: sad
+    Description:
+      Key: nk_description_tech_fishing
+      RU: "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0420\u0435\u0441\u0443\u0440\u0441
+        \u0420\u044B\u0431\u043E\u0432"
+      EN: da
   Tier: 1
-  NextTech: []
-  PreviousTech:
-  - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
-  OpensResources: []
+  Rarity: 0
+  Icon: {fileID: 0}
+  BaseWeight: 100
+  IsHiddenByDefault: 0
+  TotalResearchPoints: 100
+  Milestones: []
   ResearchRequirements:
-    TechnologiesRequiredToResearch:
+    TechPrerequisites:
     - {fileID: 11400000, guid: 1136b65290ecf084d9d5d60fdcec5d4c, type: 2}
-    ResourceOneTimeCost:
-    - <Resource>k__BackingField: {fileID: 11400000, guid: ac34504bf884f8d49ad8487616b845c5, type: 2}
-      <Amount>k__BackingField: 60
+    ResourceOneTimeCost: []
     ResourceDailyCost: []
+    SpecialRequirements: []
+  BreakthroughChances: []
+  UnlockedResources:
+  - {fileID: 11400000, guid: 109fe67aa07885446b81869f8686022b, type: 2}
+  references:
+    version: 2
+    RefIds: []

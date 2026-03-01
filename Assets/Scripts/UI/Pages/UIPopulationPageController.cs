@@ -1,3 +1,4 @@
+using Managers;
 using SO;
 using State;
 using System.Collections.Generic;
@@ -8,40 +9,53 @@ namespace UI
 {
     public class UIPopulationPageController : IUIPageController
     {
-        private VisualElement page;
+        private VisualElement RootVE;
         private VisualElement racePageMainView;
+
         private PopulationManagerSO data;
         private PopulationStateSO populationStateSO;
+
         private MultiColumnListView raceMultiColumnListView;
         private VisualTreeAsset raceInfoPanel;
         private Dictionary<string, VisualElement> cachedRaceInfoPanels;
         private List<RaceRow> raceRows = new();
+
+        private PopulationManager PopManager;
+
+        Label currentPopulationLabel;
+
         public void InitializePage(VisualElement page, ScriptableObject data)
         {
-            this.page = page;
+            RootVE = page;
             this.data = data as PopulationManagerSO;
             if (this.data == null)
                 Debug.Log("NO DATA SO FOUND");
-            racePageMainView = page.Q<VisualElement>("populationRaceListVE");
-            populationStateSO = Resources.Load<PopulationStateSO>("SO/PopulationState");
-            raceInfoPanel = Resources.Load<VisualTreeAsset>("UI/Panel/RacePanelInfoAsset");
-            cachedRaceInfoPanels= new Dictionary<string, VisualElement>();
             InitializeData();
-        }
-        private void InitializeData()
-        {
-            UpdatePopulationInfo();
+            InitializeConnections();
             InitializeRaceTable();
             InitializeRaceInfoPanels();
         }
-        private void UpdatePopulationInfo()
+        private void InitializeData()
         {
-            Label currentPopulationLabel = page.Q<Label>("currentPopulation");
-            currentPopulationLabel.text = populationStateSO.CurrentPopulation.ToString();
+            PopManager = PopulationManager.Instance;
+            racePageMainView = RootVE.Q<VisualElement>("populationRaceListVE");
+            populationStateSO = Resources.Load<PopulationStateSO>("SO/PopulationState");
+            raceInfoPanel = Resources.Load<VisualTreeAsset>("UI/Panel/RacePanelInfoAsset");
+            cachedRaceInfoPanels = new Dictionary<string, VisualElement>();
+
+            currentPopulationLabel = RootVE.Q<Label>("currentPopulation");
         }
+        private void InitializeConnections()
+        {
+            PopManager.OnPopulationChanged += PopManager_OnPopulationChanged;
+        }
+        private void PopManager_OnPopulationChanged(bool value, ulong population)
+            => UpdatePopulationInfo(population);
+        private void UpdatePopulationInfo(ulong population)
+            => currentPopulationLabel.text = population.ToString();
         private void InitializeRaceTable()
         {
-            raceMultiColumnListView = page.Q<MultiColumnListView>("RacesMCLV");
+            raceMultiColumnListView = RootVE.Q<MultiColumnListView>("RacesMCLV");
             raceMultiColumnListView.sortingMode = ColumnSortingMode.Default;
             raceMultiColumnListView.selectionType = SelectionType.Single;
             raceMultiColumnListView.itemsChosen += OnRaceSelected;
@@ -52,37 +66,44 @@ namespace UI
         }
         private void InitializeRaceInfoPanels()
         {
-            foreach(var race in populationStateSO.Races)
+            if (PopManager.GetAllPopulationGroupsData(out List<PopulationRaceGroup> raceData))
             {
-                TemplateContainer raceInfoPanelTemplate = raceInfoPanel.CloneTree();
-                raceInfoPanelTemplate.AddToClassList("race-info-panel");
-                raceInfoPanelTemplate.style.display = DisplayStyle.None;
-                raceInfoPanelTemplate.style.flexGrow = 1;
-                Label raceNameLabel = raceInfoPanelTemplate.Q<Label>("raceNK");
-                Button backButton = raceInfoPanelTemplate.Q<Button>("backButton");
-                raceNameLabel.text = race.Race.ToString();
-                backButton.RegisterCallback<ClickEvent, string>(OnRaceInfoPanelBackButtonClicked, race.Race.ToString());
-                cachedRaceInfoPanels.Add(race.Race.ToString(), raceInfoPanelTemplate);
-                racePageMainView.Add(raceInfoPanelTemplate);
+                foreach (var race in raceData)
+                {
+                    TemplateContainer raceInfoPanelTemplate = raceInfoPanel.CloneTree();
+                    raceInfoPanelTemplate.AddToClassList("race-info-panel");
+                    raceInfoPanelTemplate.style.display = DisplayStyle.None;
+                    raceInfoPanelTemplate.style.flexGrow = 1;
+                    Label raceNameLabel = raceInfoPanelTemplate.Q<Label>("raceNK");
+                    Button backButton = raceInfoPanelTemplate.Q<Button>("backButton");
+                    if (LocalizationManager.Instance.GetLocalizedRaceData(race.GetRaceSO().NameKey, out string value))
+                        UpdateLabel(raceNameLabel, value);
+                    backButton.RegisterCallback<ClickEvent, string>(OnRaceInfoPanelBackButtonClicked, race.GetRaceSO().ID);
+                    cachedRaceInfoPanels.Add(race.GetRaceSO().ID, raceInfoPanelTemplate);
+                    racePageMainView.Add(raceInfoPanelTemplate);
+                }
             }
         }
+        private void UpdateLabel(Label label, string value)
+            => label.text = value;
         private void BuildRaceRows()
         {
             raceRows.Clear();
-            foreach (var race in populationStateSO.Races)
+            if (PopManager.GetAllPopulationGroupsData(out List<PopulationRaceGroup> raceData))
             {
-                raceRows.Add(new RaceRow
+                foreach (PopulationRaceGroup race in raceData)
                 {
-                    Race = race.Race,
-                    Population = race.Population,
-                    Happiness = race.Happiness,
-                    ActivePopulationAmount = race.ActivePopulationAmount,
-                    DependablePopulationAmount = race.DependablePopulationAmount,
-                    ChildrenAmount = race.ChildrenAmount,
-                    AdultsAmount = race.AdultsAmount,
-                    EldersAmount = race.EldersAmount,
-                    Modifiers = string.Join(",", race.Modifiers)
-                });
+                    raceRows.Add(new RaceRow
+                    {
+                        Race = race.GetRaceSO(),
+                        Population = race.GetTotalPopAmount(),
+                        ChildrenAmount = race.GetChildAmount(),
+                        AdultsAmount = race.GetAdultAmount(),
+                        EldersAmount = race.GetElderAmount(),
+                        ActivePopulationAmount = race.GetActiveAmount(),
+                        DependablePopulationAmount = race.GetDependablesAmount(),
+                    });
+                }
             }
         }
         private void CreateRaceColumns()
@@ -207,7 +228,7 @@ namespace UI
                 bindCell = (e, i) =>
                 {
                     var label = e.Q<Label>();
-                    float h = raceRows[i].Happiness;
+                    float h = 0f;
                     label.text = $"{h:P0}";
                     label.RemoveFromClassList("good");
                     label.RemoveFromClassList("bad");
@@ -218,9 +239,9 @@ namespace UI
                     if (h > 0.75)
                         label.AddToClassList("good");
                 },
-                sortable = true,
-                comparison = (a, b)
-                    => raceRows[a].Happiness.CompareTo(raceRows[b].Happiness)
+                //sortable = true,
+                //comparison = (a, b)
+                //    => raceRows[a].Happiness.CompareTo(raceRows[b].Happiness)
             };
         }
         private Column CreateRaceActivePopulationColumn()
@@ -449,7 +470,7 @@ namespace UI
                 bindCell = (e, i) =>
                 {
                     var label = e.Q<Label>();
-                    label.text = raceRows[i].Modifiers;
+                    label.text = "NO";//raceRows[i].Modifiers;
                 },
                 sortable = false
             };
@@ -459,7 +480,7 @@ namespace UI
             var firstItem = selectedRace.FirstOrDefault();
             if (firstItem == null)
                 return;
-            if(firstItem is RaceRow raceRow)
+            if (firstItem is RaceRow raceRow)
             {
                 var race = raceRow.Race;
                 ShowRaceInfoPanel(race.ToString());
@@ -486,11 +507,11 @@ namespace UI
         }
         public void ShowPage()
         {
-            page.style.display = DisplayStyle.Flex;
+            RootVE.style.display = DisplayStyle.Flex;
         }
         public void HidePage()
         {
-            page.style.display = DisplayStyle.None;
+            RootVE.style.display = DisplayStyle.None;
         }
         public void UpdatePage()
         {

@@ -12,19 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0d15fce6aa4264198f6eb46032999f, type: 3}
   m_Name: Gathering
   m_EditorClassIdentifier: Assembly-CSharp::SO.TechnologySO
-  ID: tGathering
-  NameKey: nkGathering
-  DescriptionKey: dkGathering
+  ID: tech_Gathering
+  Localization:
+    Name:
+      Key: nk_name_tech_Gathering
+      RU: "\u0421\u043E\u0431\u0438\u0440\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"
+      EN: Gathering
+    Description:
+      Key: nk_description_tech_Gathering
+      RU: "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0440\u0430\u0431\u043E\u0447\u0438\u0435
+        \u043C\u0435\u0441\u0442\u0430 \"\u041A\u0443\u0441\u0442\u0430\u0440\u043D\u0438\u043A\"
+        \u0438 \"\u0412\u0430\u043B\u0435\u0436\u043D\u0438\u043A\""
+      EN: desceng
   Tier: 0
-  NextTech:
-  - {fileID: 11400000, guid: fd75237c6d0827d45a0954e84a89b041, type: 2}
-  - {fileID: 11400000, guid: dda95a3dabd221b4dbeac58e228846f1, type: 2}
-  PreviousTech: []
-  OpensResources:
-  - {fileID: 11400000, guid: ac34504bf884f8d49ad8487616b845c5, type: 2}
-  - {fileID: 11400000, guid: ff2248c4c3897124c85836a2d94a6141, type: 2}
-  - {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+  Rarity: 0
+  Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  BaseWeight: 100
+  IsHiddenByDefault: 0
+  TotalResearchPoints: 0
+  Milestones: []
   ResearchRequirements:
-    TechnologiesRequiredToResearch: []
+    TechPrerequisites: []
     ResourceOneTimeCost: []
     ResourceDailyCost: []
+    SpecialRequirements: []
+  BreakthroughChances: []
+  UnlockedResources:
+  - {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+  - {fileID: 11400000, guid: 767bbd604a4c7c5409d9c187415aa7ce, type: 2}
+  references:
+    version: 2
+    RefIds: []

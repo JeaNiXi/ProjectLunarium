@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85d583e102e43c4c8252821f7262cf5, type: 3}
+  m_Name: AgeAudioData
+  m_EditorClassIdentifier: Assembly-CSharp::SO.AgeAudioDataSO
+  AncientAgeBGAudio:
+  - {fileID: 8300000, guid: 531eb0a05d6d8c548bdc4d807bdb9457, type: 3}

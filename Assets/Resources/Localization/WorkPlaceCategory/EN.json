@@ -1,0 +1,12 @@
+{
+    "Entries": [
+        {
+            "Key": "nkwpcBasicLiving",
+            "Value": "Basic Living"
+        },
+        {
+            "Key": "nkwpcFoodGathering",
+            "Value": "Food Gathering"
+        }
+    ]
+}

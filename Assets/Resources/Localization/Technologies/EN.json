@@ -1,0 +1,44 @@
+{
+    "Entries": [
+        {
+            "Key": "nk_name_tech_Fire",
+            "Value": "eng"
+        },
+        {
+            "Key": "nk_description_tech_Fire",
+            "Value": "eng"
+        },
+        {
+            "Key": "nk_name_tech_Gathering",
+            "Value": "Gathering"
+        },
+        {
+            "Key": "nk_description_tech_Gathering",
+            "Value": "desceng"
+        },
+        {
+            "Key": "nk_name_tech_basketWieving",
+            "Value": "asda"
+        },
+        {
+            "Key": "nk_description_tech_basketWieving",
+            "Value": "asd"
+        },
+        {
+            "Key": "nk_name_tech_fishing",
+            "Value": "sad"
+        },
+        {
+            "Key": "nk_description_tech_fishing",
+            "Value": "da"
+        },
+        {
+            "Key": "nk_name_tech_primitiveHunting",
+            "Value": "eng"
+        },
+        {
+            "Key": "nk_description_tech_primitiveHunting",
+            "Value": "eng"
+        }
+    ]
+}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 namespace SO
@@ -9,15 +10,37 @@ namespace SO
         public string StartIDString;
 
         [Header("Race Data")]
-        public List<RaceSO> AllStartingRaces;
-        public RaceSO MainRace;
-
-        [Header("Population Data")]
-        public int MainRaceChildPopulation;
-        public int MainRaceAdultPopulation;
-        public int MainRaceElderPopulation;
+        public List<NGPopState> NGPopStateList;
 
         [Header("Technology Data")]
-        public List<TechnologySO> ReaserchedTechnologies;
+        public List<NGTechState> NGTechStateList;
+    }
+    [Serializable]
+    public class NGPopState
+    {
+        public RaceSO Race;
+        public ulong ChildAmount;
+        public ulong AdultAmount;
+        public ulong ElderAmount;
+        public NGPopState(
+            RaceSO race,
+            ulong childAmount,
+            ulong adultAmount,
+            ulong elderAmount)
+        {
+            Race = race;
+            ChildAmount = childAmount;
+            AdultAmount = adultAmount;
+            ElderAmount = elderAmount;
+        }
+    }
+    [Serializable]
+    public class NGTechState
+    {
+        public List<TechnologySO> ResearchedTech;
+        public NGTechState(List<TechnologySO> researchedTechList)
+        {
+            ResearchedTech = researchedTechList;
+        }
     }
 }

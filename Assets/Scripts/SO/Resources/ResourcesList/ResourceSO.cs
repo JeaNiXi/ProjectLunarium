@@ -1,46 +1,32 @@
 using Localization;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 namespace SO
 {
+    [Serializable]
+    public class ResourceSOLocalization
+    {
+        public LocalizedString Name;
+        public LocalizedString Description;
+    }
     [CreateAssetMenu(fileName = "Resource", menuName = "Scriptable Objects/Resources/Resource")]
     public class ResourceSO : ScriptableObject, ILocalizable
     {
-        [Header("ID")]
+        [Header("Main Info")]
         public string ID;
-
-        [Header("Localization Keys:")]
-        [field: SerializeField] public string NameKey { get; private set; }
-        [field: SerializeField] public string DescriptionKey { get; private set; }
+        public LocalizationCategory Category => LocalizationCategory.UIResources;
+        public ResourceSOLocalization Localization;
+        public IEnumerable<LocalizationEntry> GetLocalizationEntries(string lang)
+        {
+            yield return new LocalizationEntry(Localization.Name.Key, Localization.Name.Get(lang));
+            yield return new LocalizationEntry(Localization.Description.Key, Localization.Description.Get(lang));
+        }
 
         [Header("Visualisation")]
         public List<Sprite> AnimationSprites = new List<Sprite>();
 
         [Header("Unlock Conditions")]
         public List<TechnologySO> TechNeeded;
-
-        [Header("RU Localization Data")]
-        public string NameRU;
-        [TextArea(2, 6)]
-        public string DescriptionRU;
-
-        [Header("EN Localization Data")]
-        public string NameEN;
-        [TextArea(2, 6)]
-        public string DescriptionEN;
-
-        public string LocalizationOutputFolder(LocalizationGeneratorSO config)
-            => config.ResourcesLocalizationOutputFolder;
-
-        public IEnumerable<LocalizationEntry> GetLocalizationEntriesRU()
-        {
-            yield return new(NameKey, NameRU);
-            yield return new(DescriptionKey, DescriptionRU);
-        }
-        public IEnumerable<LocalizationEntry> GetLocalizationEntriesEN()
-        {
-            yield return new(NameKey, NameEN);
-            yield return new(DescriptionKey, DescriptionEN);
-        }
     }
 }

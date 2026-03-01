@@ -1,0 +1,9 @@
+:root {
+}
+
+.display-main-text {
+    -unity-font-definition: resource("Fonts/TovariSans/tovari-sans");
+    color: rgb(255, 255, 255);
+    font-size: 42px;
+    -unity-text-align: middle-center;
+}

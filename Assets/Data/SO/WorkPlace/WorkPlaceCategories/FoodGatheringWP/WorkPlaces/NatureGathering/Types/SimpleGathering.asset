@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75b1f1571da7f642a4fc9310192260d, type: 3}
+  m_Name: SimpleGathering
+  m_EditorClassIdentifier: Assembly-CSharp::SO.WorkPlaceTypeSO
+  <ID>k__BackingField: wptSimpleGathering
+  LocalizedStrings:
+  - Key: nkwptSimpleGathering
+    RU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0421\u043E\u0431\u0438\u0440\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"
+    EN: Simple Gathering
+  <TechNeeded>k__BackingField: []
+  ProducedResources:
+  - Resource: {fileID: 11400000, guid: 38008ee131a0d0a478ebd0e44a44cc77, type: 2}
+    Amount: 1
+  - Resource: {fileID: 11400000, guid: 704305aa3e904024b8c85d857f092337, type: 2}
+    Amount: 1
+  RequiredResources: []
+  <NameKey>k__BackingField: nkwptSimpleGathering
+  NameRU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0421\u043E\u0431\u0438\u0440\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E"
+  NameEN: Simple Gathering

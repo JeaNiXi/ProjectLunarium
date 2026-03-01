@@ -1,13 +1,13 @@
 using SO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Resources;
 using UnityEngine;
 namespace State
 {
     public class WorkersState
     {
+
+
+
         private WorkersStateSO workersStateSO;
         private Dictionary<ResourceSO, int> WorkersAmounts = new Dictionary<ResourceSO, int>();
 
@@ -17,11 +17,25 @@ namespace State
             InitializeWorkersAmounts();
             InitializeStateSO();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private void InitializeWorkersAmounts()
         {
             //OnGame Start/Load to change Amounts;
         }
-        #region SO 
         private void InitializeStateSO()
         {
             ClearStateSODictionary();
@@ -53,7 +67,7 @@ namespace State
             foreach (var key in WorkersAmounts.Keys)
                 if (index >= workersStateSO.currentWorkersAmountStateList.Count)
                 {
-                    workersStateSO.currentWorkersResourcesStateList.Add(key.NameKey);
+                    workersStateSO.currentWorkersResourcesStateList.Add(key.Localization.Name.Key);
                     workersStateSO.currentWorkersAmountStateList.Add(WorkersAmounts[key]);
                     index++;
                 }
@@ -76,7 +90,7 @@ namespace State
                 workersStateSO.ClearWorkersAmountStateList();
             }
         }
-        #endregion
+
         public void AddWorkerToResource(ResourceSO resource)
         {
             //Check for non-available worker population.

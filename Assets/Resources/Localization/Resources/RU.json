@@ -1,36 +1,52 @@
 {
     "Entries": [
         {
-            "Key": "",
+            "Key": "nk_name_res_animalHide",
+            "Value": "Шкуры животных"
+        },
+        {
+            "Key": "nk_description_res_animalHide",
+            "Value": "Защищают от холода. Добываются примитивной охотой."
+        },
+        {
+            "Key": "nk_name_res_drySticks",
+            "Value": "Сухие Ветки"
+        },
+        {
+            "Key": "nk_description_res_drySticks",
+            "Value": "Базовое топливо и материал для простых орудий."
+        },
+        {
+            "Key": "nk_name_res_fish",
             "Value": "Рыба"
         },
         {
-            "Key": "",
-            "Value": "Просто рыба, буль."
+            "Key": "nk_description_res_fish",
+            "Value": "Обычная рыбов."
         },
         {
-            "Key": "resource.food.name",
-            "Value": ""
+            "Key": "nk_name_res_flintStone",
+            "Value": "Кремень"
         },
         {
-            "Key": "resource.food.description",
-            "Value": ""
+            "Key": "nk_description_res_flintStone",
+            "Value": "Твердый камень. Нужен для создания первых ножей и скребков."
         },
         {
-            "Key": "resource.water.name",
-            "Value": "Водичка"
+            "Key": "nk_name_res_riverWater",
+            "Value": "Речная Вода"
         },
         {
-            "Key": "resource.water.description",
-            "Value": "Сила воды."
+            "Key": "nk_description_res_riverWater",
+            "Value": "Необходима для выживания. Добывается у берега."
         },
         {
-            "Key": "resource.wood.name",
-            "Value": "Дерево"
+            "Key": "nk_name_res_wildBerries",
+            "Value": "Дикие Ягоды"
         },
         {
-            "Key": "resource.wood.description",
-            "Value": "Обычное дерево, валяющееся везде."
+            "Key": "nk_description_res_wildBerries",
+            "Value": "Спелые ягоды, которые растут везде и повсюду. Основной источник еды. Быстро портятся, но легко собираются."
         }
     ]
 }

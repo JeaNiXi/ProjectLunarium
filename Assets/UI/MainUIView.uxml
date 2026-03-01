@@ -1,14 +1,89 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainUIView.uss?fileID=7433441132597879392&amp;guid=956bf726a039cf24a839a6eb08647025&amp;type=3#MainUIView"/>
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:VisualElement style="flex-basis: 20%;"/>
+        <ui:VisualElement name="header" style="flex-basis: 20%; flex-direction: row;">
+            <ui:VisualElement name="" style="flex-basis: 10%;"/>
+            <ui:VisualElement name="" style="flex-direction: row; flex-basis: 75%;">
+                <ui:VisualElement name="" style="flex-basis: 100%; flex-direction: row;">
+                    <ui:VisualElement name="populationPanel" style="flex-basis: 35%;">
+                        <ui:VisualElement name="totalPopPanel" class="pop-info-panel-background-ve" style="flex-basis: 16%; flex-direction: row;">
+                            <ui:VisualElement class="pop-info-panel-image-ve" style="flex-basis: 8%;"/>
+                            <ui:VisualElement class="pop-info-ui-text-ve">
+                                <ui:Label text="infoPanelUpPopLabel" name="infoPanelUpPopLabel" class="default-info-ui-text"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-basis: 44%;">
+                                <ui:Label text="999.999.999.999" name="infoPanelUpPopValueLabel" class="default-info-ui-ulong"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="activePopPanel" class="pop-info-panel-background-ve" style="flex-direction: row; flex-basis: 16%;">
+                            <ui:VisualElement class="pop-info-panel-image-ve"/>
+                            <ui:VisualElement class="pop-info-ui-text-ve">
+                                <ui:Label text="infoPanelUpPopActiveLabel" name="infoPanelUpPopActiveLabel" class="default-info-ui-text"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label text="999.999.999.999" name="infoPanelUpPopActiveValueLabel" class="default-info-ui-ulong"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="inactivePopPanel" class="pop-info-panel-background-ve" style="flex-direction: row; flex-basis: 16%;">
+                            <ui:VisualElement class="pop-info-panel-image-ve"/>
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label text="infoPanelUpPopInactiveLabel" name="infoPanelUpPopInactiveLabel" class="default-info-ui-text"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label text="999.999.999.999" name="infoPanelUpPopInactiveValueLabel" class="default-info-ui-ulong"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-basis: 20%;"/>
+                    <ui:VisualElement style="flex-basis: 45%;"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-basis: 15%;">
+                <ui:VisualElement name="" class="date-info-header" style="flex-grow: 1;">
+                    <ui:VisualElement>
+                        <ui:Label text="infoTimeSettingsLabel" name="infoTimeSettingsLabel"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="date-info-ve" style="flex-grow: 1;">
+                    <ui:VisualElement class="date-info-text-ve">
+                        <ui:Label text="infoCurrentDay" name="infoCurrentDay" class="date-info-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="date-info-value-ve">
+                        <ui:Label text="000000" name="infoCurrentDayValue" class="date-info-label"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="" class="date-info-ve" style="flex-grow: 1;">
+                    <ui:VisualElement class="date-info-text-ve">
+                        <ui:Label text="infoCurrentMonth" name="infoCurrentMonth" class="date-info-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="date-info-value-ve">
+                        <ui:Label text="000000" name="infoCurrentMonthValue" class="date-info-label"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="date-info-ve" style="flex-grow: 1;">
+                    <ui:VisualElement class="date-info-text-ve">
+                        <ui:Label text="infoCurrentYear" name="infoCurrentYear" class="date-info-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="date-info-value-ve">
+                        <ui:Label text="000000" name="infoCurrentYearValue" class="date-info-label"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
         <ui:VisualElement style="flex-basis: 70%; flex-direction: row;">
             <ui:VisualElement style="flex-basis: 10%;">
                 <ui:VisualElement style="flex-grow: 1; background-color: rgba(28, 29, 50, 0.8);">
-                    <ui:Button text="menuBNK" name="menuButton" enabled="false"/>
-                    <ui:Button text="popsBNK" name="populationButton" enabled="false"/>
+                    <ui:Button name="menuButton" enabled="false" text="menuBNK" double-click-selects-word="false" triple-click-selects-line="false" style="-unity-font-definition: resource(&quot;Fonts/TovariSans/tovari-sans&quot;); background-color: rgba(26, 26, 26, 0.6); color: rgb(255, 255, 255); flex-basis: 28px; font-size: 24px; text-shadow: 1px 1px 2px rgb(0, 0, 0); -unity-font-style: normal;"/>
+                    <ui:Button name="populationButton" enabled="false" text="populationBNK" double-click-selects-word="false" triple-click-selects-line="false" style="-unity-font-definition: resource(&quot;Fonts/TovariSans/tovari-sans&quot;); background-color: rgba(26, 26, 26, 0.6); color: rgb(255, 255, 255); flex-basis: 28px; font-size: 24px; text-shadow: 1px 1px 2px rgb(0, 0, 0); -unity-font-style: normal;"/>
                     <ui:Button text="ResBNK" name="resourcesButton" enabled="false"/>
                     <ui:Button text="techBNK" name="technologyButton" enabled="false"/>
                     <ui:Button text="workersBNK" name="workersButton" enabled="false"/>
+                    <ui:Button name="workPlaceButton" enabled="false" text="workPlaceBNK" double-click-selects-word="false" triple-click-selects-line="false" style="-unity-font-definition: resource(&quot;Fonts/TovariSans/tovari-sans&quot;); background-color: rgba(26, 26, 26, 0.6); color: rgb(255, 255, 255); flex-basis: 28px; font-size: 24px; text-shadow: 1px 1px 2px rgb(0, 0, 0); -unity-font-style: normal;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="mainView" style="flex-basis: 75%; background-color: rgba(28, 29, 50, 0.8);"/>

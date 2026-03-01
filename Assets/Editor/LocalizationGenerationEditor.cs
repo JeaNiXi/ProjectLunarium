@@ -2,6 +2,7 @@ using Localization;
 using SO;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 [CustomEditor(typeof(LocalizationGeneratorSO))]
@@ -10,45 +11,64 @@ public class LocalizationGenerationEditor : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        if (GUILayout.Button("Generate Resource Localization JSON"))
-            GenerateLocalizationForType<ResourceSO>();
-        if (GUILayout.Button("Gen. Races Localization JSON"))
-            GenerateLocalizationForType<RaceSO>();
-        if (GUILayout.Button("Generate Technology Localization JSON"))
-            Debug.Log("AH, this is not realised");
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Generate Localization", GUILayout.Height(40f)))
+            GenerateAll();
     }
-    private void GenerateLocalizationForType<T>() where T : ScriptableObject, ILocalizable
+    private void GenerateAll()
     {
         var config = (LocalizationGeneratorSO)target;
-        var tmpPath = GetOutputPath<T>(config);
+        var localizableTypes = System.AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(s => s.GetTypes())
+            .Where(p => typeof(ILocalizable).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
+
+        foreach (var type in localizableTypes)
+        {
+            GenerateForType(type, config);
+        }
+        AssetDatabase.Refresh();
+        Debug.Log("<color=green><b>[Localization]</b> All Localizations Generated Succsessfully! </color>");
+    }
+    private void GenerateForType(System.Type type, LocalizationGeneratorSO config)
+    {
+        var guids = AssetDatabase.FindAssets($"t:{type.Name}");
+        if (guids.Length == 0)
+            return;
+
+        var first = AssetDatabase.LoadAssetAtPath<ScriptableObject>(
+            AssetDatabase.GUIDToAssetPath(guids[0])) as ILocalizable;
+        var path = GetPathByCategory(config, first.Category);
+
         var ru = new List<LocalizationEntry>();
         var en = new List<LocalizationEntry>();
 
-        var guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}");
         foreach (var guid in guids)
         {
-            var path = AssetDatabase.GUIDToAssetPath(guid);
-            var asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(
+                AssetDatabase.GUIDToAssetPath(guid)) as ILocalizable;
 
-            ru.AddRange(asset.GetLocalizationEntriesRU());
-            en.AddRange(asset.GetLocalizationEntriesEN());
+            ru.AddRange(asset.GetLocalizationEntries("RU"));
+            en.AddRange(asset.GetLocalizationEntries("EN"));
         }
-        WriteJSON<T>("RU", ru, tmpPath, config);
-        WriteJSON<T>("EN", en, tmpPath, config);
-        AssetDatabase.Refresh();
-        Debug.Log($"Generated JSON for ALL {typeof(T).Name}.");
+        WriteJSON("RU", ru, path, config);
+        WriteJSON("EN", en, path, config);
     }
-    private string GetOutputPath<T>(LocalizationGeneratorSO config) where T : ScriptableObject, ILocalizable
+    private string GetPathByCategory(LocalizationGeneratorSO config, LocalizationCategory category)
     {
-        if (typeof(T) == typeof(ResourceSO))
-            return config.ResourcesLocalizationOutputFolder;
-        if (typeof(T) == typeof(RaceSO))
-            return config.RacesLocalizationOutputFolder;
-        if (typeof(T) == typeof(TechnologySO))
-            return config.TechnologyLocalizationOutputFolder;
-        return config.DefaultPath;
+        return category switch
+        {
+            LocalizationCategory.UIMenu => config.UIMenuLocalizationOutputFolder,
+            LocalizationCategory.UIWorkPlace => config.UIWorkPlaceLocalizationOutputFolder,
+            LocalizationCategory.UIResources => config.ResourcesLocalizationOutputFolder,
+            LocalizationCategory.UITechnology => config.TechnologyLocalizationOutputFolder,
+            LocalizationCategory.Races => config.RacesLocalizationOutputFolder,
+            LocalizationCategory.WorkPlaceSO => config.WorkPlaceSOLocalizationOutputFolder,
+            LocalizationCategory.WorkPlaceCategorySO => config.WorkPlaceCategorySOLocalizationOutputFolder,
+            LocalizationCategory.WorkPlaceTypeSO => config.WorkPlaceTypeSOLocalizationOutputFolder,
+            _ => config.DefaultPath
+        };
     }
-    private void WriteJSON<T>(string language, List<LocalizationEntry> entries, string outputPath, LocalizationGeneratorSO config) where T : ScriptableObject, ILocalizable
+    private void WriteJSON(string language, List<LocalizationEntry> entries, string outputPath, LocalizationGeneratorSO config)
     {
         var wrapper = new LocalizationWrapper { Entries = entries };
         var json = JsonUtility.ToJson(wrapper, true);

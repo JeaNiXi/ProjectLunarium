@@ -1,0 +1,64 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Pages/WorkPlaceDetailPanelAsset.uss?fileID=7433441132597879392&amp;guid=4478d19fb8353a245b4f67c67b0698fb&amp;type=3#WorkPlaceDetailPanelAsset"/>
+    <ui:VisualElement style="flex-basis: 100%;">
+        <ui:VisualElement name="bgVE" style="flex-direction: row; flex-basis: 100%; background-color: rgba(0, 0, 0, 0.8);">
+            <ui:VisualElement style="flex-basis: 50%; flex-direction: row;">
+                <ui:VisualElement style="flex-basis: 30%;">
+                    <ui:Button text="Button" name="Button" style="flex-grow: 1;"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="" style="flex-basis: 70%;">
+                    <ui:VisualElement style="flex-basis: 35%;">
+                        <ui:Label text="workPlaceNK" name="workPlaceNK" class="wp-name-key"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-basis: 65%;">
+                        <ui:VisualElement name="" style="flex-basis: 35%;">
+                            <ui:Label text="workPlaceTypeLabel" name="workPlaceTypeLabel" class="wp-default-text"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-basis: 65%;">
+                            <ui:DropdownField label="Dropdown" name="wpTypeDropDownfield" choices="defaultWPTypeChoice" index="0" class="wp-dropdown-menu"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-basis: 50%;">
+                <ui:VisualElement name="" style="flex-basis: 20%; flex-direction: row;">
+                    <ui:VisualElement style="flex-basis: 55%;">
+                        <ui:Label text="currentWorkersAmountLabelNK" name="currentWorkersAmountLabel" class="wp-default-text"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-basis: 45%;">
+                        <ui:Label text="000.000.000.000" name="currentWorkersAmountValue" class="wp-default-text"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-basis: 20%; flex-direction: row;">
+                    <ui:VisualElement style="flex-basis: 55%;">
+                        <ui:Label text="placeHolderLabel" class="wp-default-text"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-basis: 45%;">
+                        <ui:Label text="000.000.000.000" class="wp-default-text"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-basis: 20%; flex-direction: row;">
+                    <ui:VisualElement style="flex-basis: 55%;">
+                        <ui:Label text="placeHolderLabel" class="wp-default-text"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-basis: 45%;">
+                        <ui:Label text="000.000.000.000" class="wp-default-text"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-basis: 40%; flex-direction: row;">
+                    <ui:VisualElement style="flex-grow: 1;">
+                        <ui:Label text="Количество Рабочих" name="workerAmountLabelAddRemove" class="wp-default-text"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                        <ui:VisualElement style="flex-grow: 1;">
+                            <ui:Button text="+" name="addWorkerButton"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1;">
+                            <ui:Button text="-" name="removeWorkerButton"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

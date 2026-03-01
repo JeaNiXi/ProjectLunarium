@@ -1,0 +1,47 @@
+:root {
+}
+
+.wp-name-key {
+    -unity-font-definition: url("project://database/Assets/Resources/Fonts/TovariSans/tovari-sans%20SDF.asset?fileID=11400000&guid=5af0f98967ae75f4c9a22d9786ed6340&type=2#tovari-sans SDF");
+    font-size: 42px;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+}
+
+.wp-default-text {
+    -unity-font-definition: resource("Fonts/TovariSans/tovari-sans");
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-left;
+    flex-grow: 1;
+}
+
+.wp-dropdown-menu {
+    -unity-font-definition: resource("Fonts/TovariSans/tovari-sans");
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    flex-basis: 44px;
+    align-self: stretch;
+    align-content: center;
+}
+
+.unity-base-field__input {
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 26px;
+    flex-grow: 1;
+    -unity-font-style: normal;
+    align-content: center;
+}
+
+.unity-base-field__label {
+    display: none;
+}
+
+.unity-base-popup-field__text {
+    font-size: 24px;
+    -unity-text-align: middle-left;
+}
+
+.unity-base-popup-field__arrow {
+    display: none;
+}

@@ -1,5 +1,4 @@
 using Managers;
-using SO;
 using System.Collections.Generic;
 using UnityEngine;
 namespace SO
@@ -15,18 +14,18 @@ namespace SO
         {
             if (resource.TechNeeded == null)
             {
-                Debug.Log($" Tech Needed is null, returing TRUE");
+                //Debug.Log($" Tech Needed is null, returing TRUE");
                 return true;
             }
             foreach (var tech in resource.TechNeeded)
             {
                 if (!TechnologyManager.Instance.IsTechnologyResearched(tech))
                 {
-                    Debug.Log($"Researched Tech does not contain {tech.ID}. Returning False");
+                    //Debug.Log($"Researched Tech does not contain {tech.ID}. Returning False");
                     return false;
                 }
             }
-            Debug.Log($"No Option of above, returning TRUE");
+            //Debug.Log($"No Option of above, returning TRUE");
             return true;
         }
     }

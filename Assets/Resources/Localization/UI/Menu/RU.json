@@ -1,0 +1,44 @@
+{
+    "Entries": [
+        {
+            "Key": "categoryMainMenuKey",
+            "Value": "Главное Меню"
+        },
+        {
+            "Key": "mainMenuNewGameKey",
+            "Value": "Создать Новую Игру"
+        },
+        {
+            "Key": "categoryPopulationKey",
+            "Value": "Население"
+        },
+        {
+            "Key": "categoryWorkPlaceKey",
+            "Value": "Рабочие Места"
+        },
+        {
+            "Key": "InfoPanelUpPopLabelKey",
+            "Value": "Текущее Население"
+        },
+        {
+            "Key": "InfoPanelUpPopActiveLabelKey",
+            "Value": "Активное Население"
+        },
+        {
+            "Key": "InfoPanelUpPopInactiveLabelKey",
+            "Value": "Неактивное Население"
+        },
+        {
+            "Key": "InfoCurrentDayKey",
+            "Value": "Текущий День"
+        },
+        {
+            "Key": "InfoCurrentMonthKey",
+            "Value": "Текущий Месяц"
+        },
+        {
+            "Key": "InfoCurrentYearKey",
+            "Value": "Текущий Год"
+        }
+    ]
+}

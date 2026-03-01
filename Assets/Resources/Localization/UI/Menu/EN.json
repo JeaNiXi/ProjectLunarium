@@ -1,0 +1,44 @@
+{
+    "Entries": [
+        {
+            "Key": "categoryMainMenuKey",
+            "Value": "Main Menu"
+        },
+        {
+            "Key": "mainMenuNewGameKey",
+            "Value": "Create New Game"
+        },
+        {
+            "Key": "categoryPopulationKey",
+            "Value": "Population"
+        },
+        {
+            "Key": "categoryWorkPlaceKey",
+            "Value": "Work Places"
+        },
+        {
+            "Key": "InfoPanelUpPopLabelKey",
+            "Value": "Current Population"
+        },
+        {
+            "Key": "InfoPanelUpPopActiveLabelKey",
+            "Value": "Active Population"
+        },
+        {
+            "Key": "InfoPanelUpPopInactiveLabelKey",
+            "Value": "Inactive Population"
+        },
+        {
+            "Key": "InfoCurrentDayKey",
+            "Value": "Current Day"
+        },
+        {
+            "Key": "InfoCurrentMonthKey",
+            "Value": "Current Month"
+        },
+        {
+            "Key": "InfoCurrentYearKey",
+            "Value": "Current Year"
+        }
+    ]
+}

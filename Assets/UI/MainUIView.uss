@@ -1,0 +1,56 @@
+:root {
+}
+
+.default-info-ui-text {
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-left;
+    -unity-font-definition: resource("Fonts/TovariSans/tovari-sans");
+    font-size: 26px;
+}
+
+.pop-info-panel-image-ve {
+    flex-basis: 8%;
+    flex-grow: 0;
+}
+
+.pop-info-panel-background-ve {
+    background-color: rgba(28, 29, 50, 0.8);
+}
+
+.default-info-ui-ulong {
+    font-size: 26px;
+    -unity-text-align: middle-right;
+    -unity-font-definition: resource("Fonts/TovariSans/tovari-sans");
+    color: rgb(255, 255, 255);
+}
+
+.pop-info-ui-text-ve {
+    flex-basis: 48%;
+}
+
+.date-info-header {
+    flex-basis: 40%;
+    background-color: rgba(28, 29, 50, 0.8);
+}
+
+.date-info-ve {
+    background-color: rgba(28, 29, 50, 0.8);
+    flex-basis: 20%;
+    flex-direction: row;
+}
+
+.date-info-label {
+    flex-grow: 1;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: resource("Fonts/TovariSans/tovari-sans");
+    font-size: 24px;
+    -unity-text-align: middle-left;
+}
+
+.date-info-text-ve {
+    flex-basis: 65%;
+}
+
+.date-info-value-ve {
+    flex-basis: 35%;
+}

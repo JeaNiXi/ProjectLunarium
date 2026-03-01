@@ -1,0 +1,16 @@
+{
+    "Entries": [
+        {
+            "Key": "nkwptSimpleSurviving",
+            "Value": "Simple Surviving"
+        },
+        {
+            "Key": "nkwptSimpleFishing",
+            "Value": ""
+        },
+        {
+            "Key": "nkwptSimpleGathering",
+            "Value": "Simple Gathering"
+        }
+    ]
+}

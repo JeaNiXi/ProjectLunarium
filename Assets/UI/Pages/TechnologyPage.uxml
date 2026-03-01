@@ -1,13 +1,69 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Pages/TechnologyPage.uss?fileID=7433441132597879392&amp;guid=cd04ec729039d77408af649abac2828a&amp;type=3#TechnologyPage"/>
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:VisualElement style="flex-basis: 10%;"/>
-        <ui:VisualElement style="flex-direction: row; flex-basis: 90%;">
-            <ui:VisualElement style="flex-basis: 10%;"/>
-            <ui:VisualElement style="flex-basis: 90%;">
-                <ui:VisualElement style="flex-basis: 90%;">
-                    <ui:VisualElement name="techPageMainView" style="flex-direction: row; flex-basis: 90%; justify-content: space-around;">
-                        <ui:ScrollView name="mainScrollView" mode="Horizontal" style="flex-basis: 100%;"/>
+        <ui:VisualElement name="upPanelCurrentResearch" style="flex-basis: 20%; flex-direction: row;">
+            <ui:VisualElement style="flex-basis: 14%;">
+                <ui:VisualElement style="flex-basis: 100%;">
+                    <ui:Button text="Button" name="currentResearchInfoButton" style="flex-grow: 1;"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-basis: 86%;">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                    <ui:VisualElement name="" style="flex-basis: 50%;">
+                        <ui:VisualElement style="flex-basis: 40%;">
+                            <ui:Label text="currentRersearchNK" name="currentRersearchNK"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-basis: 20%;">
+                            <ui:ProgressBar value="0" title="0%"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-basis: 40%;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="moreInfoTab" style="flex-grow: 1;">
+                        <ui:VisualElement style="flex-basis: 40%; flex-direction: row;">
+                            <ui:VisualElement style="flex-basis: 30%;">
+                                <ui:Label text="Label" name="PossibleBreakthrough"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="possibleBreakthroughVE" style="flex-basis: 70%;"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="techOpensVE" style="flex-grow: 1;">
+                            <ui:VisualElement name="placeholder" style="flex-grow: 1;"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-direction: row; flex-basis: 80%;">
+            <ui:VisualElement style="flex-basis: 14%;"/>
+            <ui:VisualElement style="flex-basis: 86%;">
+                <ui:VisualElement style="flex-basis: 90%; flex-direction: row;">
+                    <ui:VisualElement name="techPageMainView" style="flex-basis: 55%;">
+                        <ui:ScrollView name="mainScrollView" style="flex-basis: 100%;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-basis: 45%;">
+                        <ui:VisualElement name="mainInfoPanelVisualElement" style="flex-grow: 1;">
+                            <ui:VisualElement style="flex-basis: 16%; flex-direction: row;">
+                                <ui:VisualElement style="flex-basis: 26%;">
+                                    <ui:Button text="Button" style="flex-grow: 1;"/>
+                                </ui:VisualElement>
+                                <ui:VisualElement style="flex-basis: 74%;">
+                                    <ui:VisualElement style="flex-basis: 40%;">
+                                        <ui:Label text="Label" name="nameLabelInfoPanel" class="ui-default-text"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement style="flex-basis: 60%;">
+                                        <ui:Button text="Начать Исследование" name="mainStartResearchButton" enabled="false"/>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-basis: 84%; flex-direction: row;">
+                                <ui:VisualElement style="flex-basis: 70%;">
+                                    <ui:VisualElement style="flex-basis: 40%;">
+                                        <ui:Label text="Label" name="infoPanelDescriptionLabel" class="ui-default-text" style="flex-basis: 100%; white-space: normal;"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement name="placeholder" style="flex-basis: 60%;"/>
+                                </ui:VisualElement>
+                                <ui:VisualElement name="placeHolder" style="flex-basis: 30%;"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-basis: 10%;"/>

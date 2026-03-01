@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75b1f1571da7f642a4fc9310192260d, type: 3}
+  m_Name: SimpleFishing
+  m_EditorClassIdentifier: Assembly-CSharp::SO.WorkPlaceTypeSO
+  <ID>k__BackingField: wptSimpleFishing
+  LocalizedStrings:
+  - Key: nkwptSimpleFishing
+    RU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0420\u044B\u0431\u043E\u043B\u043E\u0432\u0441\u0442\u0432\u043E"
+    EN: 
+  <TechNeeded>k__BackingField:
+  - {fileID: 11400000, guid: fd75237c6d0827d45a0954e84a89b041, type: 2}
+  ProducedResources:
+  - Resource: {fileID: 11400000, guid: 109fe67aa07885446b81869f8686022b, type: 2}
+    Amount: 1
+  RequiredResources: []
+  <NameKey>k__BackingField: nkwptSimpleFishing
+  NameRU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435 \u0420\u044B\u0431\u043E\u043B\u043E\u0432\u0441\u0442\u0432\u043E"
+  NameEN: 

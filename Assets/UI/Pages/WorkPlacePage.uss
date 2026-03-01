@@ -1,0 +1,13 @@
+:root {
+}
+
+.work-place-button {
+    -unity-font-definition: url("project://database/Assets/Resources/Fonts/TovariSans/tovari-sans%20SDF.asset?fileID=11400000&guid=5af0f98967ae75f4c9a22d9786ed6340&type=2#tovari-sans SDF");
+    font-size: 26px;
+    height: 32px;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
+    -unity-text-auto-size: none;
+    background-color: rgba(25, 25, 51, 0.6);
+}

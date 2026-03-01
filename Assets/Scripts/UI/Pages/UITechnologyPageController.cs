@@ -3,208 +3,254 @@ using SO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.XR;
 namespace UI
 {
-    // Research Not available Color D74E63
-    // Research Available Color
-    // Researched Color
-    // Research in Progress Color
+    public class UITechTopPanelViewHolder
+    {
+        public VisualElement Root;
+        public Label NameLabel;
+        public ProgressBar ProgressBar;
+        public Button InfoButton;
+
+        public VisualElement PossibleBreakthroughVE;
+        public VisualElement TechsOpenVE;
+
+        public UITechTopPanelViewHolder(VisualElement root)
+        {
+            Root = root;
+            NameLabel = root.Q<Label>("currentRersearchNK");
+            ProgressBar = root.Q<ProgressBar>();
+            InfoButton = root.Q<Button>("currentResearchInfoButton");
+            PossibleBreakthroughVE = root.Q<VisualElement>("possibleBreakthroughVE");
+            TechsOpenVE = root.Q<VisualElement>("techOpensVE");
+        }
+        public void SetVisible(bool visible) =>
+            Root.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+    public class UITechPViewHolder
+    {
+        public Label NameLabel;
+        public Button InfoButton;
+        public VisualElement StatusIndicator;
+        public TechnologySO BoundTech;
+
+        public UITechPViewHolder(VisualElement root)
+        {
+            NameLabel = root.Q<Label>("techNameLabel");
+            InfoButton = root.Q<Button>("mainTechInfoButton");
+            StatusIndicator = root.Q<VisualElement>("mainColorElement");
+        }
+        public void UpdateVisuals(bool isAvailable, bool isResearched, bool isCurrent, float progressValue)
+        {
+            StatusIndicator.style.backgroundColor = isResearched ? Color.green : (isCurrent) ? Color.yellow : Color.red;
+        }
+    }
+    public class UITechInfoBinder
+    {
+        private VisualElement Root;
+        public Label NameLabel;
+        public Label DescriptionLabel;
+        public Button BackButton;
+        public Button StartResearchButton;
+        public TechnologySO CurrentTech;
+
+        public UITechInfoBinder(VisualElement root, System.Action onBackPressed, System.Action<TechnologySO> onResearchStart)
+        {
+            Root = root;
+            NameLabel = root.Q<Label>("nameLabelInfoPanel");
+            DescriptionLabel = root.Q<Label>("infoPanelDescriptionLabel");
+            BackButton = root.Q<Button>("backButton");
+            StartResearchButton = root.Q<Button>("mainStartResearchButton");
+
+            StartResearchButton.clicked += () => onResearchStart?.Invoke(CurrentTech);
+        }
+        public void Bind(TechnologySO tech)
+        {
+            CurrentTech = tech;
+            NameLabel.text = LocalizationManager.Instance.GetLocalizedTechnologySOData(tech.Localization.Name.Key);
+            DescriptionLabel.text = LocalizationManager.Instance.GetLocalizedTechnologySOData(tech.Localization.Description.Key);
+
+            bool canAfford = TechnologyManager.Instance.AreResourcesAvailable(tech);
+            StartResearchButton.SetEnabled(canAfford);
+            StartResearchButton.text = canAfford ? "Начать исследование." : "Недостаточно ресурсов.";
+
+            Root.style.display = DisplayStyle.Flex;
+        }
+        public void Hide() =>
+            Root.style.display = DisplayStyle.None;
+        public void Show() =>
+            Root.style.display = DisplayStyle.Flex;
+    }
     public class UITechnologyPageController : IUIPageController
     {
-        private VisualElement page;
-        private VisualElement techPageMainView;
-        private TechnologyManagerSO data;
-        private VisualTreeAsset technologyPanelAsset;
-        private VisualTreeAsset technologyPanelInfoAsset;
-        private ScrollView scrollView;
-        private TechnologyStateSO technologyStateSO;
-        private Dictionary<string, VisualElement> cachedTechInfoPanels;
-        private Dictionary<TechnologySO, VisualElement> visibleElements;
-        private TechnologySO currentResearchedTechCache;
-        private int maxTechTier;
-        private bool isUpdating;
-        private readonly float updateTime = 0.2f;
-        private float pageTime;
+        private VisualElement RootVE;
+        private TechnologyManagerSO TechManagerDataSO;
+        private ScrollView MainScrollView;
+        private VisualElement TechPageMainView;
+
+        private VisualTreeAsset CardAsset;
+        private VisualTreeAsset InfoAsset;
+
+        private Dictionary<TechnologySO, UITechPViewHolder> TechCards;
+        private UITechInfoBinder InfoPanelBinder;
+        private UITechTopPanelViewHolder TechTopPanelViewHolder;
+
         public void InitializePage(VisualElement page, ScriptableObject data)
         {
-            this.page = page;
-            this.data = data as TechnologyManagerSO;
-            if (this.data == null)
-                Debug.Log("NO DATA SO FOUND");
-            techPageMainView = page.Q<VisualElement>("techPageMainView");
-            scrollView = page.Q<ScrollView>("mainScrollView");
-            technologyPanelAsset = Resources.Load<VisualTreeAsset>("UI/Panel/TechPanelAsset");
-            technologyPanelInfoAsset = Resources.Load<VisualTreeAsset>("UI/Panel/TechPanelInfoAsset");
-            technologyStateSO = Resources.Load<TechnologyStateSO>("SO/TechnologyState");
-            cachedTechInfoPanels = new Dictionary<string, VisualElement>();
-            visibleElements = new Dictionary<TechnologySO, VisualElement>();
-            InitializeData(this.data);
-            InitializeScrollView();
-            CreateTechInfoPanels(this.data);
+            RootVE = page;
+            TechManagerDataSO = data as TechnologyManagerSO;
+
+            MainScrollView = RootVE.Q<ScrollView>("mainScrollView");
+            TechPageMainView = RootVE.Q<VisualElement>("techPageMainView");
+
+            CardAsset = Resources.Load<VisualTreeAsset>("UI/Panel/TechPanelAsset");
+            InfoAsset = Resources.Load<VisualTreeAsset>("UI/Panel/TechPanelInfoAsset");
+
+            TechCards = new Dictionary<TechnologySO, UITechPViewHolder>();
+
+            SetupTopPanel();
+            SetupInfoPanel();
+
+            TechnologyManager.Instance.OnOfferedTechsRefreshedEvent += TM_OnOfferedTechsRefreshed;
+
+            BuildOfferedTechnologies();
         }
-        private void InitializeData(TechnologyManagerSO data)
+        private void SetupTopPanel()
         {
-            maxTechTier = data.GetMaxTechTier();
-        }
-        private void InitializeScrollView()
-        {
-            UpdateScrollView(data);
-        }
-        private void UpdateScrollView(TechnologyManagerSO data)
-        {
-            for (int tier = 0; tier <= maxTechTier; tier++)
+            var topVE = RootVE.Q<VisualElement>("upPanelCurrentResearch");
+            TechTopPanelViewHolder = new UITechTopPanelViewHolder(topVE);
+
+            TechTopPanelViewHolder.InfoButton.clicked += () =>
             {
-                VisualElement column = new VisualElement();
-                column.AddToClassList("techColumn");
-                List<TechnologySO> techTierList = data.GetTechByTier(tier);
-                foreach (TechnologySO tech in techTierList)
-                {
-                    TemplateContainer ve = technologyPanelAsset.CloneTree();
-                    ve.AddToClassList("techPanel");
-                    visibleElements.Add(tech, ve);
-                    var techMainColorVE = ve.Q<VisualElement>("mainColorElement");
-                    var techInfoPanelButton = ve.Q<Button>("mainTechInfoButton");
-                    var techNameLabel = ve.Q<Label>("techNameLabel");
-                    var techResearchProgressBar = ve.Q<ProgressBar>("techResearchProgressBar");
-                    var techStartResearchButton = ve.Q<Button>("techStartResearchButton");
-                    techMainColorVE.style.backgroundColor = GetTechResearchColor(tech);
-                    techInfoPanelButton.RegisterCallback<ClickEvent, string>(OnTechInfoPanelButtonClicked, tech.ID);
-                    techStartResearchButton.SetEnabled(GetResearchButtonAvailability(tech));
-                    techStartResearchButton.text = GetResearchButtonLabelText(tech);
-                    techStartResearchButton.RegisterCallback<ClickEvent, TechnologySO>(OnStartResearchButtonClicked, tech);
-                    techNameLabel.text = tech.NameKey;
-                    column.Add(ve);
-                    Debug.Log($"Adding Technology Tier: {tech.Tier}, Name: {tech.NameKey}");
-                }
-                scrollView.Add(column);
-                Debug.Log($"Adding Column with Tiers: {tier}");
+                var current = TechnologyManager.Instance.GetCurrentResearchInProgressTechnology();
+                if (current != null)
+                    ShowTechDetail(current);
+            };
+            UpdateTopPanelVisuals();
+        }
+        private void UpdateTopPanelVisuals()
+        {
+            var current = TechnologyManager.Instance.GetCurrentResearchInProgressTechnology();
+            if (current == null)
+            {
+                TechTopPanelViewHolder.SetVisible(true);
+                return;
+            }
+            TechTopPanelViewHolder.SetVisible(true);
+            TechTopPanelViewHolder.NameLabel.text = LocalizationManager.Instance.GetLocalizedTechnologySOData(current.Localization.Name.Key);
+        }
+        private void SetupInfoPanel()
+        {
+            var infoVE = RootVE.Q<VisualElement>("mainInfoPanelVisualElement");
+            InfoPanelBinder = new UITechInfoBinder(infoVE,
+            onBackPressed: () =>
+            {
+                InfoPanelBinder.Hide();
+                MainScrollView.style.display = DisplayStyle.Flex;
+            },
+            onResearchStart: (tech) =>
+            {
+                if (tech != null)
+                    TechnologyManager.Instance.StartResearch(tech);
+            });
+            InfoPanelBinder.Hide();
+        }
+        private void BuildOfferedTechnologies()
+        {
+            MainScrollView.Clear();
+            TechCards.Clear();
+
+            var offeredTechs = TechnologyManager.Instance.GetOfferedTechnologies();
+            if (offeredTechs == null || offeredTechs.Count == 0)
+            {
+                Debug.Log("No Offered Techs at the Moment");
+                return;
+            }
+            foreach (var tech in offeredTechs)
+            {
+                VisualElement cardVE = CardAsset.CloneTree();
+                var holder = new UITechPViewHolder(cardVE);
+                holder.BoundTech = tech;
+
+                holder.NameLabel.text = LocalizationManager.Instance.GetLocalizedTechnologySOData(holder.BoundTech.Localization.Name.Key);
+
+                holder.InfoButton.clicked += () => ShowTechDetail(tech);
+
+                TechCards.Add(tech, holder);
+                MainScrollView.Add(cardVE);
+            }
+            RefreshButtonsState();
+        }
+        private void ShowTechDetail(TechnologySO tech)
+        {
+            InfoPanelBinder.Bind(tech);
+            InfoPanelBinder.Show();
+        }
+        private void StartResearch(TechnologySO tech)
+        {
+            TechnologyManager.Instance.StartResearch(tech);
+            BuildOfferedTechnologies();
+            UpdateTopResearchPanel();
+        }
+        public void UpdateTopResearchPanel()
+        {
+            var current = TechnologyManager.Instance.GetCurrentResearchInProgressTechnology();
+            if (current != null)
+            {
+                TechTopPanelViewHolder.NameLabel.text = LocalizationManager.Instance.GetLocalizedTechnologySOData(current.Localization.Name.Key);
+            }
+            else
+                TechTopPanelViewHolder.NameLabel.text = "Исследование не выбрано.";
+        }
+        private void RefreshButtonsState()
+        {
+            foreach (var entry in TechCards)
+            {
+                var tech = entry.Key;
+                var holder = entry.Value;
+
+                bool isResearched = TechnologyManager.Instance.IsTechnologyResearched(tech);
+                bool isAvailable = TechnologyManager.Instance.IsTechResearchAvailable(tech);
+
+                holder.StatusIndicator.style.backgroundColor = isResearched ? Color.green : Color.white;
             }
         }
-        private void CreateTechInfoPanels(TechnologyManagerSO data)
+        private void TM_OnOfferedTechsRefreshed()
         {
-            foreach (var tech in data.allTechnologies)
-            {
-                TemplateContainer techInfoPanelTemplate = technologyPanelInfoAsset.CloneTree();
-                techInfoPanelTemplate.AddToClassList("techInfoPanel");
-                techInfoPanelTemplate.style.display = DisplayStyle.None;
-                techInfoPanelTemplate.style.flexGrow = 1;
-                Label techNameLabel = techInfoPanelTemplate.Q<Label>("techNameLabel");
-                Button backButton = techInfoPanelTemplate.Q<Button>("backButton");
-                backButton.RegisterCallback<ClickEvent, string>(OnTechInfoPanelBackClicked, tech.ID);
-                techNameLabel.text = tech.NameKey;
-                cachedTechInfoPanels.Add(tech.ID, techInfoPanelTemplate);
-                techPageMainView.Add(techInfoPanelTemplate);
-                Debug.Log($"Added to Cache Tech Info Panel: {tech.ID}");
-            }
-        }
-        private Color GetTechResearchColor(TechnologySO tech)
-        {
-            if (technologyStateSO.researchedTechnologies.Contains(tech))
-                return Color.green;
-            else return Color.red;
-        }
-        private bool GetResearchButtonAvailability(TechnologySO tech)
-            => TechnologyManager.Instance.IsTechResearchAvailable(tech);
-        private string GetResearchButtonLabelText(TechnologySO tech)
-            => TechnologyManager.Instance.GetReseachButtonLabelText(tech);
-        private bool IsTechnologyResearchInProgress()
-            => TechnologyManager.Instance.IsTechnologyResearchInProgress();
-        private TechnologySO GetCurrentResearchedTechnology()
-            => TechnologyManager.Instance.GetCurrentResearchInProgressTechnology();
-        private VisualElement GetElementByTechSO(TechnologySO tech)
-        {
-            if (visibleElements.TryGetValue(tech, out var element))
-                return element;
-            return null;
-        }
-        private float GetCurrentReseachProgressBarValue()
-            => TechnologyManager.Instance.GetCurrentReseachProgressBarValue();
-        private void OnTechInfoPanelButtonClicked(ClickEvent evt, string techID)
-        {
-            Debug.Log($"Clicked Button: {techID}");
-            ShowTechInfoPanel(techID);
-        }
-        private void OnStartResearchButtonClicked(ClickEvent evt, TechnologySO tech)
-        {
-            Debug.Log($"Started researching: {tech}.");
-            TechnologyManager.Instance.QueueTechnologyResearch(tech);
-        }
-        private void OnTechInfoPanelBackClicked(ClickEvent evt, string techID)
-        {
-            Debug.Log($"Clicked Go Back Button From Tech: {techID}");
-            HideInfoPanel(techID);
-        }
-        public void ShowPage()
-        {
-            page.style.display = DisplayStyle.Flex;
-        }
-        public void HidePage()
-        {
-            page.style.display = DisplayStyle.None;
-        }
-        private void ShowTechInfoPanel(string techID)
-        {
-            scrollView.style.display = DisplayStyle.None;
-            if (cachedTechInfoPanels.TryGetValue(techID, out var techVisualElement))
-                techVisualElement.style.display = DisplayStyle.Flex;
-        }
-        private void HideInfoPanel(string techID)
-        {
-            if (cachedTechInfoPanels.TryGetValue(techID, out var techVisualElement))
-                techVisualElement.style.display = DisplayStyle.None;
-            scrollView.style.display = DisplayStyle.Flex;
+            BuildOfferedTechnologies();
+            UpdateTopResearchPanel();
         }
         public void UpdatePage()
         {
-            if (!isUpdating)
+            var current = TechnologyManager.Instance.GetCurrentResearchInProgressTechnology();
+            if (current != null)
             {
-                pageTime += Time.deltaTime;
-                if (pageTime > updateTime)
+                float progress = TechnologyManager.Instance.GetCurrentReseachProgressPercent(current) * 100f;
+                TechTopPanelViewHolder.ProgressBar.value = progress;
+                TechTopPanelViewHolder.ProgressBar.title = $"{Mathf.Round(progress)}%";
+                if (TechCards.TryGetValue(current, out var holder))
                 {
-                    if (visibleElements == null || visibleElements.Count == 0)
-                        return;
-                    isUpdating = true;
-                    UpdateTechPanels();
-                    UpdateTechnologyResearchStatus();
-                    pageTime = 0;
-                    isUpdating = false;
+                    //holder.Progress.value = progress;
+                }
+            }
+            else
+            {
+                TechTopPanelViewHolder.ProgressBar.value = 0;
+                TechTopPanelViewHolder.ProgressBar.title = "Ожидание выбора...";
+            }
+            if (InfoPanelBinder != null && InfoPanelBinder.CurrentTech != null)
+            {
+                bool canAfford = TechnologyManager.Instance.AreResourcesAvailable(InfoPanelBinder.CurrentTech);
+                if (InfoPanelBinder.StartResearchButton.enabledSelf != canAfford)
+                {
+                    InfoPanelBinder.StartResearchButton.SetEnabled(canAfford);
+                    InfoPanelBinder.StartResearchButton.text = canAfford ? "Начать исследование" : "Недостаточно ресурсов";
                 }
             }
         }
-        private void UpdateTechPanels()
-        {
-            foreach (var key in visibleElements)
-                UpdateButtons(key.Value, key.Key);
-        }
-        private void UpdateButtons(VisualElement element, TechnologySO tech)
-        {
-            var researchButton = element.Q<Button>("techStartResearchButton");
-            if (researchButton != null)
-            {
-                researchButton.SetEnabled(GetResearchButtonAvailability(tech));
-                researchButton.text = GetResearchButtonLabelText(tech);
-            }
-        }
-        private void UpdateTechnologyResearchStatus()
-        {
-            var previousTech = currentResearchedTechCache;
-
-            if (!IsTechnologyResearchInProgress() && previousTech == null)
-                return;
-            if (!IsTechnologyResearchInProgress() && previousTech != null)
-                SetProgressBarValue(previousTech, 100f);
-            currentResearchedTechCache = GetCurrentResearchedTechnology();
-            if (currentResearchedTechCache == null)
-                return;
-            SetProgressBarValue(currentResearchedTechCache, GetCurrentReseachProgressBarValue());
-        }
-        private void SetProgressBarValue(TechnologySO tech, float value)
-        {
-            var techProgressBarElement = GetElementByTechSO(tech);
-            var techProgressBar = techProgressBarElement.Q<ProgressBar>("techResearchProgressBar");
-            if (techProgressBar != null)
-                techProgressBar.value = value;
-        }
+        public void ShowPage() =>
+            RootVE.style.display = DisplayStyle.Flex;
+        public void HidePage() =>
+            RootVE.style.display = DisplayStyle.None;
     }
 }

@@ -9,6 +9,10 @@ namespace Managers
 
         private TimeState TimeState;
 
+        public event Action<int> OnDayChangedEvent;
+        public event Action<int> OnMonthChangedEvent;
+        public event Action<int> OnYearChangedEvent;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -18,11 +22,33 @@ namespace Managers
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-            TimeState = new TimeState();
+            InitizalizeDataOnAwake();
         }
+        private void InitizalizeDataOnAwake()
+        {
+            TimeState = new TimeState();
+            InitializeConnections();
+        }
+        private void InitializeConnections()
+        {
+            TimeState.OnDayChanged += OnDayChanged;
+            TimeState.OnMonthChanged += OnMonthChanged;
+            TimeState.OnYearChanged += OnYearChanged;
+        }
+        private void OnDayChanged(int day) =>
+            OnDayChangedEvent?.Invoke(day);
+        private void OnMonthChanged(int month) =>
+            OnMonthChangedEvent?.Invoke(month);
+        private void OnYearChanged(int year) =>
+            OnYearChangedEvent?.Invoke(year);
 
         public string GetCurrentTimeString() => TimeState.GetCurrentTimeString();
-        public void GetCurrentDay() => TimeState.GetCurrentDay();
+        public int GetCurrentDay() =>
+            TimeState.GetCurrentDay();
+        public int GetCurrentMonth() =>
+            TimeState.GetCurrentMonth();
+        public int GetCurrentYear() =>
+            TimeState.GetCurrentYear();
         public void OnTickUpdate()
         {
             TimeState.UpdateTick();

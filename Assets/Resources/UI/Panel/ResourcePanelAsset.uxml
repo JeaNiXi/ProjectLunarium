@@ -1,14 +1,15 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Pages/ResourcePanel.uss?fileID=7433441132597879392&amp;guid=c520f4cb79430a94ab9cef7f03298fdf&amp;type=3#ResourcePanel"/>
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:VisualElement name="defaultResource" style="background-color: rgb(255, 227, 203); flex-basis: auto; flex-direction: row; margin-bottom: 5px; margin-top: 5px; height: 104px; flex-grow: 1;">
+        <ui:VisualElement name="defaultResource" style="background-color: rgba(25, 25, 51, 0.6); flex-basis: auto; flex-direction: row; margin-bottom: 5px; margin-top: 5px; height: 104px; flex-grow: 1;">
             <ui:VisualElement name="leftElement" style="flex-direction: row; flex-basis: 30%;">
                 <ui:VisualElement name="leftLVE" style="flex-basis: 30%;">
-                    <ui:Button text="&#1048;&#1082;&#1086;&#1085;&#1082;&#1072;" name="buttonIcon" style="flex-grow: 1;"/>
+                    <ui:Button text="Иконка" name="buttonIcon" style="flex-grow: 1;"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="rightLVE" style="flex-basis: 70%;">
                     <ui:VisualElement name="nameVE" style="flex-basis: 40%; flex-direction: row;">
                         <ui:Button text="Pin" name="pinButton"/>
-                        <ui:Label text="&#1053;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077;" name="nameLabel" style="font-size: 22px; -unity-text-align: middle-center;"/>
+                        <ui:Label text="Название" name="nameLabel" class="display-main-text"/>
                     </ui:VisualElement>
                     <ui:VisualElement name="animationVE" style="flex-basis: 60%;">
                         <ui:Image source="project://database/Assets/Data/Test/elf_walk.gif?fileID=145885272568563908&amp;guid=e470b151ddeef604ca261877c959f2a1&amp;type=3#elf_walk_0" name="resourceImage"/>
@@ -18,14 +19,14 @@
             <ui:VisualElement name="rightElement" style="flex-basis: 70%;">
                 <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
                     <ui:VisualElement style="flex-basis: 20%; justify-content: space-around;">
-                        <ui:Label text="&#1050;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086; &#1088;&#1072;&#1073;&#1086;&#1095;&#1080;&#1093;:"/>
+                        <ui:Label text="Количество рабочих:"/>
                         <ui:Label text="Label" name="currentWorkers"/>
-                        <ui:Label text="&#1052;&#1077;&#1089;&#1090; &#1076;&#1086;&#1089;&#1090;&#1091;&#1087;&#1085;&#1086;:"/>
+                        <ui:Label text="Мест доступно:"/>
                         <ui:Label text="Label" name="maxWorkerPlaces"/>
                     </ui:VisualElement>
                     <ui:VisualElement style="flex-basis: 20%; -unity-text-auto-size: none; flex-grow: 1; flex-direction: column;">
                         <ui:VisualElement style="flex-grow: 1; flex-basis: 10%; justify-content: space-around;">
-                            <ui:Label text="&#1056;&#1072;&#1073;&#1086;&#1095;&#1080;&#1077;:" style="-unity-text-align: middle-center;"/>
+                            <ui:Label text="Рабочие:" style="-unity-text-align: middle-center;"/>
                         </ui:VisualElement>
                         <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
                             <ui:VisualElement style="align-items: center; align-self: center; flex-grow: 1;">
@@ -49,21 +50,21 @@
                     <ui:VisualElement style="flex-basis: 60%; flex-direction: row;">
                         <ui:VisualElement style="flex-basis: 25%;">
                             <ui:VisualElement style="flex-grow: 1; justify-content: space-around;">
-                                <ui:Label text="&#1056;&#1072;&#1089;&#1093;&#1086;&#1076; &#1074; &#1076;&#1077;&#1085;&#1100;:"/>
-                                <ui:Label text="&#1055;&#1088;&#1080;&#1073;&#1099;&#1083;&#1100; &#1074; &#1076;&#1077;&#1085;&#1100;:" name=""/>
+                                <ui:Label text="Расход в день:"/>
+                                <ui:Label text="Прибыль в день:" name=""/>
                                 <ui:Label text="Label"/>
                                 <ui:Label text="Label"/>
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement style="flex-basis: 75%; flex-direction: row;">
                             <ui:VisualElement style="flex-basis: 35%; justify-content: space-around;">
-                                <ui:Label text="&#1054;&#1089;&#1090;&#1072;&#1090;&#1086;&#1082; &#1085;&#1072; &#1089;&#1082;&#1083;&#1072;&#1076;&#1077;:"/>
-                                <ui:Label text="Label" name="currentAmount" binding-path="Amount"/>
+                                <ui:Label text="Остаток на складе:"/>
+                                <ui:Label text="Label" name="currentAmount" binding-path="Amount" class="display-main-text"/>
                             </ui:VisualElement>
                             <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
                                 <ui:VisualElement style="flex-basis: 60%;">
                                     <ui:VisualElement style="flex-basis: 30%;">
-                                        <ui:Label text="&#1052;&#1077;&#1089;&#1090;&#1086; &#1087;&#1088;&#1086;&#1080;&#1079;&#1074;&#1086;&#1076;&#1089;&#1090;&#1074;&#1072;:"/>
+                                        <ui:Label text="Место производства:"/>
                                     </ui:VisualElement>
                                     <ui:VisualElement style="flex-basis: 70%;">
                                         <ui:Button text="Button" style="flex-grow: 1;"/>
@@ -71,7 +72,7 @@
                                 </ui:VisualElement>
                                 <ui:VisualElement style="flex-basis: 40%;">
                                     <ui:VisualElement name="" style="flex-basis: 40%;">
-                                        <ui:Label text="&#1054;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100; &#1044;&#1086;&#1073;&#1099;&#1095;&#1082;&#1091;:" style="white-space: pre-wrap; -unity-text-align: middle-center;"/>
+                                        <ui:Label text="Остановить Добычку:" style="white-space: pre-wrap; -unity-text-align: middle-center;"/>
                                     </ui:VisualElement>
                                     <ui:VisualElement style="flex-basis: 60%;">
                                         <ui:Button text="Button" style="flex-grow: 1;"/>

@@ -34,7 +34,7 @@ namespace Managers
         private void UpdateTick()
         {
             timer += Time.deltaTime;
-            if(timer > SECONDS_PER_DAY)
+            if (timer > SECONDS_PER_DAY)
             {
                 GameManager.Instance.DisableTickPossibility();
                 TimeManager.Instance.OnTickUpdate();

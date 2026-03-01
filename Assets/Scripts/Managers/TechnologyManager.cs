@@ -1,8 +1,8 @@
-using NUnit.Framework;
 using SO;
 using State;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 namespace Managers
 {
@@ -10,7 +10,12 @@ namespace Managers
     {
         public static TechnologyManager Instance;
         public TechnologyManagerSO TechnologyManagerSO;
-        public TechnologyState TechnologyState;
+        public TechnologyState TechState;
+
+        public event Action OnOfferedTechsRefreshedEvent;
+
+        public int MaxOfferedTechs = 3;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -20,78 +25,147 @@ namespace Managers
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-            InitializeTechState();
-            InitializeResearchedTechs(TechnologyManagerSO.startingTech);
+            InitializeData();
+            InitializeStartingTechs(TechnologyManagerSO.startingTech);
         }
-        private void InitializeTechState()
+        private void InitializeData()
         {
-            TechnologyState = new TechnologyState(TechnologyManagerSO);
+            TechState = new TechnologyState(TechnologyManagerSO);
+            TechState.OnOfferedTechsRefresh += TechState_OnOfferedTechsRefresh;
+            Debug.Log("[TechManager] Initializing Tech State");
         }
-        private void InitializeResearchedTechs(List<TechnologySO> initResearchedTechsList)
-            => TechnologyState.InitializeResearchedTechs(initResearchedTechsList);
-        public void OnGlobalTick(TimeState timeState)
+
+        private void TechState_OnOfferedTechsRefresh()
         {
-            /*
-             * First we look if we are actually researching something. If not, we just return and do nothing at all.
-             * If we are researching, we check if we currently have enough resources to sustain our research. 
-             * To do this we First check all our modifiers. Get them all together.
-             * Then we update the cost for the tech based on all modifiers for THIS day.
-             * Then we check if we can afford it. If yes, we update, if not we calculate the penalty, or stop the research.
-             * On update we check if research complete, advance, etc.
-             */
+            OnOfferedTechsRefreshedEvent?.Invoke();
         }
-        public bool IsTechResearchAvailable(TechnologySO tech)
+
+        public void InitializeStartingTechs(List<TechnologySO> startingTechs)
         {
-            // Add a check if the Tech is Next in Line to shorten check.
-            if (IsTechnologyResearched(tech))
-                return false;
-            foreach (var techRequirement in tech.ResearchRequirements.TechnologiesRequiredToResearch)
-                if (!IsTechnologyResearched(techRequirement))
-                    return false;
-            if (AreTechResearchResourcesAvailable(tech))
+            foreach (var tech in startingTechs)
+            {
+                TechState.AddTechToResearched(tech);
+                Debug.Log($"Added Starting Tech: {tech}");
+            }
+            InitializeFirstTimeStart();
+        }
+        public void InitializeFirstTimeStart() =>
+            RefreshTechDeck();
+
+        private void RefreshTechDeck()
+        {
+            TechState.ClearOffers();
+            var pool = TechnologyManagerSO.allTechnologies
+                .Where(t => !TechState.IsResearched(t))
+                .Where(t => t != TechState.CurrentResearch)
+                .Where(t => ArePrerequisitesMet(t))
+                .Where(t => AreSpecialConditionsMet(t))
+                .ToList();
+            TechState.AddTechToOffered(PickRandomTechs(pool, MaxOfferedTechs));
+        }
+        public bool ArePrerequisitesMet(TechnologySO tech)
+        {
+            if (tech.ResearchRequirements == null)
                 return true;
-            return false;
+            if (tech.ResearchRequirements.TechPrerequisites == null || tech.ResearchRequirements.TechPrerequisites.Count == 0)
+                return true;
+            return tech.ResearchRequirements.TechPrerequisites.All(p => TechState.IsResearched(p));
         }
-        public bool IsTechnologyResearched(TechnologySO tech)
-            => TechnologyState.IsTechnologyResearched(tech);
-        public bool IsTechnologyInResearchProgress(TechnologySO tech)
-            => TechnologyState.IsTechnologyInResearchProgress(tech);
-        public bool AreTechResearchResourcesAvailable(TechnologySO tech)
+        public bool AreSpecialConditionsMet(TechnologySO tech)
         {
-            foreach (var resourceRequirement in tech.ResearchRequirements.ResourceOneTimeCost)
-                if (!ResourceManager.Instance.HasResourceAmount(resourceRequirement.Resource, resourceRequirement.Amount))
-                    return false;
-            Debug.Log($"Resources Available for: {tech.ID}");
+            // TODO LATER
             return true;
         }
-        public string GetReseachButtonLabelText(TechnologySO tech)
+        public List<TechnologySO> PickRandomTechs(List<TechnologySO> pool, int maxOfferedTechs)
         {
-            if (IsTechnologyResearched(tech))
-                return "Исследовано"; // Change to Localized String
-            else
-                return "Исследовать";
+            if (pool.Count <= maxOfferedTechs)
+                return pool;
+            List<TechnologySO> selected = new();
+            for (int i = 0; i < maxOfferedTechs; i++)
+            {
+                float totalWeight = pool.Sum(t => (float)t.BaseWeight);
+                float randomValue = UnityEngine.Random.Range(0, totalWeight);
+                float currentSum = 0;
+
+                foreach (var tech in pool)
+                {
+                    currentSum += tech.BaseWeight;
+                    if (randomValue <= currentSum)
+                    {
+                        selected.Add(tech);
+                        pool.Remove(tech);
+                        break;
+                    }
+                }
+            }
+            return selected;
         }
-        public bool IsTechnologyResearchInProgress()
-            => GameManager.Instance.CurrentTechnologyResearchState == GameManager.TechnologyResearchState.RESEARCHING ? true : false;
-        public TechnologySO GetCurrentResearchInProgressTechnology()
-            => TechnologyState.GetCurrentResearchInProgressTechnology();
-        public float GetCurrentReseachProgressBarValue()
-            => TechnologyState.GetCurrentReseachProgressBarValue();
-        public void UpdateTechResearchProgressBar()
+        public void AddResearchPoints(float amount)
         {
-            if (GameManager.Instance.CurrentTechnologyResearchState == GameManager.TechnologyResearchState.NOT_RESEARCHING)
+            if (TechState.CurrentResearch == null)
                 return;
-            TechnologyState.AddTechnologyResearchProgress(10f); // CalculateProgressHere
+            TechnologySO current = TechState.CurrentResearch;
+            if (!TechState.ResearchProgress.ContainsKey(current))
+                TechState.ResearchProgress[current] = 0f;
+            TechState.ResearchProgress[current] += amount;
+            if (TechState.ResearchProgress[current] >= current.TotalResearchPoints)
+                CompleteResearch(current);
         }
-        public void CheckForTechReseachStatus()
+        public void CompleteResearch(TechnologySO tech)
         {
-            if (GameManager.Instance.IsResearchInProgress())
-                TechnologyState.CheckForTechReseachStatus();
+            TechState.AddTechToResearched(tech);
+            if (tech.UnlockedResources != null)
+            {
+                ResourceManager.Instance.UpdateVisibleUIResources();
+            }
+            TechState.CurrentResearch = null;
+
+            RefreshTechDeck();
         }
-        public void QueueTechnologyResearch(TechnologySO tech)
+        public void StartResearch(TechnologySO tech)
         {
-            TechnologyState.StartTechResearch(tech);
-            GameManager.Instance.SetTechnologyResearchState(GameManager.TechnologyResearchState.RESEARCHING);
+            if (tech == null)
+                return;
+            if (!AreResourcesAvailable(tech))
+                return;
+            SpendResources(tech);
+            TechState.SetCurrentResearch(tech);
+            TechState.RemoveTechFromOffered(tech);
+        }
+        public bool AreResourcesAvailable(TechnologySO tech)
+        {
+            if (tech.ResearchRequirements == null)
+                return true;
+            return tech.ResearchRequirements.ResourceOneTimeCost
+                .All(r => ResourceManager.Instance.HasResourceAmount(r.Resource, (int)r.Amount));
+        }
+
+        private void SpendResources(TechnologySO tech)
+        {
+            if (tech.ResearchRequirements == null || tech.ResearchRequirements.ResourceOneTimeCost == null)
+                return;
+            foreach (var cost in tech.ResearchRequirements.ResourceOneTimeCost)
+            {
+                ResourceManager.Instance.SpendResource(cost.Resource, (int)cost.Amount);
+            }
+        }
+        public TechnologySO GetCurrentResearchInProgressTechnology() =>
+            TechState.GetCurrentResearchTech();
+        public bool IsTechnologyResearched(TechnologySO tech) =>
+            TechState.IsResearched(tech);
+        public bool IsTechResearchAvailable(TechnologySO tech)
+        {
+            return true;
+        }
+        public float GetCurrentReseachProgressPercent(TechnologySO tech) =>
+            TechState.GetProgressPercent(tech);
+        public List<TechnologySO> GetOfferedTechnologies() =>
+            TechState.GetOfferedTechnologies();
+        public void OnGlobalTick()
+        {
+            if (TechState.CurrentResearch == null)
+                return;
+            AddResearchPoints(10f);
         }
     }
 }

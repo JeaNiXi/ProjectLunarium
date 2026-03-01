@@ -1,7 +1,6 @@
 using SO;
 using State;
 using System;
-using UI;
 using UnityEngine;
 namespace Managers
 {
@@ -34,21 +33,16 @@ namespace Managers
             CurrentGameState = GameState.INIT;
             CurrentTechnologyResearchState = TechnologyResearchState.NOT_RESEARCHING;
         }
-        //public void StartGame()
-        //{
-        //    SetGameState(GameState.RUNNING);
-        //    EnableTickPossibility();
-        //}
-        //public void StartGame(GameDataState gameState)
-        //{
-        //    SetGameState(GameState.RUNNING);
-        //    EnableTickPossibility();
-        //}
-
         public void StartNewGame(NewGameState newGameState)
         {
+            Debug.Log("[GameManager] New Game Started!");
+            PopulationManager.Instance.InitializePopulation(newGameState.GetNGPopState());
+            WorkersManager.Instance.InitializeInitialWorkers();
             SetGameState(GameState.RUNNING);
+            Debug.Log("[GameManager] Setting GameState to -RUNNING-");
             EnableTickPossibility();
+            Debug.Log("[GameManager] Enabling Tick Possibility!");
+            AudioManager.Instance.PlayBackgroundAgeMusic();
         }
         public void SetGameState(GameState state)
         {
@@ -63,8 +57,30 @@ namespace Managers
             => IsTickPossible = true;
         public void DisableTickPossibility()
             => IsTickPossible = false;
+
+
+
+
+
+
+
+
+        //public void StartGame()
+        //{
+        //    SetGameState(GameState.RUNNING);
+        //    EnableTickPossibility();
+        //}
+        //public void StartGame(GameDataState gameState)
+        //{
+        //    SetGameState(GameState.RUNNING);
+        //    EnableTickPossibility();
+        //}
+
         public void OnGlobalTick(TimeState timeState)
         {
+            WorkPlaceManager.Instance.OnGlobalTick();
+            ResourceManager.Instance.OnGlobalTick();
+            TechnologyManager.Instance.OnGlobalTick();
             /*
              * On each day the first thing that should be done is updating and checking for events and meta gameplay.
              * After that we apply event modifiers if needed. 
@@ -79,12 +95,12 @@ namespace Managers
              * All updates on button presses should be collected and scheduled for the final prep for the last, before we allow a new tick.
              * They start working from the next day.
              */
-            ResourceManager.Instance.UpdateGathererResourceIncome(18); //Need to give gatherer Amount in future.
-            ResourceManager.Instance.UpdateResourceUsage(9, 18, 3); // Need to give populations and other in future.
-            TechnologyManager.Instance.UpdateTechResearchProgressBar();
-            TechnologyManager.Instance.CheckForTechReseachStatus();
-            TechnologyManager.Instance.OnGlobalTick(timeState);
-            ResourceManager.Instance.OnGlobalTick(timeState);
+            //ResourceManager.Instance.UpdateGathererResourceIncome(18); //Need to give gatherer Amount in future.
+            //ResourceManager.Instance.UpdateResourceUsage(9, 18, 3); // Need to give populations and other in future.
+            //TechnologyManager.Instance.UpdateTechResearchProgressBar();
+            //TechnologyManager.Instance.CheckForTechReseachStatus();
+            //TechnologyManager.Instance.OnGlobalTick(timeState);
+            //ResourceManager.Instance.OnGlobalTick(timeState);
             EnableTickPossibility();
         }
 

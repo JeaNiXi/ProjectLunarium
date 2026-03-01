@@ -3,7 +3,7 @@
         <ui:VisualElement style="flex-grow: 0; flex-basis: 20%;">
             <ui:VisualElement style="flex-grow: 0; flex-basis: 70%;">
                 <ui:Button text="continueBNK" name="continueButton"/>
-                <ui:Button text="newGameBNK" name="newGameButton"/>
+                <ui:Button text="newGameBNK" name="newGameButton" style="flex-basis: 32px; -unity-font-definition: resource(&quot;Fonts/TovariSans/tovari-sans&quot;); font-size: 24px;"/>
                 <ui:Button text="saveGameBNK" name="saveGameButton"/>
                 <ui:Button text="loadGameBNK" name="loadGameButton"/>
                 <ui:Button text="settingsBNK" name="settingsButton"/>

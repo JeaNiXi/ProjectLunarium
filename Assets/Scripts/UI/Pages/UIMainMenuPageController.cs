@@ -1,3 +1,4 @@
+using Managers;
 using SO;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,6 +73,8 @@ namespace UI
         private void InitializeButtons()
         {
             categoryMainMenuNewGameButton = RootVE.Q<Button>("newGameButton");
+            categoryMainMenuNewGameButton.text = LocalizationManager.Instance.GetLocalizedUIMenuData(
+                UIManager.Instance.GetMenuLocalizationDataSO().MainMenuNewGameKey);
         }
         private void InitializeButtonEvents()
         {
@@ -86,7 +89,7 @@ namespace UI
         {
             if (CurrentMenuCategoryPage != null && CurrentMenuController != null)
                 CurrentMenuController.HidePage();
-            if(cachedMenuPages.TryGetValue(category, out var page) && cachedMenuIUIPageControllers.TryGetValue(category, out var controller))
+            if (cachedMenuPages.TryGetValue(category, out var page) && cachedMenuIUIPageControllers.TryGetValue(category, out var controller))
             {
                 controller.ShowPage();
                 CurrentMenuCategoryPage = page;

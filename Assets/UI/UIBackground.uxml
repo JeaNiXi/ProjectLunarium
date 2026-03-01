@@ -1,5 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="UIBackgroundVE" style="flex-grow: 1;">
-        <ui:Image name="BackgroundImage" source="project://database/Assets/Resources/Images/UI/Background/DefaultBackgroundSplashBig.jpg?fileID=2800000&amp;guid=2363eca080b289148840b6a3cc8e726b&amp;type=3#DefaultBackgroundSplashBig"/>
+    <ui:VisualElement name="UIBackgroundVE" style="flex-grow: 1; display: none;">
+        <ui:Image name="BackgroundImageOne" source="project://database/Assets/Resources/Images/UI/Background/Clouds%204/1.png?fileID=21300000&amp;guid=eeeb103e22aa8fc4fa49cdbc66c5cbf9&amp;type=3#1" style="flex-grow: 1; position: absolute; aspect-ratio: 1.777778; width: 1920px; height: 1080px;"/>
+        <ui:Image name="BackgroundImageTwo" source="project://database/Assets/Resources/Images/UI/Background/Clouds%204/2.png?fileID=21300000&amp;guid=bcec6ee0fdd5cac44b87af393364519a&amp;type=3#2" style="position: absolute; width: 1920px; height: 1080px; aspect-ratio: 1.777778;"/>
+        <ui:Image name="BackgroundImageThree" source="project://database/Assets/Resources/Images/UI/Background/Clouds%204/3.png?fileID=21300000&amp;guid=6396e294496e48a4090a8074030b0851&amp;type=3#3" style="aspect-ratio: 1.777778; width: 1920px; height: 1080px; position: absolute;"/>
+        <ui:Image name="BackgroundImageFour" source="project://database/Assets/Resources/Images/UI/Background/Clouds%204/4.png?fileID=21300000&amp;guid=4ef2074ad1b52584a95b60447b8ff413&amp;type=3#4" style="aspect-ratio: 1.777778; position: absolute; width: 1920px; height: 1080px;"/>
     </ui:VisualElement>
 </ui:UXML>
